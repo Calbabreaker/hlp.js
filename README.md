@@ -19,4 +19,7 @@ These are the script tags for the lastest hlp.js
 <script src="/src/canvas.js"></script>
 ```
 
-To compile the source files yourselves into one files
+To compile the source files yourselves into lib/hlp.js
+```sh
+sh scripts/compile.sh
+```
