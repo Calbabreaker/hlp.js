@@ -9,11 +9,14 @@ You will see different sections for the different parts to the library.
 ## SRC files
 These are the script tags for the lastest hlp.js
 ```html
-<script src="src/main.js"></script>
-<script src="src/dictionary.js"></script>
+<script src="/src/main.js"></script>
+<script src="/src/dictionary.js"></script>
 
-<script src="src/matrix.js"></script>
-<script src="src/vector.js"></script>
+<script src="/src/math/additions.js"></script>
+<script src="/src/math/matrix.js"></script>
+<script src="/src/math/vector.js"></script>
 
-<script src="src/canvas.js"></script>
+<script src="/src/canvas.js"></script>
 ```
+
+To compile the source files yourselves into one files

@@ -65,6 +65,12 @@ hlp.Vector = class Vector {
     return new Vector(this.x, this.y, this.z);
   }
 
+  set(x = 0, y = 0, z = 0) {
+    this.x = x;
+    this.y = y;
+    this.z = z;
+  }
+
   magSq() {
     // gets the length of the vector squared
     return this.x * this.x + this.y * this.y + this.z * this.z;
@@ -93,12 +99,12 @@ hlp.Vector = class Vector {
 
   // down here contains functions useful for 3d
   static intersectPlane(planePoint, planeNormal, lineStart, lineEnd) {
-    planeNormal = Vector.normalise(planeNormal);
+    planeNormal = hlp.Vector.normalise(planeNormal);
     const planeDirection = -planeNormal.dotProduct(planePoint);
     const ad = lineStart.dotProduct(planeNormal);
     const bd = lineEnd.dotProduct(planeNormal);
     const t = (-planeDirection - ad) / (bd - ad);
-    const newLine = Vector.sub(lineEnd, lineStart).mult(t).add(lineStart);
+    const newLine = hlp.Vector.sub(lineEnd, lineStart).mult(t).add(lineStart);
     return newLine;
   }
 }

@@ -1,13 +1,15 @@
 // the canvas object for canvas drawing
 document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock;
 
-class Canvas {
+hlp.Canvas = class Canvas {
   constructor(width = 400, height = 400) {
     // initialize variables
     this.width = width;
     this.height = height;
     this.doFill = true;
     this.doStroke = true;
+    this.prevDoFills = [];
+    this.prevDoStrokes = [];
 
     this.frameCount = 0;
     this.fps = 60;
@@ -32,16 +34,16 @@ class Canvas {
     this.then = Date.now();
     this.deltaTimeMS = 0;
     this.deltaTime = 0;
-    this.mouse = new Vector(0, 0);
-    this.mouseMovement = new Vector(0, 0);
+    this.mouse = new hlp.Vector(0, 0);
+    this.mouseMovement = new hlp.Vector(0, 0);
     this.mouseIsLocked = false;
 
     // gets the mouse pos
     document.body.addEventListener("mousemove", event => {
-      this.mouse.x = event.clientX - this.clientRect.left;
-      this.mouse.y = event.clientY - this.clientRect.top;
-      this.mouseMovement = new Vector(event.movementX, event.movementY);
-      if (!this.mouseIsLocked) this.mouseMove();
+      this.mouse.set(event.clientX - this.clientRect.left, event.clientY - this.clientRect.top);
+      this.mouseMovement.set(event.movementX, event.movementY);
+      this.mouseMove();
+      if (!this.mouseIsLocked) this.unlockedMouseMove();
       else this.lockedMouseMove();
     });
 
@@ -97,6 +99,7 @@ class Canvas {
   mousePressed() {}
   mouseMove() {}
   lockedMouseMove() {}
+  unlockedMouseMove() {}
 
   updateCycle() {
     this.push();
@@ -236,16 +239,16 @@ class Canvas {
     this.ctx.scale(x, y);
   }
 
-  // push and pop like p5
+  // push and pop to restore and save states
   push() {
-    this.prevDoFill = this.doFill;
-    this.prevDoStroke = this.doStroke;
+    this.prevDoFills.push(this.doFill);
+    this.prevDoStrokes.push(this.doStroke);
     this.ctx.save();
   }
 
   pop() {
-    this.doFill = this.prevDoFill;
-    this.doStroke = this.prevDoStroke;
+    this.doFill = this.prevDoFills.pop();
+    this.doStroke = this.prevDoStrokes.pop();
     this.ctx.restore();
   }
 }

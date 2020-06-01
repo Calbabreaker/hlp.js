@@ -1,5 +1,3 @@
-class hlp {
+const hlp = {
   
 }
-
-hlp.freeze();
