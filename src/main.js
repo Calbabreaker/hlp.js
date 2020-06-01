@@ -1,0 +1,5 @@
+class hlp {
+  
+}
+
+hlp.freeze();

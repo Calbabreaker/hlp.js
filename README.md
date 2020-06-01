@@ -1,20 +1,19 @@
-# The Helper Utils Library
-Welcome to The Helper Utils Library where there is bunch of useful tools.
+# The hlp.js Library
+Welcome to The hlp.js library where there is bunch of useful tools.
 You will see different sections for the different parts to the library.
 
 ### Notes: 
 * The source code is in the src/ directory and all the paths are in src/paths.xtx
-* The library code you probaly want to use is in the lib/ directory with helperutils.js and helperutils.min.js (minified version)
+* The library code you probaly want to use is in the lib/ directory with hlp.js and hlp.min.js (minified version)
 
-## Core
-PATH: src/core.js
-This is where the helper class lives. 
+## SRC files
+These are the script tags for the lastest hlp.js
+```html
+<script src="src/main.js"></script>
+<script src="src/dictionary.js"></script>
 
-## Dictionary
-PATH: src/dictionary.js
-I know that you can make dictionaries by creating objects but there are no helper functions to go along with it.
-So I made a dictionary class.
+<script src="src/matrix.js"></script>
+<script src="src/vector.js"></script>
 
-## Matrix
-PATH: src/matrix.js
-Useful for doing matrix stuff like neural networks.
+<script src="src/canvas.js"></script>
+```
