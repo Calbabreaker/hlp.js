@@ -2,25 +2,35 @@
 document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock;
 
 hlp.Canvas = class Canvas {
-  constructor(width = 400, height = 400) {
+  constructor(width = 400, height = 400, extra) {
     // initialize variables
-    this.width = width;
-    this.height = height;
-    this.doFill = true;
-    this.doStroke = true;
-    this.prevDoFills = [];
-    this.prevDoStrokes = [];
+    if (width === hlp.FULL) {
+      if (extra != null) this.aspectRatio = new hlp.Vector(extra / height, 1);
+      this.isFull = true;
+      this._calcResize();
+    } else {
+      this.width = width;
+      this.height = height;
+    }
+
+    this._doFill = true;
+    this._doStroke = true;
+    this._prevDoFills = [];
+    this._prevDoStrokes = [];
+    this._firstPosShapes = null;
 
     this.frameCount = 0;
-    this.fps = 60;
+    this.targetFPS = 60;
     this.hasStopped = false;
-    this.fpsInterval = 1000 / this.fps;
+    this.fpsInterval = 1000 / this.targetFPS;
+    this.fps = this.targetFPS;
 
     // initialize the canvas (creates new one)
     this.canvas = document.createElement("canvas");
     this.canvas.setAttribute("id", "defaultCanvas");
     this.canvas.width = this.width;
     this.canvas.height = this.height;
+
     this.clientRect = this.canvas.getBoundingClientRect();
     if (this.canvas.getContext) this.ctx = this.canvas.getContext("2d");
     else return alert("Browser does not support the canvas.");
@@ -31,12 +41,18 @@ hlp.Canvas = class Canvas {
     this.canvas.requestPointerLock = this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock;
 
     // handle all the calls
-    this.then = Date.now();
-    this.deltaTimeMS = 0;
+    this._then = Date.now();
+    this._deltaTimeMS = 0;
     this.deltaTime = 0;
     this.mouse = new hlp.Vector(0, 0);
     this.mouseMovement = new hlp.Vector(0, 0);
     this.mouseIsLocked = false;
+
+    if (this.isFull) {
+      window.onresize = (event) => {
+        this._calcResize();
+      };
+    }
 
     // gets the mouse pos
     document.body.addEventListener("mousemove", event => {
@@ -47,8 +63,8 @@ hlp.Canvas = class Canvas {
       else this.lockedMouseMove();
     });
 
-    document.addEventListener('pointerlockchange', () => (this.mouseIsLocked = !this.mouseIsLocked), false);
-    document.addEventListener('mozpointerlockchange', () => (this.mouseIsLocked = !this.mouseIsLocked), false);
+    document.addEventListener("pointerlockchange", () => (this.mouseIsLocked = !this.mouseIsLocked), false);
+    document.addEventListener("mozpointerlockchange", () => (this.mouseIsLocked = !this.mouseIsLocked), false);
 
     document.body.addEventListener("mousedown", event => {
       this.mousePressed();
@@ -67,13 +83,14 @@ hlp.Canvas = class Canvas {
 
     this.animationDrawFunc = () => {
       try {
-        this.now = Date.now();
-        this.deltaTimeMS = this.now - this.then; // get ellapsed time between draw call
-        this.deltaTime = this.deltaTimeMS / 1000;
+        this._now = Date.now();
+        this._deltaTimeMS = this._now - this._then; // get ellapsed time between draw call
+        this.deltaTime = this._deltaTimeMS / 1000;
 
-        if (this.deltaTimeMS > this.fpsInterval && !this.hasStopped) { // if time is next frame
+        if (this._deltaTimeMS > this.fpsInterval && !this.hasStopped) { // if time is next frame
+          this.fps = 1000 / this._deltaTimeMS;
           this.updateCycle();
-          this.then = this.now - (this.deltaTimeMS % this.fpsInterval); // get ready for next ani frame
+          this._then = this._now - (this._deltaTimeMS % this.fpsInterval); // get ready for next ani frame
         }
       } catch(err) {
         return console.error(err); // stop animation if error
@@ -113,7 +130,7 @@ hlp.Canvas = class Canvas {
 
   start() {
     this.hasStopped = false;
-    this.then = Date.now();
+    this._then = Date.now();
   }
 
   keyIsDown(key) {
@@ -133,13 +150,14 @@ hlp.Canvas = class Canvas {
   }
 
   changeFPS(fps) {
+    this.targetFPS = fps;
     this.fps = fps;
     this.fpsInterval = 1000 / fps;
-    this.then = Date.now();
+    this._then = Date.now();
   }
 
   fill(...args) {
-    this.doFill = true;
+    this._doFill = true;
     if (typeof args[0] == "string") { // if fill type is with string (hexidecimal, rgb(), ect.)
       this.ctx.fillStyle == args[0];
     } else if (typeof args[0] == "number") { // if args is with number
@@ -149,12 +167,12 @@ hlp.Canvas = class Canvas {
         this.ctx.fillStyle = `rgb(${args[0]}, ${args[1]}, ${args[2]})`;
       } else if (args.length >= 4) { // with alpha
         this.ctx.fillStyle = `rgb(${args[0]}, ${args[1]}, ${args[2]}, ${args[3]})`;
-      }
-    }
+      } else throw new Error("Invalid param for fill!");
+    } else throw new Error("Invalid param for fill!");
   }
 
   stroke(...args) {
-    this.doStroke = true;
+    this._doStroke = true;
     if (typeof args[0] == "string") { // if fill type is with string (hexidecimal, rgb(), ect.)
       this.ctx.strokeStyle == args[0];
     } else if (typeof args[0] == "number") { // if args is with number
@@ -164,43 +182,60 @@ hlp.Canvas = class Canvas {
         this.ctx.strokeStyle = `rgb(${args[0]}, ${args[1]}, ${args[2]})`;
       } else if (args.length >= 4) { // with alpha
         this.ctx.strokeStyle = `rgb(${args[0]}, ${args[1]}, ${args[2]}, ${args[3]})`;
-      }
-    }
+      } else throw new Error("Invalid param for stroke!");
+    } else throw new Error("Invalid param for stroke!");
   }
 
   noFill() {
-    this.doFill = false;
+    this._doFill = false;
   }
 
   noStroke() {
-    this.doStroke = false;
+    this._doStroke = false;
   }
 
   strokeWeight(s) {
     this.ctx.lineWidth = s;
   }
 
+  beginShape() {
+    if (this._firstPosShapes != null) throw new Error("Cannot beginShape before closing/ending!");
+    this.ctx.beginPath();
+  } 
+
+  endShape(close = true) {
+    if (this._firstPosShapes == null) throw new Error("Cannot endShape before begining one!");
+    if (close) this.ctx.closePath(this._firstPosShapes.x, this._firstPosShapes.y);
+    if (this._doFill) this.ctx.fill();
+    if (this._doStroke) this.ctx.stroke();
+    this._firstPosShapes = null;
+  } 
+
+  vertex(x, y) {
+    if (this._firstPosShapes == null) {
+      this._firstPosShapes = new hlp.Vector(x, y);
+      this.ctx.moveTo(x, y);
+    } else this.ctx.lineTo(x, y);
+  }
+
   rect(x, y, width, height) {
-    if (this.doFill) this.ctx.fillRect(x, y, width, height);
-    if (this.doStroke) this.ctx.strokeRect(x, y, width, height);
+    if (this._doFill) this.ctx.fillRect(x, y, width, height);
+    if (this._doStroke) this.ctx.strokeRect(x, y, width, height);
   }
 
   triangle(...args) {
-    this.ctx.beginPath();
+    this.beginShape();
     if (args[0] instanceof hlp.Vector) {
-      this.ctx.moveTo(args[0].x, args[0].y);
-      this.ctx.lineTo(args[1].x, args[1].y);
-      this.ctx.lineTo(args[2].x, args[2].y);
-      this.ctx.closePath(args[0].x, args[0].y);
+      this.vertex(args[0].x, args[0].y);
+      this.vertex(args[1].x, args[1].y);
+      this.vertex(args[2].x, args[2].y);
     } else if (typeof args[0] == "number") {
-      this.ctx.moveTo(args[0], args[1]);
-      this.ctx.lineTo(args[2], args[3]);
-      this.ctx.lineTo(args[4], args[5]);
-      this.ctx.closePath(args[0], args[1].y);
-    }
+      this.vertex(args[0], args[1]);
+      this.vertex(args[2], args[3]);
+      this.vertex(args[4], args[5]);
+    } else throw new Error("Invalid data for shape");
 
-    if (this.doFill) this.ctx.fill();
-    if (this.doStroke) this.ctx.stroke();
+    this.endShape();
   }
 
   triangleInflate(v1, v2, v3) {
@@ -218,6 +253,18 @@ hlp.Canvas = class Canvas {
     this.rect(x, y, 1, 1);
   }
 
+  line(...args) {
+    this.beginShape();
+    if (args[0] instanceof hlp.Vector) {
+      this.vertex(args[0].x, args[0].y);
+      this.vertex(args[1].x, args[1].y);
+    } else if (typeof args[0] == "number") {
+      this.vertex(args[0], args[1]);
+      this.vertex(args[2], args[3]);
+    } else throw new Error("Invalid data for line.");
+    this.endShape(false);
+  }
+
   // make a rectangle that fills the screen (clears it)
   background(...args) {
     this.push(); 
@@ -232,7 +279,7 @@ hlp.Canvas = class Canvas {
   }
 
   rotate(x) {
-    this.ctx.rotate(x * Math.PI / 180);
+    this.ctx.rotate(x * hlp.math.toRadians());
   }
 
   scale(x, y = 0) {
@@ -241,14 +288,29 @@ hlp.Canvas = class Canvas {
 
   // push and pop to restore and save states
   push() {
-    this.prevDoFills.push(this.doFill);
-    this.prevDoStrokes.push(this.doStroke);
+    this._prevDoFills.push(this._doFill);
+    this._prevDoStrokes.push(this._doStroke);
     this.ctx.save();
   }
 
   pop() {
-    this.doFill = this.prevDoFills.pop();
-    this.doStroke = this.prevDoStrokes.pop();
+    this._doFill = this._prevDoFills.pop();
+    this._doStroke = this._prevDoStrokes.pop();
     this.ctx.restore();
+  }
+
+  _calcResize() {
+    let newInnerHeight = innerHeight;
+    if (this.aspectRatio != null) {
+      const aspectHeight = innerWidth / this.aspectRatio.x;
+      if (aspectHeight < innerHeight) newInnerHeight = aspectHeight;
+    }
+
+    this.width = this.aspectRatio != null ? newInnerHeight * this.aspectRatio.x : innerWidth;
+    this.height = newInnerHeight;
+    if (this.canvas != null) {
+      this.canvas.width = this.width;
+      this.canvas.height = this.height;
+    }
   }
 }

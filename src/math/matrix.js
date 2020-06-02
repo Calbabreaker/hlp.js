@@ -121,7 +121,7 @@ hlp.Matrix = class Matrix {
 
   randomize(min = 0, max = 1) {
     // sets every element to random number between min and max
-    return this.map(x => hlp.math.random() * (min - max) + max);
+    return this.map(() => hlp.random(min, max));
   }
 
   randomizeGuassian(mean = 0, sd = 1) {

@@ -7,7 +7,7 @@ MAIN_FILE="$BASE_DIR/../src/main.js"
 # empty lib and create hlp.js
 rm -r ../lib/
 mkdir ../lib/
-echo "/* \n  The hlp.js library by Calbabreaker. Free to use. \n*/\n" > $HLP_FILE
+echo "/* \n  The hlp.js library by Calbabreaker. \n  Free to use. GPL-3.0 \n*/\n" > $HLP_FILE
 
 # get main file first
 cat $MAIN_FILE >> $HLP_FILE

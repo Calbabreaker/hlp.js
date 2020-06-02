@@ -9,7 +9,7 @@ hlp.Vector = class Vector {
 
   add(val) {
     // adds every axis with a number or a vector
-    if (val instanceof Vector) this.x += val.x, this.y += val.y, this.z += val.z;
+    if (val instanceof hlp.Vector) this.x += val.x, this.y += val.y, this.z += val.z;
     else this.x += val, this.y += val, this.z += val;
     return this;
   }
@@ -20,7 +20,7 @@ hlp.Vector = class Vector {
   }
 
   sub(val) {
-    if (val instanceof Vector) this.x -= val.x, this.y -= val.y, this.z -= val.z;
+    if (val instanceof hlp.Vector) this.x -= val.x, this.y -= val.y, this.z -= val.z;
     else this.x -= val, this.y -= val, this.z -= val;
     return this;
   }
@@ -30,7 +30,7 @@ hlp.Vector = class Vector {
   }
 
   div(val) {
-    if (val instanceof Vector) this.x /= val.x, this.y /= val.y, this.z /= val.z;
+    if (val instanceof hlp.Vector) this.x /= val.x, this.y /= val.y, this.z /= val.z;
     else this.x /= val, this.y /= val, this.z /= val;
     return this;
   }
@@ -40,7 +40,7 @@ hlp.Vector = class Vector {
   }
 
   mult(val) {
-    if (val instanceof Vector) this.x *= val.x, this.y *= val.y, this.z *= val.z;
+    if (val instanceof hlp.Vector) this.x *= val.x, this.y *= val.y, this.z *= val.z;
     else this.x *= val, this.y *= val, this.z *= val;
     return this;
   }
@@ -50,7 +50,7 @@ hlp.Vector = class Vector {
   }
 
   static crossProduct(v1, v2) {
-    const vector = new Vector();
+    const vector = new hlp.Vector();
     vector.x = v1.y * v2.z - v1.z * v2.y;
     vector.y = v1.z * v2.x - v1.x * v2.z;
     vector.z = v1.x * v2.y - v1.y * v2.x;
@@ -62,7 +62,7 @@ hlp.Vector = class Vector {
   }
 
   copy() {
-    return new Vector(this.x, this.y, this.z);
+    return new hlp.Vector(this.x, this.y, this.z);
   }
 
   set(x = 0, y = 0, z = 0) {
@@ -78,7 +78,7 @@ hlp.Vector = class Vector {
 
   mag() {
     // gets the length of the vector 
-    return Math.sqrt(this.magSq());
+    return hlp.math.sqrt(this.magSq());
   }
 
   normalise() {
@@ -95,6 +95,24 @@ hlp.Vector = class Vector {
   setMag(len) {
     // set the length of the vector
     return this.normalise().mult(len);
+  }
+
+  heading() {
+    const h = hlp.math.atan2(this.y, this.x);
+    return hlp.math.toDegrees(h);
+  }
+
+  rotate(a) {
+    const newHeading = hlp.math.toRadians(this.heading() + a);
+    const mag = this.mag();
+    this.x = hlp.math.cos(newHeading) * mag;
+    this.y = hlp.math.sin(newHeading) * mag;
+    return this;
+  }
+
+  static fromAngle(angle, length = 1) {
+    angle = hlp.math.toRadians(angle);
+    return new hlp.Vector(length * hlp.math.cos(angle), length * hlp.math.sin(angle), 0);
   }
 
   // down here contains functions useful for 3d

@@ -20,6 +20,7 @@ hlp.Renderer3D = class Renderer3D {
   }
 
   draw(mesh) {
+    this.c.push();
     this.c.noStroke();
     // this.c.stroke(255, 0, 0); // debug wireframe
     // this.rotation += 0.01;
@@ -130,5 +131,7 @@ hlp.Renderer3D = class Renderer3D {
         this.c.triangleInflate(tri.points[0].sub(descaleVector), tri.points[1].sub(descaleVector), tri.points[2].sub(descaleVector));
       });
     });
+
+    this.c.pop();
   }
 }

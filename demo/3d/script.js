@@ -1,4 +1,4 @@
-const canvas = new hlp.Canvas(600, 600);
+const canvas = new hlp.Canvas(hlp.FULL, 1, 1);
 const renderer = new hlp.Renderer3D(canvas);
 
 let model;
@@ -19,6 +19,9 @@ canvas.draw = () => {
   renderer.cameraPos.add(velocity.normalise().mult(canvas.keyCodeIsDown("ShiftLeft") ? 16 : 4 * canvas.deltaTime));
 
   renderer.draw(model);
+  canvas.fill(255);
+  canvas.ctx.font = "30px Arial";
+  canvas.ctx.fillText(hlp.math.round(canvas.fps), 10, 50);
 }
 
 canvas.mousePressed = () => {
