@@ -4,12 +4,12 @@
 hlp.Matrix = class Matrix {
   constructor(rows = 0, cols = 0) {
     if (rows instanceof Array) {
-      // create a new Matrix with data 
+      // create a new hlp.Matrix with data 
       this.data = rows;
       this.rows = this.data.length;
       this.cols = this.data[0].length;
     } else {
-      // creates a new Matrix that is filled with 0s
+      // creates a new hlp.Matrix that is filled with 0s
       this.rows = rows;
       this.cols = cols;
       this.data = new Array(rows).fill().map(() => new Array(cols).fill(0));
@@ -18,12 +18,12 @@ hlp.Matrix = class Matrix {
 
   static add(a, b) {
     //same as normal add but creates new matrix
-    return new Matrix(a.rows, a.cols).add(b);
+    return new hlp.Matrix(a.rows, a.cols).add(b);
   }
 
   add(toAdd) {
     // check if is matrix then add matrix with hadamard else add number to every element
-    if (toAdd instanceof Matrix) {
+    if (toAdd instanceof hlp.Matrix) {
       if (this.cols !== toAdd.cols || this.rows !== toAdd.rows) throw new Error("Both matrixs rows and cols must match!");
       return this.map((val, i, j) => val + toAdd.data[i][j]);
     } else if (typeof toAdd == "number") {
@@ -34,11 +34,11 @@ hlp.Matrix = class Matrix {
   }
 
   static sub(a, b) {
-    return new Matrix(a.rows, a.cols).sub(b);
+    return new hlp.Matrix(a.rows, a.cols).sub(b);
   }
 
   sub(toSub) {
-    if (toSub instanceof Matrix) {
+    if (toSub instanceof hlp.Matrix) {
       if (this.cols !== toSub.cols || this.rows !== toSub.rows) throw new Error("Both matrixs rows and cols must match!");
       return this.map((val, i, j) => val - toSub.data[i][j]);
     } else if (typeof toSub == "number") {
@@ -50,9 +50,9 @@ hlp.Matrix = class Matrix {
 
   static dotMult(a, b) {
     // multiplies with the dot product
-    if (a.cols !== b.rows) throw new Error("Matrix a cols must match matrix b rows!");
+    if (a.cols !== b.rows) throw new Error("hlp.Matrix a cols must match matrix b rows!");
 
-    return new Matrix(a.rows, b.cols).map((val, i, j) => {
+    return new hlp.Matrix(a.rows, b.cols).map((val, i, j) => {
       let sum = 0;
       for (let k = 0; k < a.cols; k++) sum += a.data[i][k] * b.data[k][j];
       return sum;
@@ -60,41 +60,41 @@ hlp.Matrix = class Matrix {
   }
 
   static multVector(vec, matrix) {
-    if (!(vec instanceof Vector)) throw new Error("vec must be a vector");
+    if (!(vec instanceof hlp.Vector)) throw new Error("vec must be a vector");
     if (matrix.cols != 4 || matrix.rows != 4) throw new Error("matrix must have 4 cols and 4 rows!");
 
-    const newVec = new Vector(vec.x, vec.y, vec.z);
-    newVec.x = vec.x * matrix.getVal(0, 0) + vec.y * matrix.getVal(1, 0) + vec.z * matrix.getVal(2, 0) + matrix.getVal(3, 0);
-    newVec.y = vec.x * matrix.getVal(0, 1) + vec.y * matrix.getVal(1, 1) + vec.z * matrix.getVal(2, 1) + matrix.getVal(3, 1);
-    newVec.z = vec.x * matrix.getVal(0, 2) + vec.y * matrix.getVal(1, 2) + vec.z * matrix.getVal(2, 2) + matrix.getVal(3, 2);
-    const w = vec.x * matrix.getVal(0, 3) + vec.y * matrix.getVal(1, 3) + vec.z * matrix.getVal(2, 3) + matrix.getVal(3, 3);
+    const newVec = new hlp.Vector(vec.x, vec.y, vec.z);
+    newVec.x = vec.x * matrix.get(0, 0) + vec.y * matrix.get(1, 0) + vec.z * matrix.get(2, 0) + matrix.get(3, 0);
+    newVec.y = vec.x * matrix.get(0, 1) + vec.y * matrix.get(1, 1) + vec.z * matrix.get(2, 1) + matrix.get(3, 1);
+    newVec.z = vec.x * matrix.get(0, 2) + vec.y * matrix.get(1, 2) + vec.z * matrix.get(2, 2) + matrix.get(3, 2);
+    const w = vec.x * matrix.get(0, 3) + vec.y * matrix.get(1, 3) + vec.z * matrix.get(2, 3) + matrix.get(3, 3);
 
     if (w != 0) newVec.div(w);
     return newVec;
   }
 
   static quickInverse(m) { // only for rotation/translation matrixs
-    const matrix = new Matrix([
-      [m.getVal(0, 0), m.getVal(1, 0), m.getVal(2, 0), 0],
-      [m.getVal(0, 1), m.getVal(1, 1), m.getVal(2, 1), 0],
-      [m.getVal(0, 2), m.getVal(1, 2), m.getVal(2, 2), 0],
+    const matrix = new hlp.Matrix([
+      [m.get(0, 0), m.get(1, 0), m.get(2, 0), 0],
+      [m.get(0, 1), m.get(1, 1), m.get(2, 1), 0],
+      [m.get(0, 2), m.get(1, 2), m.get(2, 2), 0],
       [0, 0, 0, 0],
     ]);
 
-		matrix.setVal(3, 0, -(m.getVal(3, 0) * matrix.getVal(0, 0) + m.getVal(3, 1) * matrix.getVal(1, 0) + m.getVal(3, 2) * matrix.getVal(2, 0)));
-		matrix.setVal(3, 1, -(m.getVal(3, 0) * matrix.getVal(0, 1) + m.getVal(3, 1) * matrix.getVal(1, 1) + m.getVal(3, 2) * matrix.getVal(2, 1)));
-		matrix.setVal(3, 2, -(m.getVal(3, 0) * matrix.getVal(0, 2) + m.getVal(3, 1) * matrix.getVal(1, 2) + m.getVal(3, 2) * matrix.getVal(2, 2)));
-		matrix.setVal(3, 3, 1);
+		matrix.set(3, 0, -(m.get(3, 0) * matrix.get(0, 0) + m.get(3, 1) * matrix.get(1, 0) + m.get(3, 2) * matrix.get(2, 0)));
+		matrix.set(3, 1, -(m.get(3, 0) * matrix.get(0, 1) + m.get(3, 1) * matrix.get(1, 1) + m.get(3, 2) * matrix.get(2, 1)));
+		matrix.set(3, 2, -(m.get(3, 0) * matrix.get(0, 2) + m.get(3, 1) * matrix.get(1, 2) + m.get(3, 2) * matrix.get(2, 2)));
+		matrix.set(3, 3, 1);
 		return matrix;
 	}
 
 
   static mult(a, b) {
-    return new Matrix(a.rows, a.cols).mult(b);
+    return new hlp.Matrix(a.rows, a.cols).mult(b);
   }
 
   mult(toMult) {
-    if (toMult instanceof Matrix) {
+    if (toMult instanceof hlp.Matrix) {
       if (this.cols !== toMult.cols || this.rows !== toMult.rows) throw new Error("Both matrixs rows and cols must match!");
       return this.map((val, i, j) => val * toMult.data[i][j]);
     } else if (typeof toMult == "number") {
@@ -105,11 +105,11 @@ hlp.Matrix = class Matrix {
   }
 
   static div(a, b) {
-    return new Matrix(a.rows, a.cols).div(b);
+    return new hlp.Matrix(a.rows, a.cols).div(b);
   }
 
   div(toDiv) {
-    if (toDiv instanceof Matrix) {
+    if (toDiv instanceof hlp.Matrix) {
       if (this.cols !== toDiv.cols || this.rows !== toDiv.rows) throw new Error("Both matrixs rows and cols must match!");
       return this.map((val, i, j) => val / toDiv.data[i][j]);
     } else if (typeof toDiv == "number") {
@@ -121,7 +121,7 @@ hlp.Matrix = class Matrix {
 
   randomize(min = 0, max = 1) {
     // sets every element to random number between min and max
-    return this.map(x => Math.random() * (min - max) + max);
+    return this.map(x => hlp.Math.random() * (min - max) + max);
   }
 
   randomizeGuassian(mean = 0, sd = 1) {
@@ -133,7 +133,7 @@ hlp.Matrix = class Matrix {
   max() {
     // gets the maxium val in matrix
     let maxValue = 0;
-    Matrix.map(this, val => {
+    hlp.Matrix.map(this, val => {
       if (val > maxValue) maxValue = val;
     });
 
@@ -143,7 +143,7 @@ hlp.Matrix = class Matrix {
   sum() {
     // gets the sum of all vals in matrix
     let sum = 0;
-    Matrix.map(this, val => (sum += val));
+    hlp.Matrix.map(this, val => (sum += val));
     return sum;
   }
 
@@ -162,12 +162,12 @@ hlp.Matrix = class Matrix {
     return this.map(() => n);
   }
 
-  setVal(row, col, val) {
+  set(row, col, val) {
     this.data[row][col] = val;
     return this;
   }
 
-  getVal(row, col) {
+  get(row, col) {
     return this.data[row][col];
   }
 
@@ -196,12 +196,12 @@ hlp.Matrix = class Matrix {
 
   static map(matrix, func) {
     // like normal map but creates new matrix
-    return new Matrix(matrix.rows, matrix.cols).map((val, i, j) => func(matrix.data[i][j], i, j));
+    return new hlp.Matrix(matrix.rows, matrix.cols).map((val, i, j) => func(matrix.data[i][j], i, j));
   }
 
   static transpose(matrix) {
     // basically rotates the matrix
-    return new Matrix(matrix.cols, matrix.rows).map((val, i, j) => matrix.data[j][i]);
+    return new hlp.Matrix(matrix.cols, matrix.rows).map((val, i, j) => matrix.data[j][i]);
   }
 
   log() {
@@ -211,7 +211,7 @@ hlp.Matrix = class Matrix {
   }
 
   copy() {
-    return Matrix.map(this, val => val);
+    return hlp.Matrix.map(this, val => val);
   }
 
   toArray() {
@@ -220,18 +220,18 @@ hlp.Matrix = class Matrix {
   }
 
   static createFromVector(vector) {
-    return new Matrix([[vector.x], [vector.y], [vector.z], [0]]);
+    return new hlp.Matrix([[vector.x], [vector.y], [vector.z], [0]]);
   }
 
   toVector() {
     if (this.rows >= 3) {
-      return new Vector(this.data[0][0], this.data[1][0], this.data[2][0]);
-    } else throw new Error("Matrix cannot be converted to a vector");
+      return new hlp.Vector(this.data[0][0], this.data[1][0], this.data[2][0]);
+    } else throw new Error("hlp.Matrix cannot be converted to a vector");
   }
 
   // down here are functions that create matrixs that can be used for multipliying
   static createIdentity() {
-    return new Matrix([
+    return new hlp.Matrix([
       [1, 0, 0, 0],
       [0, 1, 0, 0],
       [0, 0, 1, 0],
@@ -240,7 +240,7 @@ hlp.Matrix = class Matrix {
   }
 
   static createRotationX(angle) {
-    return new Matrix([
+    return new hlp.Matrix([
       [1, 0, 0, 0],
       [0, Math.cos(angle), Math.sin(angle), 0],
       [0, -Math.sin(angle), Math.cos(angle), 0],
@@ -249,7 +249,7 @@ hlp.Matrix = class Matrix {
   }
 
   static createRotationY(angle) {
-    return new Matrix([
+    return new hlp.Matrix([
       [Math.cos(angle), 0, Math.sin(angle), 0],
       [0, 1, 0, 0],
       [-Math.sin(angle), 0, Math.cos(angle), 0],
@@ -258,7 +258,7 @@ hlp.Matrix = class Matrix {
   }
 
   static createRotationZ(angle) {
-    return new Matrix([
+    return new hlp.Matrix([
       [Math.cos(angle), Math.sin(angle), 0, 0],
       [-Math.sin(angle), Math.cos(angle), 0, 0],
       [0, 0, 1, 0],
@@ -267,7 +267,7 @@ hlp.Matrix = class Matrix {
   }
 
   static createTranslation(x, y, z) {
-    return new Matrix([
+    return new hlp.Matrix([
       [1, 0, 0, 0],
       [0, 1, 0, 0],
       [0, 0, 1, 0],
@@ -276,7 +276,7 @@ hlp.Matrix = class Matrix {
   }
 
   static createProjectionOrtho() {
-    return new Matrix([
+    return new hlp.Matrix([
       [1, 0, 0, 0],
       [0, 1, 0, 0],
       [0, 0, 0, 0],
@@ -285,8 +285,8 @@ hlp.Matrix = class Matrix {
   }
 
   static createProjectionPerspect(fovDegrees, aspectRatio, near, far) {
-    const fovRadians = Math.toRadians(fovDegrees);
-    return new Matrix([
+    const fovRadians = hlp.Math.toRadians(fovDegrees);
+    return new hlp.Matrix([
       [aspectRatio * fovRadians, 0, 0, 0],
       [0, fovRadians, 0, 0],
       [0, 0, far / (far - near), 1],
@@ -295,10 +295,10 @@ hlp.Matrix = class Matrix {
   }
 
   static createPointAt(pos, target, up) {
-    const newForward = Vector.sub(target, pos).normalise();
-    const newUp = Vector.sub(up, Vector.mult(newForward, up.dotProduct(newForward))).normalise();
-    const newRight = Vector.crossProduct(newUp, newForward);
-    return new Matrix([
+    const newForward = hlp.Vector.sub(target, pos).normalise();
+    const newUp = hlp.Vector.sub(up, hlp.Vector.mult(newForward, up.dotProduct(newForward))).normalise();
+    const newRight = hlp.Vector.crossProduct(newUp, newForward);
+    return new hlp.Matrix([
       [newRight.x, newRight.y, newRight.z],
       [newUp.x, newUp.y, newUp.z],
       [newForward.x, newForward.y, newForward.z],

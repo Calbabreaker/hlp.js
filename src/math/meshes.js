@@ -40,8 +40,8 @@ hlp.Triangle = class Triangle {
       const outputTri = new hlp.Triangle();
       outputTri.illumination = inTri.illumination;
       outputTri.points[0] = insidePoints[0].copy();
-      outputTri.points[1] = Vector.intersectPlane(planePoint, planeNormal, insidePoints[0], outsidePoints[0]);
-      outputTri.points[2] = Vector.intersectPlane(planePoint, planeNormal, insidePoints[0], outsidePoints[1]);
+      outputTri.points[1] = hlp.Vector.intersectPlane(planePoint, planeNormal, insidePoints[0], outsidePoints[0]);
+      outputTri.points[2] = hlp.Vector.intersectPlane(planePoint, planeNormal, insidePoints[0], outsidePoints[1]);
       return [outputTri];
     } else if (insidePoints.length == 2 && outsidePoints.length == 1) {
       // triangle should be clipped but now a quad

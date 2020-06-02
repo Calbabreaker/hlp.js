@@ -132,7 +132,7 @@ hlp.Canvas = class Canvas {
     document.exitPointerLock();
   }
 
-  changeFps(fps) {
+  changeFPS(fps) {
     this.fps = fps;
     this.fpsInterval = 1000 / fps;
     this.then = Date.now();
@@ -187,7 +187,7 @@ hlp.Canvas = class Canvas {
 
   triangle(...args) {
     this.ctx.beginPath();
-    if (args[0] instanceof Vector) {
+    if (args[0] instanceof hlp.Vector) {
       this.ctx.moveTo(args[0].x, args[0].y);
       this.ctx.lineTo(args[1].x, args[1].y);
       this.ctx.lineTo(args[2].x, args[2].y);
@@ -205,10 +205,10 @@ hlp.Canvas = class Canvas {
 
   triangleInflate(v1, v2, v3) {
     // calculate middle
-    const center = new Vector(v1.x + v2.x + v3.x, v1.y + v2.y + v3.y).div(3);
-    v1 = Vector.sub(v1, center);
-    v2 = Vector.sub(v2, center);
-    v3 = Vector.sub(v3, center);
+    const center = new hlp.Vector(v1.x + v2.x + v3.x, v1.y + v2.y + v3.y).div(3);
+    v1 = hlp.Vector.sub(v1, center);
+    v2 = hlp.Vector.sub(v2, center);
+    v3 = hlp.Vector.sub(v3, center);
       
     // inflate tri by 1 px
     this.triangle(v1.setMag(v1.mag() + 1).add(center), v2.setMag(v2.mag() + 1).add(center), v3.setMag(v3.mag() + 1).add(center));

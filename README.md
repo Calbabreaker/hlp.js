@@ -15,8 +15,10 @@ These are the script tags for the lastest hlp.js
 <script src="/src/math/additions.js"></script>
 <script src="/src/math/matrix.js"></script>
 <script src="/src/math/vector.js"></script>
+<script src="/src/math/meshes.js"></script>
 
 <script src="/src/canvas.js"></script>
+<script src="/src/renderer.js"></script>
 ```
 
 To compile the source files yourselves into lib/hlp.js
