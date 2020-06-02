@@ -20,8 +20,8 @@ hlp.Renderer3D = class Renderer3D {
   }
 
   draw(mesh) {
-    // this.c.noStroke();
-    this.c.stroke(255, 0, 0); // debug wireframe
+    this.c.noStroke();
+    // this.c.stroke(255, 0, 0); // debug wireframe
     // this.rotation += 0.01;
     this.c.translate(this.c.width / 2, this.c.height / 2);
     this.c.scale(1, -1); // this flips the screen so y is correct

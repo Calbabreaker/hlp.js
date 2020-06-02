@@ -121,7 +121,7 @@ hlp.Matrix = class Matrix {
 
   randomize(min = 0, max = 1) {
     // sets every element to random number between min and max
-    return this.map(x => hlp.Math.random() * (min - max) + max);
+    return this.map(x => hlp.math.random() * (min - max) + max);
   }
 
   randomizeGuassian(mean = 0, sd = 1) {
@@ -285,7 +285,7 @@ hlp.Matrix = class Matrix {
   }
 
   static createProjectionPerspect(fovDegrees, aspectRatio, near, far) {
-    const fovRadians = hlp.Math.toRadians(fovDegrees);
+    const fovRadians = hlp.math.toRadians(fovDegrees);
     return new hlp.Matrix([
       [aspectRatio * fovRadians, 0, 0, 0],
       [0, fovRadians, 0, 0],

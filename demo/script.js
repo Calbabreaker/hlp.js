@@ -27,5 +27,5 @@ canvas.mousePressed = () => {
 
 canvas.lockedMouseMove = () => {
   renderer.yawX -= canvas.mouseMovement.x * 0.1 * canvas.deltaTime;
-  renderer.yawY = hlp.Math.constrain(renderer.yawY + canvas.mouseMovement.y * 0.1 * canvas.deltaTime, -1.5, 1.5);
+  renderer.yawY = hlp.math.constrain(renderer.yawY + canvas.mouseMovement.y * 0.1 * canvas.deltaTime, -1.5, 1.5);
 }
