@@ -9,9 +9,6 @@ rm -r ../lib/
 mkdir ../lib/
 echo "/* \n  The hlp.js library by Calbabreaker. Free to use. \n*/\n" > $HLP_FILE
 
-echo $MAIN_FILE
-cat $MAIN_FILE
-
 # get main file first
 cat $MAIN_FILE >> $HLP_FILE
 
@@ -26,3 +23,5 @@ while IFS= read -r line; do
     echo "\n/* $line from hlp.js */\n\n$output" >> $HLP_FILE 
   fi
 done
+
+echo "Compiling done"
