@@ -19,8 +19,8 @@ files=`find $SRC_DIR -type f`
 echo "$files" |
 while IFS= read -r line; do
   if [ "$line" != $MAIN_FILE ]; then
-    output=`cat $line`
-    echo "\n/* $line from hlp.js */\n\n$output" >> $HLP_FILE 
+    echo "\n/* $line from hlp.js */\n\n" >> $HLP_FILE 
+    cat $line >> $HLP_FILE
   fi
 done
 
