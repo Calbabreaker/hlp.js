@@ -1,4 +1,4 @@
-hlp.Renderer3D = class Renderer3D {
+hlp.RendererCPU = class RendererCPU {
   constructor(canvas) {
     this.c = canvas;
 

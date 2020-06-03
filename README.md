@@ -13,16 +13,17 @@ W.I.P.
 These are the script tags for the lastest hlp.js
 ```html
 <script src="/src/main.js"></script>
-<script src="/src/dictionary.js"></script>
-<script src="/src/audioSynth.js"></script>
+
+<script src="/src/extra/dictionary.js"></script>
+<script src="/src/extra/audioSynth.js"></script>
 
 <script src="/src/math/additions.js"></script>
 <script src="/src/math/matrix.js"></script>
 <script src="/src/math/vector.js"></script>
-<script src="/src/math/meshes.js"></script>
 
+<script src="/src/graphics/meshes.js"></script>
 <script src="/src/graphics/canvas.js"></script>
-<script src="/src/graphics/renderer.js"></script>
+<script src="/src/graphics/rendererCPU.js"></script>
 ```
 
 To compile the source files yourselves into lib/hlp.js
