@@ -6,8 +6,11 @@ You will see different sections for the different parts to the library.
 * The source code is in the src/ directory
 * The library code you probaly want to use is in the lib/ directory with hlp.js and hlp.min.js (minified version)
 
-# Documentation
+## Documentation
 W.I.P.
+
+## Demo
+The demo folder contains demos for different things. Go to the [repl](https://hlpjs.calbabreaker1.repl.co/demo).
 
 ## SRC files
 These are the script tags for the lastest hlp.js
@@ -35,5 +38,5 @@ To minify the compiled file
 sh scripts/minify.sh
 ```
 
-# LICENSE
+## LICENSE
 GPL-3.0
