@@ -60,7 +60,6 @@ hlp.RendererCPU = class RendererCPU {
 
       // if ray is alligned with normal then the camera can see it
       if (normal.dotProduct(cameraRay) < 0) {
-
         // illumantion
         const dotProduct = normal.dotProduct(this.lightDirection);
 
@@ -71,7 +70,7 @@ hlp.RendererCPU = class RendererCPU {
 
         const clippedTris = hlp.Triangle.clipAgainstPlane(new hlp.Vector(0, 0, 0.1), new hlp.Vector(0, 0, 1), newTri);
 
-        clippedTris.forEach(clippedTri => {
+        clippedTris.forEach((clippedTri) => {
           const triProjected = new hlp.Triangle();
           // project into 2d view (camera) from 3d
           triProjected.points[0] = hlp.Matrix.multVector(clippedTri.points[0], this.projectionMatrix);
@@ -106,7 +105,7 @@ hlp.RendererCPU = class RendererCPU {
     const descaleVector = new hlp.Vector(this.c.width / 2, this.c.height / 2);
 
     // draw them
-    trianglesToDraw.forEach(triToDraw => {
+    trianglesToDraw.forEach((triToDraw) => {
       // clip triangle agaist all four screen edges
       const triList = [];
       triList.push(triToDraw);
@@ -118,15 +117,23 @@ hlp.RendererCPU = class RendererCPU {
 
           // test clip to edges
           switch (p) {
-            case 0: triList.push(...hlp.Triangle.clipAgainstPlane(new hlp.Vector(0, 0, 0), new hlp.Vector(0, 1, 0), test)); break;
-            case 1: triList.push(...hlp.Triangle.clipAgainstPlane(new hlp.Vector(0, this.c.height - 1, 0), new Vector(0, -1, 0), test)); break;
-					  case 2: triList.push(...hlp.Triangle.clipAgainstPlane(new hlp.Vector(0, 0, 0), new hlp.Vector(1, 0, 0), test)); break;
-					  case 3: triList.push(...hlp.Triangle.clipAgainstPlane(new hlp.Vector(this.c.width - 1, 0, 0), new hlp.Vector(-1, 0, 0), test)); break;
-					}
+            case 0:
+              triList.push(...hlp.Triangle.clipAgainstPlane(new hlp.Vector(0, 0, 0), new hlp.Vector(0, 1, 0), test));
+              break;
+            case 1:
+              triList.push(...hlp.Triangle.clipAgainstPlane(new hlp.Vector(0, this.c.height - 1, 0), new Vector(0, -1, 0), test));
+              break;
+            case 2:
+              triList.push(...hlp.Triangle.clipAgainstPlane(new hlp.Vector(0, 0, 0), new hlp.Vector(1, 0, 0), test));
+              break;
+            case 3:
+              triList.push(...hlp.Triangle.clipAgainstPlane(new hlp.Vector(this.c.width - 1, 0, 0), new hlp.Vector(-1, 0, 0), test));
+              break;
+          }
         }
       }
 
-      triList.forEach(tri => {
+      triList.forEach((tri) => {
         this.c.fill(tri.illumination * -255);
         this.c.triangleInflate(tri.points[0].sub(descaleVector), tri.points[1].sub(descaleVector), tri.points[2].sub(descaleVector));
       });
@@ -134,4 +141,4 @@ hlp.RendererCPU = class RendererCPU {
 
     this.c.pop();
   }
-}
+};

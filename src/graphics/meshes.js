@@ -7,14 +7,14 @@ hlp.Triangle = class Triangle {
 
   static clipAgainstPlane(planePoint, planeNormal, inTri) {
     hlp.Vector.normalise(planeNormal);
-    
+
     const insidePoints = [];
     const outsidePoints = [];
 
     // return signed shortest distance
-    const dist = point => {
+    const dist = (point) => {
       return planeNormal.x * point.x + planeNormal.y * point.y + planeNormal.z * point.z - planeNormal.dotProduct(planePoint);
-    }
+    };
 
     // get signed distacnce of each point in triangle to plane
     const d0 = dist(inTri.points[0]);
@@ -49,7 +49,7 @@ hlp.Triangle = class Triangle {
       const outputTri2 = new hlp.Triangle();
       outputTri1.illumination = inTri.illumination;
       outputTri2.illumination = inTri.illumination;
-      
+
       outputTri1.points[0] = insidePoints[0].copy();
       outputTri1.points[1] = insidePoints[1].copy();
       outputTri1.points[2] = hlp.Vector.intersectPlane(planePoint, planeNormal, insidePoints[0], outsidePoints[0]);
@@ -60,7 +60,7 @@ hlp.Triangle = class Triangle {
       return [outputTri1, outputTri2];
     }
   }
-}
+};
 
 hlp.Mesh = class Mesh {
   constructor(tris = []) {
@@ -68,7 +68,7 @@ hlp.Mesh = class Mesh {
   }
 
   static async loadFromFile(url) {
-    if (url.split('.').pop() != "obj") throw new Error("Can only support obj models");
+    if (url.split(".").pop() != "obj") throw new Error("Can only support obj models");
     // load using fetch
     const response = await fetch(url);
     const data = await response.text();
@@ -93,4 +93,4 @@ hlp.Mesh = class Mesh {
 
     return mesh;
   }
-}
+};

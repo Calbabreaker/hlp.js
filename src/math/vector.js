@@ -9,8 +9,8 @@ hlp.Vector = class Vector {
 
   add(val) {
     // adds every axis with a number or a vector
-    if (val instanceof hlp.Vector) this.x += val.x, this.y += val.y, this.z += val.z;
-    else this.x += val, this.y += val, this.z += val;
+    if (val instanceof hlp.Vector) (this.x += val.x), (this.y += val.y), (this.z += val.z);
+    else (this.x += val), (this.y += val), (this.z += val);
     return this;
   }
 
@@ -20,8 +20,8 @@ hlp.Vector = class Vector {
   }
 
   sub(val) {
-    if (val instanceof hlp.Vector) this.x -= val.x, this.y -= val.y, this.z -= val.z;
-    else this.x -= val, this.y -= val, this.z -= val;
+    if (val instanceof hlp.Vector) (this.x -= val.x), (this.y -= val.y), (this.z -= val.z);
+    else (this.x -= val), (this.y -= val), (this.z -= val);
     return this;
   }
 
@@ -30,8 +30,8 @@ hlp.Vector = class Vector {
   }
 
   div(val) {
-    if (val instanceof hlp.Vector) this.x /= val.x, this.y /= val.y, this.z /= val.z;
-    else this.x /= val, this.y /= val, this.z /= val;
+    if (val instanceof hlp.Vector) (this.x /= val.x), (this.y /= val.y), (this.z /= val.z);
+    else (this.x /= val), (this.y /= val), (this.z /= val);
     return this;
   }
 
@@ -40,8 +40,8 @@ hlp.Vector = class Vector {
   }
 
   mult(val) {
-    if (val instanceof hlp.Vector) this.x *= val.x, this.y *= val.y, this.z *= val.z;
-    else this.x *= val, this.y *= val, this.z *= val;
+    if (val instanceof hlp.Vector) (this.x *= val.x), (this.y *= val.y), (this.z *= val.z);
+    else (this.x *= val), (this.y *= val), (this.z *= val);
     return this;
   }
 
@@ -58,7 +58,7 @@ hlp.Vector = class Vector {
   }
 
   dotProduct(vec2) {
-    return this.x * vec2.x + this.y * vec2.y + this.z * vec2.z; 
+    return this.x * vec2.x + this.y * vec2.y + this.z * vec2.z;
   }
 
   copy() {
@@ -77,7 +77,7 @@ hlp.Vector = class Vector {
   }
 
   mag() {
-    // gets the length of the vector 
+    // gets the length of the vector
     return hlp.math.sqrt(this.magSq());
   }
 
@@ -125,4 +125,4 @@ hlp.Vector = class Vector {
     const newLine = hlp.Vector.sub(lineEnd, lineStart).mult(t).add(lineStart);
     return newLine;
   }
-}
+};

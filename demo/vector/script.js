@@ -7,4 +7,4 @@ canvas.draw = () => {
   canvas.stroke(255, 100, 0);
   canvas.strokeWeight(5);
   canvas.line(0, 0, vector.x, vector.y);
-}
+};

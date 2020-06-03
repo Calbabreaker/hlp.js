@@ -1,19 +1,25 @@
 # The hlp.js Library
+
 Welcome to The hlp.js library where there is bunch of useful tools.
 You will see different sections for the different parts to the library.
 
-### Notes: 
-* The source code is in the src/ directory
-* The library code you probaly want to use is in the lib/ directory with hlp.js and hlp.min.js (minified version)
+### Notes:
+
+- The source code is in the src/ directory
+- The library code you probaly want to use is in the lib/ directory with hlp.js and hlp.min.js (minified version)
 
 ## Documentation
-W.I.P.
+
+It is [here](../blob/master/doc/).
 
 ## Demo
+
 The demo folder contains demos for different things. Go to the [repl](https://hlpjs.calbabreaker1.repl.co/demo).
 
 ## SRC files
+
 These are the script tags for the lastest hlp.js
+
 ```html
 <script src="/src/main.js"></script>
 
@@ -30,14 +36,17 @@ These are the script tags for the lastest hlp.js
 ```
 
 To compile the source files yourselves into lib/hlp.js
+
 ```sh
 sh scripts/compile.sh
 ```
 
 To minify the compiled file
+
 ```sh
 sh scripts/minify.sh
 ```
 
 ## LICENSE
+
 GPL-3.0

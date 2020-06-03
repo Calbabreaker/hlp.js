@@ -4,7 +4,7 @@
 hlp.Matrix = class Matrix {
   constructor(rows = 0, cols = 0) {
     if (rows instanceof Array) {
-      // create a new hlp.Matrix with data 
+      // create a new hlp.Matrix with data
       this.data = rows;
       this.rows = this.data.length;
       this.cols = this.data[0].length;
@@ -27,7 +27,7 @@ hlp.Matrix = class Matrix {
       if (this.cols !== toAdd.cols || this.rows !== toAdd.rows) throw new Error("Both matrixs rows and cols must match!");
       return this.map((val, i, j) => val + toAdd.data[i][j]);
     } else if (typeof toAdd == "number") {
-      return this.map(val => val + toAdd);
+      return this.map((val) => val + toAdd);
     } else {
       throw new Error("Did not provide valid data for parameter toAdd!");
     }
@@ -42,7 +42,7 @@ hlp.Matrix = class Matrix {
       if (this.cols !== toSub.cols || this.rows !== toSub.rows) throw new Error("Both matrixs rows and cols must match!");
       return this.map((val, i, j) => val - toSub.data[i][j]);
     } else if (typeof toSub == "number") {
-      return this.map(val => val - toSub);
+      return this.map((val) => val - toSub);
     } else {
       throw new Error("Did not provide valid data for parameter toSub!");
     }
@@ -73,7 +73,8 @@ hlp.Matrix = class Matrix {
     return newVec;
   }
 
-  static quickInverse(m) { // only for rotation/translation matrixs
+  static quickInverse(m) {
+    // only for rotation/translation matrixs
     const matrix = new hlp.Matrix([
       [m.get(0, 0), m.get(1, 0), m.get(2, 0), 0],
       [m.get(0, 1), m.get(1, 1), m.get(2, 1), 0],
@@ -81,13 +82,12 @@ hlp.Matrix = class Matrix {
       [0, 0, 0, 0],
     ]);
 
-		matrix.set(3, 0, -(m.get(3, 0) * matrix.get(0, 0) + m.get(3, 1) * matrix.get(1, 0) + m.get(3, 2) * matrix.get(2, 0)));
-		matrix.set(3, 1, -(m.get(3, 0) * matrix.get(0, 1) + m.get(3, 1) * matrix.get(1, 1) + m.get(3, 2) * matrix.get(2, 1)));
-		matrix.set(3, 2, -(m.get(3, 0) * matrix.get(0, 2) + m.get(3, 1) * matrix.get(1, 2) + m.get(3, 2) * matrix.get(2, 2)));
-		matrix.set(3, 3, 1);
-		return matrix;
-	}
-
+    matrix.set(3, 0, -(m.get(3, 0) * matrix.get(0, 0) + m.get(3, 1) * matrix.get(1, 0) + m.get(3, 2) * matrix.get(2, 0)));
+    matrix.set(3, 1, -(m.get(3, 0) * matrix.get(0, 1) + m.get(3, 1) * matrix.get(1, 1) + m.get(3, 2) * matrix.get(2, 1)));
+    matrix.set(3, 2, -(m.get(3, 0) * matrix.get(0, 2) + m.get(3, 1) * matrix.get(1, 2) + m.get(3, 2) * matrix.get(2, 2)));
+    matrix.set(3, 3, 1);
+    return matrix;
+  }
 
   static mult(a, b) {
     return new hlp.Matrix(a.rows, a.cols).mult(b);
@@ -98,7 +98,7 @@ hlp.Matrix = class Matrix {
       if (this.cols !== toMult.cols || this.rows !== toMult.rows) throw new Error("Both matrixs rows and cols must match!");
       return this.map((val, i, j) => val * toMult.data[i][j]);
     } else if (typeof toMult == "number") {
-      return this.map(val => val * toMult);
+      return this.map((val) => val * toMult);
     } else {
       throw new Error("Did not provide valid data for parameter toMult!");
     }
@@ -113,7 +113,7 @@ hlp.Matrix = class Matrix {
       if (this.cols !== toDiv.cols || this.rows !== toDiv.rows) throw new Error("Both matrixs rows and cols must match!");
       return this.map((val, i, j) => val / toDiv.data[i][j]);
     } else if (typeof toDiv == "number") {
-      return this.map(val => val / toDiv);
+      return this.map((val) => val / toDiv);
     } else {
       throw new Error("Did not provide valid data for parameter toDiv!");
     }
@@ -125,7 +125,7 @@ hlp.Matrix = class Matrix {
   }
 
   randomizeGuassian(mean = 0, sd = 1) {
-    // uses p5 randomGaussian function (to lazzy to make one) to set every val in matrix 
+    // uses p5 randomGaussian function (to lazzy to make one) to set every val in matrix
     if (typeof p5 === "undefined") throw new Error("Cant use randomGaussian (no p5)");
     return this.map(() => randomGaussian(mean, sd));
   }
@@ -133,7 +133,7 @@ hlp.Matrix = class Matrix {
   max() {
     // gets the maxium val in matrix
     let maxValue = 0;
-    hlp.Matrix.map(this, val => {
+    hlp.Matrix.map(this, (val) => {
       if (val > maxValue) maxValue = val;
     });
 
@@ -143,7 +143,7 @@ hlp.Matrix = class Matrix {
   sum() {
     // gets the sum of all vals in matrix
     let sum = 0;
-    hlp.Matrix.map(this, val => (sum += val));
+    hlp.Matrix.map(this, (val) => (sum += val));
     return sum;
   }
 
@@ -173,7 +173,7 @@ hlp.Matrix = class Matrix {
 
   constrain(min, max) {
     // constrains every val in matrix
-    return this.map(val => Math.min(Math.max(val, min), max));
+    return this.map((val) => Math.min(Math.max(val, min), max));
   }
 
   softmax() {
@@ -211,7 +211,7 @@ hlp.Matrix = class Matrix {
   }
 
   copy() {
-    return hlp.Matrix.map(this, val => val);
+    return hlp.Matrix.map(this, (val) => val);
   }
 
   toArray() {
@@ -235,7 +235,7 @@ hlp.Matrix = class Matrix {
       [1, 0, 0, 0],
       [0, 1, 0, 0],
       [0, 0, 1, 0],
-      [0, 0, 0, 1]
+      [0, 0, 0, 1],
     ]);
   }
 
@@ -244,7 +244,7 @@ hlp.Matrix = class Matrix {
       [1, 0, 0, 0],
       [0, Math.cos(angle), Math.sin(angle), 0],
       [0, -Math.sin(angle), Math.cos(angle), 0],
-      [0, 0, 0, 1]
+      [0, 0, 0, 1],
     ]);
   }
 
@@ -253,7 +253,7 @@ hlp.Matrix = class Matrix {
       [Math.cos(angle), 0, Math.sin(angle), 0],
       [0, 1, 0, 0],
       [-Math.sin(angle), 0, Math.cos(angle), 0],
-      [0, 0, 0, 1]
+      [0, 0, 0, 1],
     ]);
   }
 
@@ -262,7 +262,7 @@ hlp.Matrix = class Matrix {
       [Math.cos(angle), Math.sin(angle), 0, 0],
       [-Math.sin(angle), Math.cos(angle), 0, 0],
       [0, 0, 1, 0],
-      [0, 0, 0, 1]
+      [0, 0, 0, 1],
     ]);
   }
 
@@ -271,7 +271,7 @@ hlp.Matrix = class Matrix {
       [1, 0, 0, 0],
       [0, 1, 0, 0],
       [0, 0, 1, 0],
-      [x, y, z, 1]
+      [x, y, z, 1],
     ]);
   }
 
@@ -280,7 +280,7 @@ hlp.Matrix = class Matrix {
       [1, 0, 0, 0],
       [0, 1, 0, 0],
       [0, 0, 0, 0],
-      [0, 0, 0, 0]
+      [0, 0, 0, 0],
     ]);
   }
 
@@ -290,7 +290,7 @@ hlp.Matrix = class Matrix {
       [aspectRatio * fovRadians, 0, 0, 0],
       [0, fovRadians, 0, 0],
       [0, 0, far / (far - near), 1],
-      [0, 0, (-far * near) / (far - near), 0]
+      [0, 0, (-far * near) / (far - near), 0],
     ]);
   }
 
@@ -305,4 +305,4 @@ hlp.Matrix = class Matrix {
       [pos.x, pos.y, pos.z],
     ]);
   }
-}
+};

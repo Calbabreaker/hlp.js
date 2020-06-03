@@ -9,4 +9,4 @@ echo "/* \n  The hlp.js library by Calbabreaker. \n  Free to use. GPL-3.0 \n*/\n
 output=`cat $HLP_FILE`
 curl -X POST -s --data-urlencode "input=$output" https://javascript-minifier.com/raw >> $MINIFIED_FILE
 
-echo "Done minifying"
+echo "Minifying done"
