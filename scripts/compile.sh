@@ -1,12 +1,9 @@
 BASE_DIR=`dirname "$0"`
 HLP_FILE="$BASE_DIR/../lib/hlp.js"
-LIB_DIR="$BASE_DIR/../lib/"
 SRC_DIR="$BASE_DIR/../src/"
 MAIN_FILE="$BASE_DIR/../src/main.js"
 
 # empty lib and create hlp.js
-rm -r ../lib/
-mkdir ../lib/
 echo "/* \n  The hlp.js library by Calbabreaker. \n  Free to use. GPL-3.0 \n*/\n" > $HLP_FILE
 
 # get main file first

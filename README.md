@@ -6,6 +6,9 @@ You will see different sections for the different parts to the library.
 * The source code is in the src/ directory
 * The library code you probaly want to use is in the lib/ directory with hlp.js and hlp.min.js (minified version)
 
+# Documentation
+W.I.P.
+
 ## SRC files
 These are the script tags for the lastest hlp.js
 ```html
@@ -26,3 +29,11 @@ To compile the source files yourselves into lib/hlp.js
 ```sh
 sh scripts/compile.sh
 ```
+
+To minify the compiled file
+```sh
+sh scripts/minify.sh
+```
+
+# LICENSE
+GPL-3.0
