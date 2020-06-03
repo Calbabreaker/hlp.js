@@ -121,12 +121,12 @@ hlp.Matrix = class Matrix {
 
   randomize(min = 0, max = 1) {
     // sets every element to random number between min and max
-    return this.map(() => hlp.random(min, max));
+    return this.map(() => hlp.math.random(min, max));
   }
 
   randomizeGuassian(mean = 0, sd = 1) {
     // uses p5 randomGaussian function (to lazzy to make one) to set every val in matrix
-    if (typeof p5 === "undefined") throw new Error("Cant use randomGaussian (no p5)");
+    if (typeof p5 === "undefined") throw new Error("Cant use randomGaussian (no p5)!");
     return this.map(() => randomGaussian(mean, sd));
   }
 
@@ -214,9 +214,12 @@ hlp.Matrix = class Matrix {
     return hlp.Matrix.map(this, (val) => val);
   }
 
-  toArray() {
-    // creates long big array from matrix
-    return this.copy().data;
+  toArray(array1d = false) {
+    if (array1d) {
+      const array = [];
+      this.data.forEach((cols) => array.push(...cols));
+      return array;
+    } else return this.copy().data;
   }
 
   static createFromVector(vector) {
@@ -226,7 +229,7 @@ hlp.Matrix = class Matrix {
   toVector() {
     if (this.rows >= 3) {
       return new hlp.Vector(this.data[0][0], this.data[1][0], this.data[2][0]);
-    } else throw new Error("hlp.Matrix cannot be converted to a vector");
+    } else throw new Error("hlp.Matrix cannot be converted to a vector!");
   }
 
   // down here are functions that create matrixs that can be used for multipliying

@@ -73,7 +73,7 @@ hlp.Vector = class Vector {
 
   magSq() {
     // gets the length of the vector squared
-    return this.x * this.x + this.y * this.y + this.z * this.z;
+    return this.x ** 2 + this.y ** 2 + this.z ** 2;
   }
 
   mag() {

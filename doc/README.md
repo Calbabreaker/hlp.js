@@ -1,3 +1,3 @@
 # hlps.js Documentation
 
-The documentation is not hear yet.
+The documentation is not here yet.

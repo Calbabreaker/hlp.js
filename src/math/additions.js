@@ -31,6 +31,6 @@ hlp.math.constrain = (n, low, high) => {
   return hlp.math.max(hlp.math.min(n, high), low);
 };
 
-hlp.random = (min, max) => {
+hlp.math.random = (min, max) => {
   return Math.random() * (min - max) + max;
 };
