@@ -16,7 +16,7 @@ canvas.draw = () => {
   const velocity = new hlp.Vector();
   if (canvas.keyCodeIsDown("KeyW")) velocity.add(renderer.lookDir);
   if (canvas.keyCodeIsDown("KeyS")) velocity.sub(renderer.lookDir);
-  renderer.cameraPos.add(velocity.normalise().mult(canvas.keyCodeIsDown("ShiftLeft") ? 16 : 4 * canvas.deltaTime));
+  renderer.cameraPos.add(velocity.normalise().mult((canvas.keyCodeIsDown("ShiftLeft") ? 16 : 4) * canvas.deltaTime));
 
   renderer.draw(model);
   canvas.fill(255);
