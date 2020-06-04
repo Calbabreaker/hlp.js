@@ -10,7 +10,7 @@ You will see different sections for the different parts to the library.
 
 ## Documentation
 
-It is [here](../blob/master/doc/).
+It is [here](../tree/master/doc/).
 
 ## Demo
 
