@@ -3,32 +3,33 @@ const renderer = new hlp.RendererCPU(canvas);
 
 let model;
 
-canvas.preload = async () => {
-  model = await hlp.loadMesh("assets/suzzane.obj");
+hlp.preload = async () => {
+  model = await hlp.loadMesh("suzzane.obj");
+  console.log(model);
 };
 
-canvas.setup = () => {
-  canvas.changeFPS(60);
+hlp.setup = () => {
+  hlp.changeFPS(60);
 };
 
-canvas.draw = () => {
+hlp.draw = () => {
   canvas.background(0);
   const velocity = new hlp.Vector();
-  if (canvas.keyCodeIsDown("KeyW")) velocity.add(renderer.lookDir);
-  if (canvas.keyCodeIsDown("KeyS")) velocity.sub(renderer.lookDir);
-  renderer.cameraPos.add(velocity.normalise().mult((canvas.keyCodeIsDown("ShiftLeft") ? 16 : 4) * canvas.deltaTime));
-
+  if (hlp.keyCodeIsDown("KeyW")) velocity.add(renderer.lookDir);
+  if (hlp.keyCodeIsDown("KeyS")) velocity.sub(renderer.lookDir);
+  renderer.cameraPos.add(velocity.normalise().mult((hlp.keyCodeIsDown("ShiftLeft") ? 16 : 4) * hlp.deltaTime));
   renderer.draw(model);
+
   canvas.fill(255);
   canvas.ctx.font = "30px Arial";
-  canvas.ctx.fillText(hlp.math.round(canvas.fps), 10, 50);
+  canvas.ctx.fillText(hlp.math.round(hlp.fps), 10, 50);
 };
 
-canvas.mousePressed = () => {
+hlp.mousePressed = () => {
   canvas.lockMouse();
 };
 
-canvas.lockedMouseMove = () => {
-  renderer.yawX -= canvas.mouseMovement.x * 0.1 * canvas.deltaTime;
-  renderer.yawY = hlp.math.constrain(renderer.yawY + canvas.mouseMovement.y * 0.1 * canvas.deltaTime, -1.5, 1.5);
+hlp.lockedMouseMove = () => {
+  renderer.yawX -= canvas.mouseMovement.x * 0.1 * hlp.deltaTime;
+  renderer.yawY = hlp.math.constrain(renderer.yawY + canvas.mouseMovement.y * 0.1 * hlp.deltaTime, -1.5, 1.5);
 };

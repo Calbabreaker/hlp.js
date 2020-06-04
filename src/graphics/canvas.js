@@ -1,11 +1,10 @@
 // the canvas object for canvas drawing
-document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock;
 
 hlp.Canvas = class Canvas {
   constructor(width, height) {
     // initialize variables
     if (width === hlp.FULL) {
-      if (height != null) this.aspectRatio = height || 1;
+      if (height != null) this.aspectRatio = height;
       this.isFull = true;
       this._calcResize();
     } else {
@@ -20,142 +19,35 @@ hlp.Canvas = class Canvas {
     this._prevDoStrokes = [];
     this._firstPosShapes = null;
 
-    this.frameCount = 0;
-    this.targetFPS = 60;
-    this.hasStopped = false;
-    this.fpsInterval = 1000 / this.targetFPS;
-    this.fps = this.targetFPS;
-
     // initialize the canvas (creates new one)
     this.canvas = document.createElement("canvas");
     this.canvas.setAttribute("id", "defaultCanvas");
     this.canvas.width = this.width;
     this.canvas.height = this.height;
+    this.canvas.requestPointerLock = this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock;
 
-    this.clientRect = this.canvas.getBoundingClientRect();
     if (this.canvas.getContext) this.ctx = this.canvas.getContext("2d");
     else return alert("Browser does not support the canvas.");
     document.body.appendChild(this.canvas); // adds to the body
 
-    this.keyPressingDict = {};
-    this.keyCodePressingDict = {};
-    this.canvas.requestPointerLock = this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock;
-
-    // handle all the calls
-    this._then = Date.now();
-    this._deltaTimeMS = 0;
-    this.deltaTime = 0;
-    this.mouse = new hlp.Vector(0, 0);
-    this.mouseMovement = new hlp.Vector(0, 0);
-    this.mouseIsLocked = false;
-
     if (this.isFull) {
-      window.onresize = (event) => {
+      window.addEventListener("resize", (event) => {
         this._calcResize();
-      };
+      });
     }
 
-    // gets the mouse pos
+    this.mouse = new hlp.Vector(0, 0);
+    this.mouseMovement = new hlp.Vector(0, 0);
+
     document.body.addEventListener("mousemove", (event) => {
-      this.mouse.set(event.clientX - this.clientRect.left, event.clientY - this.clientRect.top);
+      const clientRect = this.canvas.getBoundingClientRect();
+      this.mouse.set(event.clientX - clientRect.left, event.clientY - clientRect.top);
       this.mouseMovement.set(event.movementX, event.movementY);
-      this.mouseMove();
-      if (!this.mouseIsLocked) this.unlockedMouseMove();
-      else this.lockedMouseMove();
     });
-
-    document.addEventListener("pointerlockchange", () => (this.mouseIsLocked = !this.mouseIsLocked), false);
-    document.addEventListener("mozpointerlockchange", () => (this.mouseIsLocked = !this.mouseIsLocked), false);
-
-    document.body.addEventListener("mousedown", (event) => {
-      this.mousePressed();
-    });
-
-    // add to dictionary on keydown and removes and keyup
-    document.body.addEventListener("keydown", (event) => {
-      this.keyPressingDict[event.key] = true;
-      this.keyCodePressingDict[event.code] = true;
-    });
-
-    document.body.addEventListener("keyup", (event) => {
-      this.keyPressingDict[event.key] = false;
-      this.keyCodePressingDict[event.code] = false;
-    });
-
-    this.animationDrawFunc = () => {
-      try {
-        this._now = Date.now();
-        this._deltaTimeMS = this._now - this._then; // get ellapsed time between draw call
-        this.deltaTime = this._deltaTimeMS / 1000;
-
-        if (this._deltaTimeMS > this.fpsInterval && !this.hasStopped) {
-          // if time is next frame
-          this.fps = 1000 / this._deltaTimeMS;
-          this.updateCycle();
-          this._then = this._now - (this._deltaTimeMS % this.fpsInterval); // get ready for next ani frame
-        }
-      } catch (err) {
-        return console.error(err); // stop animation if error
-      }
-
-      requestAnimationFrame(this.animationDrawFunc);
-    };
-
-    // waits for the funs to be overided
-    setTimeout(() => {
-      // wait until preload has handled the async things
-      this.preload().then(() => {
-        this.setup();
-        this.animationDrawFunc();
-      });
-    });
-  }
-
-  // functions for user to overide
-  setup() {}
-  draw() {}
-  async preload() {}
-  mousePressed() {}
-  mouseMove() {}
-  lockedMouseMove() {}
-  unlockedMouseMove() {}
-
-  updateCycle() {
-    this.push();
-    this.draw(); // the user draw it
-    this.pop();
-  }
-
-  stop() {
-    this.hasStopped = true;
-  }
-
-  start() {
-    this.hasStopped = false;
-    this._then = Date.now();
-  }
-
-  keyIsDown(key) {
-    return this.keyPressingDict[key];
-  }
-
-  keyCodeIsDown(keyCode) {
-    return this.keyCodePressingDict[keyCode];
   }
 
   lockMouse() {
     this.canvas.requestPointerLock();
-  }
-
-  unlockMouse() {
-    document.exitPointerLock();
-  }
-
-  changeFPS(fps) {
-    this.targetFPS = fps;
-    this.fps = fps;
-    this.fpsInterval = 1000 / fps;
-    this._then = Date.now();
   }
 
   fill(...args) {
@@ -233,6 +125,10 @@ hlp.Canvas = class Canvas {
   rect(x, y, width, height) {
     if (this._doFill) this.ctx.fillRect(x, y, width, height);
     if (this._doStroke) this.ctx.strokeRect(x, y, width, height);
+  }
+
+  image(img, x, y, width = img.width, height = img.height) {
+    this.ctx.drawImage(img, x, y, width, height);
   }
 
   triangle(...args) {

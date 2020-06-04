@@ -4,13 +4,21 @@ hlp.loadStrings = async (url) => {
   return data;
 };
 
+hlp.loadImage = (url) => {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.src = url;
+    img.onload = () => resolve(img);
+  });
+};
+
 hlp.loadMesh = async (url) => {
   if (url.split(".").pop() != "obj") throw new Error("Can only support obj models");
   // load using fetch
   const data = await hlp.loadStrings(url);
-
   const mesh = new hlp.Mesh();
   const vertices = []; // temperary pool of vertices
+
   data.split("\n").forEach((line) => {
     line = line.split(/ +/g); // split by spaces (uses regex to counteract double spaces)
     if (line[0] == "v") {
