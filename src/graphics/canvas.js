@@ -2,15 +2,16 @@
 document.exitPointerLock = document.exitPointerLock || document.mozExitPointerLock;
 
 hlp.Canvas = class Canvas {
-  constructor(width = 400, height = 400, extra) {
+  constructor(width, height) {
     // initialize variables
     if (width === hlp.FULL) {
-      if (extra != null) this.aspectRatio = new hlp.Vector(extra / height, 1);
+      if (height != null) this.aspectRatio = height || 1;
       this.isFull = true;
       this._calcResize();
     } else {
-      this.width = width;
-      this.height = height;
+      this.width = width || 400;
+      this.height = height || 400;
+      this.aspectRatio = this.height / this.width;
     }
 
     this._doFill = true;
@@ -313,11 +314,11 @@ hlp.Canvas = class Canvas {
   _calcResize() {
     let newInnerHeight = innerHeight;
     if (this.aspectRatio != null) {
-      const aspectHeight = innerWidth / this.aspectRatio.x;
+      const aspectHeight = innerWidth / this.aspectRatio;
       if (aspectHeight < innerHeight) newInnerHeight = aspectHeight;
     }
 
-    this.width = this.aspectRatio != null ? newInnerHeight * this.aspectRatio.x : innerWidth;
+    this.width = this.aspectRatio != null ? newInnerHeight * this.aspectRatio : innerWidth;
     this.height = newInnerHeight;
     if (this.canvas != null) {
       this.canvas.width = this.width;

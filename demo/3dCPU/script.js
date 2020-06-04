@@ -1,10 +1,10 @@
-const canvas = new hlp.Canvas(hlp.FULL, 1, 1);
+const canvas = new hlp.Canvas(hlp.FULL, 1);
 const renderer = new hlp.RendererCPU(canvas);
 
 let model;
 
 canvas.preload = async () => {
-  model = await hlp.Mesh.loadFromFile("assets/suzzane.obj");
+  model = await hlp.loadMesh("assets/suzzane.obj");
 };
 
 canvas.setup = () => {

@@ -15,8 +15,7 @@ hlp.RendererCPU = class RendererCPU {
     this.near = 0.1;
     this.far = 1000;
     this.fov = 90;
-    this.aspectRatio = this.c.height / this.c.width;
-    this.projectionMatrix = hlp.Matrix.createProjectionPerspect(this.fov, this.aspectRatio, this.near, this.far);
+    this.projectionMatrix = hlp.Matrix.createProjectionPerspect(this.fov, this.c.aspectRatio || 1, this.near, this.far);
   }
 
   draw(mesh) {

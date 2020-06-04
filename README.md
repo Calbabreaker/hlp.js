@@ -33,6 +33,8 @@ These are the script tags for the lastest hlp.js
 <script src="/src/graphics/meshes.js"></script>
 <script src="/src/graphics/canvas.js"></script>
 <script src="/src/graphics/rendererCPU.js"></script>
+
+<script src="/src/net/loaders.js"></script>
 ```
 
 To compile the source files yourselves into lib/hlp.js
