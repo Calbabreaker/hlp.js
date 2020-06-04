@@ -24,7 +24,7 @@ These are the script tags for the lastest hlp.js
 <script src="/src/main.js"></script>
 
 <script src="/src/extra/dictionary.js"></script>
-<script src="/src/extra/audioSynth.js"></script>
+<script src="/src/extra/audioPlayer.js"></script>
 <script src="/src/extra/strings.js"></script>
 
 <script src="/src/math/additions.js"></script>
