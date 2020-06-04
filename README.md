@@ -10,7 +10,7 @@ You will see different sections for the different parts to the library.
 
 ## Documentation
 
-It is [here](../doc/).
+It is [here](../master/doc/).
 
 ## Demo
 
