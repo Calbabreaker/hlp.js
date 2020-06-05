@@ -78,7 +78,7 @@ hlp.Vector = class Vector {
 
   mag() {
     // gets the length of the vector
-    return hlp.math.sqrt(this.magSq());
+    return hlp.sqrt(this.magSq());
   }
 
   normalise() {
@@ -98,21 +98,21 @@ hlp.Vector = class Vector {
   }
 
   heading() {
-    const h = hlp.math.atan2(this.y, this.x);
-    return hlp.math.toDegrees(h);
+    const h = hlp.atan2(this.y, this.x);
+    return hlp.toDegrees(h);
   }
 
   rotate(a) {
-    const newHeading = hlp.math.toRadians(this.heading() + a);
+    const newHeading = hlp.toRadians(this.heading() + a);
     const mag = this.mag();
-    this.x = hlp.math.cos(newHeading) * mag;
-    this.y = hlp.math.sin(newHeading) * mag;
+    this.x = hlp.cos(newHeading) * mag;
+    this.y = hlp.sin(newHeading) * mag;
     return this;
   }
 
   static fromAngle(angle, length = 1) {
-    angle = hlp.math.toRadians(angle);
-    return new hlp.Vector(length * hlp.math.cos(angle), length * hlp.math.sin(angle), 0);
+    angle = hlp.toRadians(angle);
+    return new hlp.Vector(length * hlp.cos(angle), length * hlp.sin(angle), 0);
   }
 
   // down here contains functions useful for 3d

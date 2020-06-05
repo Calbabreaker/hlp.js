@@ -187,7 +187,7 @@ hlp.Canvas = class Canvas {
   }
 
   rotate(x) {
-    this.ctx.rotate(x * hlp.math.toRadians());
+    this.ctx.rotate(x * hlp.toRadians());
   }
 
   scale(x, y = 0) {

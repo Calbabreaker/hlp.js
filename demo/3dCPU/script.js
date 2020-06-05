@@ -5,7 +5,6 @@ let model;
 
 hlp.preload = async () => {
   model = await hlp.loadMesh("suzzane.obj");
-  console.log(model);
 };
 
 hlp.setup = () => {
@@ -22,7 +21,7 @@ hlp.draw = () => {
 
   canvas.fill(255);
   canvas.ctx.font = "30px Arial";
-  canvas.ctx.fillText(hlp.math.round(hlp.fps), 10, 50);
+  canvas.ctx.fillText(hlp.round(hlp.fps), 10, 50);
 };
 
 hlp.mousePressed = () => {
@@ -31,5 +30,5 @@ hlp.mousePressed = () => {
 
 hlp.lockedMouseMove = () => {
   renderer.yawX -= canvas.mouseMovement.x * 0.1 * hlp.deltaTime;
-  renderer.yawY = hlp.math.constrain(renderer.yawY + canvas.mouseMovement.y * 0.1 * hlp.deltaTime, -1.5, 1.5);
+  renderer.yawY = hlp.constrain(renderer.yawY + canvas.mouseMovement.y * 0.1 * hlp.deltaTime, -1.5, 1.5);
 };

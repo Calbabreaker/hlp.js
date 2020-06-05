@@ -121,7 +121,7 @@ hlp.Matrix = class Matrix {
 
   randomize(min = 0, max = 1) {
     // sets every element to random number between min and max
-    return this.map(() => hlp.math.random(min, max));
+    return this.map(() => hlp.random(min, max));
   }
 
   randomizeGuassian(mean = 0, sd = 1) {
@@ -149,12 +149,12 @@ hlp.Matrix = class Matrix {
 
   exp() {
     // aplies Math.exp (e^2) to all vals in matrix
-    return this.map(Math.exp);
+    return this.map(hlp.exp);
   }
 
   floor() {
     // floors every val in matrix
-    return this.map(Math.floor);
+    return this.map(hlp.floor);
   }
 
   fill(n) {
@@ -173,7 +173,7 @@ hlp.Matrix = class Matrix {
 
   constrain(min, max) {
     // constrains every val in matrix
-    return this.map((val) => Math.min(Math.max(val, min), max));
+    return this.map((val) => hlp.min(hlp.max(val, min), max));
   }
 
   softmax() {
@@ -245,25 +245,25 @@ hlp.Matrix = class Matrix {
   static createRotationX(angle) {
     return new hlp.Matrix([
       [1, 0, 0, 0],
-      [0, Math.cos(angle), Math.sin(angle), 0],
-      [0, -Math.sin(angle), Math.cos(angle), 0],
+      [0, hlp.cos(angle), hlp.sin(angle), 0],
+      [0, -hlp.sin(angle), hlp.cos(angle), 0],
       [0, 0, 0, 1],
     ]);
   }
 
   static createRotationY(angle) {
     return new hlp.Matrix([
-      [Math.cos(angle), 0, Math.sin(angle), 0],
+      [hlp.cos(angle), 0, hlp.sin(angle), 0],
       [0, 1, 0, 0],
-      [-Math.sin(angle), 0, Math.cos(angle), 0],
+      [-hlp.sin(angle), 0, hlp.cos(angle), 0],
       [0, 0, 0, 1],
     ]);
   }
 
   static createRotationZ(angle) {
     return new hlp.Matrix([
-      [Math.cos(angle), Math.sin(angle), 0, 0],
-      [-Math.sin(angle), Math.cos(angle), 0, 0],
+      [hlp.cos(angle), hlp.sin(angle), 0, 0],
+      [-hlp.sin(angle), hlp.cos(angle), 0, 0],
       [0, 0, 1, 0],
       [0, 0, 0, 1],
     ]);
@@ -288,7 +288,7 @@ hlp.Matrix = class Matrix {
   }
 
   static createProjectionPerspect(fovDegrees, aspectRatio, near, far) {
-    const fovRadians = hlp.math.toRadians(fovDegrees);
+    const fovRadians = hlp.toRadians(fovDegrees);
     return new hlp.Matrix([
       [aspectRatio * fovRadians, 0, 0, 0],
       [0, fovRadians, 0, 0],

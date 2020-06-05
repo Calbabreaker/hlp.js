@@ -7,6 +7,6 @@ hlp.preload = async () => {
 };
 
 hlp.draw = () => {
-  canvas.background(0);
-  canvas.image(img, canvas.mouse.x, canvas.mouse.y);
+  canvas.background(hlp.random(0, 255), hlp.random(0, 255), hlp.random(0, 255));
+  canvas.image(img, canvas.width / 2, canvas.height / 2);
 };
