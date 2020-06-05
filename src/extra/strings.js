@@ -34,3 +34,7 @@ hlp.smartSplitString = (str, charSplit = " ", insideChar, charToDiscludeInsideCh
 hlp.safeEscape = (unsafe) => {
   return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;").replace(/%/g, "&#37;");
 };
+
+hlp.onlyContainsSpaces = (str) => {
+  return !str.replace(/\s/g, "").length;
+};
