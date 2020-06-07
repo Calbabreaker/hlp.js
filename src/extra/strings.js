@@ -39,10 +39,6 @@ hlp.onlyContainsSpaces = (str) => {
   return !str.replace(/\s/g, "").length;
 };
 
-hlp.containsNumbers = (str) => {
-  return /[0-9]/g.test(str);
-};
-
 hlp.copyToClipboard = async (str) => {
   if (!navigator.clipboard) {
     // fallback for comapatipility

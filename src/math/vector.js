@@ -92,6 +92,14 @@ hlp.Vector = class Vector {
     return vec.copy().normalise();
   }
 
+  dist(vec) {
+    return hlp.dist(this.x, this.y, this.z, vec.x, vec.y, vec.z);
+  }
+
+  static dist(vec1, vec2) {
+    return vec1.dist(vec2);
+  }
+
   setMag(len) {
     // set the length of the vector
     return this.normalise().mult(len);
