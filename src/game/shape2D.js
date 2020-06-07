@@ -116,7 +116,7 @@ hlp.Polygon2D = class Polygon2D extends hlp.Shape2D {
     }
 
     vertices.forEach((vertex, i) => {
-      this.lines.push(new hlp.Line(vertex, vertices[(i + 1) % (vertices.length - 1)]));
+      this.lines.push(new hlp.Line(vertex, vertices[(i + 1) % vertices.length]));
     });
   }
 };

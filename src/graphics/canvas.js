@@ -18,6 +18,8 @@ hlp.Canvas = class Canvas {
     this._prevDoFills = [];
     this._prevDoStrokes = [];
     this._firstPosShapes = null;
+    this._usingFont = "Arial";
+    this._fontSize = 10;
 
     // initialize the canvas (creates new one)
     this.canvas = document.createElement("canvas");
@@ -205,6 +207,24 @@ hlp.Canvas = class Canvas {
     this._doFill = this._prevDoFills.pop();
     this._doStroke = this._prevDoStrokes.pop();
     this.ctx.restore();
+  }
+
+  // TEXT STUFF DOWN HERE
+  text(str, x, y) {
+    this.ctx.font = `${this._fontSize}px ${this._usingFont}`;
+    this.ctx.fillText(str, x, y);
+  }
+
+  textFont(font) {
+    this._usingFont = font;
+  }
+
+  textSize(size) {
+    this._fontSize = size;
+  }
+
+  textAlign(mode) {
+    this.ctx.textAlign = mode;
   }
 
   _calcResize() {

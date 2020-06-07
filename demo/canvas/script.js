@@ -1,5 +1,5 @@
 const canvas = new hlp.Canvas();
-const shape = new hlp.Polygon2D(100, 100, 100, 100);
+const shape = new hlp.Polygon2D(100, 100, 100, 100, 20);
 
 let img;
 
@@ -16,6 +16,8 @@ hlp.draw = () => {
   canvas.background(0);
   canvas.image(img, canvas.width / 2, canvas.height / 2);
   canvas.fill(255, 0, 0);
+  canvas.textSize(20);
+  canvas.text("Me rn", 250, 225);
   shape.draw();
   shape.rotate(1);
 
