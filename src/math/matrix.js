@@ -125,9 +125,7 @@ hlp.Matrix = class Matrix {
   }
 
   randomizeGuassian(mean = 0, sd = 1) {
-    // uses p5 randomGaussian function (to lazzy to make one) to set every val in matrix
-    if (typeof p5 === "undefined") throw new Error("Cant use randomGaussian (no p5)!");
-    return this.map(() => randomGaussian(mean, sd));
+    return this.map(() => hlp.randomGaussian(mean, sd));
   }
 
   max() {
