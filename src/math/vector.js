@@ -118,6 +118,14 @@ hlp.Vector = class Vector {
     return this;
   }
 
+  rotateTo(a) {
+    const heading = this.heading();
+    const mag = this.mag();
+    this.x = hlp.cos(heading) * mag;
+    this.y = hlp.sin(heading) * mag;
+    return this;
+  }
+
   static fromAngle(angle, length = 1) {
     angle = hlp.toRadians(angle);
     return new hlp.Vector(length * hlp.cos(angle), length * hlp.sin(angle), 0);
