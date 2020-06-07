@@ -52,7 +52,7 @@ hlp.Rectangle2D = class Rectangle2D extends hlp.Shape2D {
     super(x, y, [
       new hlp.Line(0, 0, w, 0), 
       new hlp.Line(w, 0, w, h), 
-      new hlp.Line(w, h, 0, 1), 
+      new hlp.Line(w, h, 0, h), 
       new hlp.Line(0, h, 0, 0)
     ]);
   }

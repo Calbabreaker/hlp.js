@@ -1,4 +1,4 @@
-hlp.raycast = (x, y, angle, shapes, fowardHeading, clipStart = 0, clipEnd = 10000) => {
+hlp.raycast = (x, y, angle, shapes, forwardHeading, clipStart = 0, clipEnd = 10000) => {
   const hits = [];
   shapes.forEach((shape) => {
     shape.lines.forEach((line) => {
