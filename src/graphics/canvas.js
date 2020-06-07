@@ -23,13 +23,13 @@ hlp.Canvas = class Canvas {
 
     // initialize the canvas (creates new one)
     this.canvas = document.createElement("canvas");
-    this.canvas.setAttribute("id", "defaultCanvas");
+    this.canvas.classList.add("hlpDefaultCanvas");
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.canvas.requestPointerLock = this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock;
 
     if (this.canvas.getContext) this.ctx = this.canvas.getContext("2d");
-    else return alert("Browser does not support the canvas.");
+    else return alert("Browser does not support the canvas!");
     document.body.appendChild(this.canvas); // adds to the body
 
     if (this.isFull) {

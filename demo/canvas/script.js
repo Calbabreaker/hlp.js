@@ -2,9 +2,10 @@ const canvas = new hlp.Canvas();
 const shape = new hlp.Polygon2D(100, 100, 100, 100, 20);
 
 let img;
+let font;
 
 hlp.preload = async () => {
-  img = await hlp.loadImage("cool.png");
+  Promise.all([(img = await hlp.loadImage("cool.png")), (font = await hlp.loadFont("AmaticSC.ttf"))]);
 };
 
 hlp.setup = () => {
@@ -15,9 +16,13 @@ hlp.draw = () => {
   canvas.push();
   canvas.background(0);
   canvas.image(img, canvas.width / 2, canvas.height / 2);
+
+  canvas.fill(0, 255, 100);
+  canvas.textSize(44);
+  canvas.textFont(font);
+  canvas.text("Me rn", 250, 250);
+
   canvas.fill(255, 0, 0);
-  canvas.textSize(20);
-  canvas.text("Me rn", 250, 225);
   shape.draw();
   shape.rotate(1);
 
