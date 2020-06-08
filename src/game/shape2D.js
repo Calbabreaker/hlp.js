@@ -78,18 +78,6 @@ hlp.Shape2D = class Shape2D {
   }
 };
 
-hlp.Rectangle2D = class Rectangle2D extends hlp.Shape2D {
-  constructor(x, y, w = 1, h = 1) {
-    // prettier-ignore
-    super(x, y, [
-      new hlp.Line(0, 0, w, 0), 
-      new hlp.Line(w, 0, w, h), 
-      new hlp.Line(w, h, 0, h), 
-      new hlp.Line(0, h, 0, 0)
-    ]);
-  }
-};
-
 hlp.Triangle2D = class Triangle2D extends hlp.Shape2D {
   constructor(x1, y1, x2, y2, x3, y3) {
     // prettier-ignore
