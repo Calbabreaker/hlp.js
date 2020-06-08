@@ -104,9 +104,9 @@ hlp.Triangle2D = class Triangle2D extends hlp.Shape2D {
 hlp.Polygon2D = class Polygon2D extends hlp.Shape2D {
   constructor(x, y, w, h = w, detail = 3) {
     // lots of detail = circle
-    // prettier-ignore
     super(x, y, []);
     if (detail < 3) throw new Error("Cannot create shape with less than 3 detail!");
+
     const vertices = [];
     for (let i = 0; i < detail; i++) {
       const angle = 360 / detail;

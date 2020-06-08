@@ -1,5 +1,5 @@
 const canvas = new hlp.Canvas();
-const shape = new hlp.Polygon2D(100, 100, 100, 100, 20);
+const shape = new hlp.Polygon2D(100, 100, 100, 100, 5);
 
 let img;
 let font;

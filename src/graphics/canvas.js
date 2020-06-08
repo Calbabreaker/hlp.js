@@ -15,11 +15,10 @@ hlp.Canvas = class Canvas {
 
     this._doFill = true;
     this._doStroke = true;
-    this._prevDoFills = [];
-    this._prevDoStrokes = [];
     this._firstPosShapes = null;
-    this._usingFont = "Arial";
+    this._font = "Arial";
     this._fontSize = 10;
+    this._prevStates = [];
 
     // initialize the canvas (creates new one)
     this.canvas = document.createElement("canvas");
@@ -198,25 +197,29 @@ hlp.Canvas = class Canvas {
 
   // push and pop to restore and save states
   push() {
-    this._prevDoFills.push(this._doFill);
-    this._prevDoStrokes.push(this._doStroke);
+    this._prevStates.push({
+      _doFill: this._doFill,
+      _doStroke: this._doStroke,
+      _font: this._font,
+      _fontSize: this._fontSize,
+    });
+
     this.ctx.save();
   }
 
   pop() {
-    this._doFill = this._prevDoFills.pop();
-    this._doStroke = this._prevDoStrokes.pop();
+    Object.assign(this, this._prevStates.pop());
     this.ctx.restore();
   }
 
   // TEXT STUFF DOWN HERE
   text(str, x, y) {
-    this.ctx.font = `${this._fontSize}px ${this._usingFont}`;
+    this.ctx.font = `${this._fontSize}px ${this._font}`;
     this.ctx.fillText(str, x, y);
   }
 
   textFont(font) {
-    this._usingFont = font;
+    this._font = font;
   }
 
   textSize(size) {
