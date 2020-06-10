@@ -47,6 +47,8 @@ window.addEventListener("load", () => {
   });
 
   const animationDrawFunc = () => {
+    requestAnimationFrame(animationDrawFunc);
+
     try {
       hlp._now = Date.now();
       hlp._deltaTimeMS = hlp._now - hlp._then; // get ellapsed time between draw call
@@ -61,8 +63,6 @@ window.addEventListener("load", () => {
     } catch (err) {
       return console.error(err); // stop animation if error
     }
-
-    requestAnimationFrame(animationDrawFunc);
   };
 
   // wait until preload has handled the async things

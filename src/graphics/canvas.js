@@ -22,7 +22,9 @@ hlp.Canvas = class Canvas {
 
     if (renderer == hlp.hlp2D) {
       this._renderer = new hlp.Renderer2D(this.canvas);
-    }
+    } else if (renderer == hlp.hlpWEBGL) {
+      this._renderer = new hlp.RendererGL(this.canvas);
+    } else return console.error("Unknown renderer!");
 
     document.body.appendChild(this.canvas); // adds to the body
 
