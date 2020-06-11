@@ -5,7 +5,8 @@ let img;
 let font;
 
 hlp.preload = async () => {
-  Promise.all([(img = await hlp.loadImage("cool.png")), (font = await hlp.loadFont("AmaticSC.ttf"))]);
+  img = await hlp.loadImage("cool.png");
+  font = await hlp.loadFont("AmaticSC.ttf");
 };
 
 hlp.setup = () => {
@@ -25,9 +26,9 @@ hlp.draw = () => {
 
   canvas.fill(255, 0, 0);
   shape.draw();
-  shape.rotate(1);
+  shape.rotate(100 * hlp.deltaTime);
 
-  for (let i = 0; i < 360; i += 10) {
+  for (let i = 0; i < 360; i += 1) {
     const hit = hlp.raycast(canvas.mouse.x, canvas.mouse.y, i, [shape])[0];
     canvas.stroke(255);
     if (hit != null) canvas.line(canvas.mouse.x, canvas.mouse.y, hit.point.x, hit.point.y);
