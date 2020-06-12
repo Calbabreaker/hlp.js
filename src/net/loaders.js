@@ -1,6 +1,6 @@
 // loadind functions that uses promises
 
-hlp.loadStrings = async (url) => {
+hlp.loadString = async (url) => {
   const response = await fetch(url);
   const data = await response.text();
   return data;
@@ -35,7 +35,9 @@ hlp.loadBytes = (url) => {
 };
 
 hlp.loadSound = (url) => {
-  return new Audio(url);
+  return new Promise((resolve) => {
+    resolve(new Audio(url)); // idk if this works
+  });
 };
 
 hlp.loadFont = async (url) => {

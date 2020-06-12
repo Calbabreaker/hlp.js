@@ -60,12 +60,27 @@ window.addEventListener("load", () => {
         hlp._timeLastFrame = now;
       }
     } catch (err) {
-      return console.error(err); // stop animation if error
+      hlp.looping = false;
+      console.error(err); // stop animation if error
     }
   };
 
+  // create loading text if haven't
+  let loading = document.getElementById("hlp_loading");
+  if (loading == null) {
+    loading = document.createElement("p");
+    loading.innerHTML = "Loading...";
+    loading.id = "hlp_loading";
+    document.body.appendChild(loading);
+  }
+
+  loading.style.position = "absolute";
+  loading.style.top = "10px";
+  loading.style.left = "10px";
+
   // wait until preload has handled the async things
   hlp.preload().then(() => {
+    document.body.removeChild(loading);
     hlp.setup();
     hlp._draw();
   });
