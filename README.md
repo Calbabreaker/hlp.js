@@ -34,6 +34,7 @@ These are the script tags for the lastest hlp.js
 <script src="/src/graphics/canvas.js"></script>
 <script src="/src/graphics/rendererGL.js"></script>
 <script src="/src/graphics/renderer2D.js"></script>
+<script src="/src/graphics/colour.js"></script>
 
 <script src="/src/game/calls.js"></script>
 <script src="/src/game/controller2D.js"></script>
