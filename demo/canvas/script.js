@@ -1,5 +1,9 @@
 const canvas = new hlp.Canvas();
-const shape = new hlp.Polygon2D(100, 100, 100, 100, 5);
+
+const body = new hlp.Polygon2D(100, 100, 100, 100, 5);
+const controller = new hlp.Controller2D(canvas);
+controller.add(body);
+body.fill.set(255, 0, 0);
 
 let img;
 let font;
@@ -9,9 +13,7 @@ hlp.preload = async () => {
   font = await hlp.loadFont("AmaticSC.ttf");
 };
 
-hlp.setup = () => {
-  hlp.setDrawingCanvas(canvas);
-};
+hlp.setup = () => {};
 
 hlp.draw = () => {
   canvas.push();
@@ -25,11 +27,11 @@ hlp.draw = () => {
   canvas.text(hlp.round(hlp.fps), 10, canvas.height - 10);
 
   canvas.fill(255, 0, 0);
-  shape.draw();
-  shape.rotate(100 * hlp.deltaTime);
+  body.rotate(100 * hlp.deltaTime);
+  controller.draw();
 
   for (let i = 0; i < 360; i += 1) {
-    const hit = hlp.raycast(canvas.mouse.x, canvas.mouse.y, i, [shape])[0];
+    const hit = controller.raycast(canvas.mouse.x, canvas.mouse.y, i)[0];
     canvas.stroke(255);
     if (hit != null) canvas.line(canvas.mouse.x, canvas.mouse.y, hit.point.x, hit.point.y);
   }

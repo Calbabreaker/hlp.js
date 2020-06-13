@@ -154,7 +154,7 @@ hlp.Renderer2D = class Renderer2D {
   }
 
   rotate(x) {
-    this.ctx.rotate(x * hlp.toRadians());
+    this.ctx.rotate(hlp.toRadians(x));
   }
 
   scale(x, y = 0) {

@@ -1,9 +1,5 @@
 // shapes so that physics and collision could be done easy
 
-hlp.setDrawingCanvas = (canvas) => {
-  hlp.drawingCanvas = canvas;
-};
-
 // line for intersections
 hlp.Line = class Line {
   constructor(x1, y1, x2, y2) {
@@ -17,15 +13,32 @@ hlp.Line = class Line {
   }
 };
 
+hlp.Colour = class Colour {
+  constructor(r, b, g) {
+    this.r = r;
+    this.b = b;
+    this.g = g;
+  }
+
+  set(r = this.r, b = this.b, g = this.g) {
+    this.r = r;
+    this.b = b;
+    this.g = g;
+  }
+};
+
 // base shape2D for shapes to inherit
-hlp.Shape2D = class Shape2D {
-  constructor(x, y, lines) {
+hlp.Body2D = class Body2D {
+  constructor(x, y, lines = []) {
     this.pos = new hlp.Vector(x, y);
     this.lines = lines;
     this.lines.forEach((line) => {
       line.a.add(this.pos);
       line.b.add(this.pos);
     });
+
+    this.fill = new hlp.Colour(255, 255, 255);
+    this.stroke = new hlp.Colour(0, 0, 0);
   }
 
   addLine(line) {
@@ -67,18 +80,31 @@ hlp.Shape2D = class Shape2D {
     });
   }
 
-  draw(close = true) {
-    if (hlp.drawingCanvas == null) return;
-    hlp.drawingCanvas.beginShape();
+  draw(canvas) {
+    canvas.beginShape();
+    canvas.fill(this.fill.r, this.fill.b, this.fill.g);
+    canvas.stroke(this.stroke.r, this.stroke.b, this.stroke.g);
     this.lines.forEach((line) => {
-      hlp.drawingCanvas.vertex(line.a.x, line.a.y);
+      canvas.vertex(line.a.x, line.a.y);
     });
 
-    hlp.drawingCanvas.endShape(close);
+    canvas.endShape();
   }
 };
 
-hlp.Triangle2D = class Triangle2D extends hlp.Shape2D {
+hlp.Rectangle2D = class Rectangle2D extends hlp.Body2D {
+  constructor(x, y, w, h) {
+    super(x, y);
+    w = w / 2;
+    h = h / 2;
+    this.addLine(new Line(-w, -h, w, -h));
+    this.addLine(new Line(w, -h, w, h));
+    this.addLine(new Line(w, h, -w, h));
+    this.addLine(new Line(-w, h, -w, -h));
+  }
+};
+
+hlp.Triangle2D = class Triangle2D extends hlp.Body2D {
   constructor(x1, y1, x2, y2, x3, y3) {
     // prettier-ignore
     super(x, y, [
@@ -89,7 +115,7 @@ hlp.Triangle2D = class Triangle2D extends hlp.Shape2D {
   }
 };
 
-hlp.Polygon2D = class Polygon2D extends hlp.Shape2D {
+hlp.Polygon2D = class Polygon2D extends hlp.Body2D {
   constructor(x, y, w, h = w, detail = 3) {
     // lots of detail = circle
     super(x, y, []);

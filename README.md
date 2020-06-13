@@ -36,8 +36,8 @@ These are the script tags for the lastest hlp.js
 <script src="/src/graphics/rendererGL.js"></script>
 
 <script src="/src/game/calls.js"></script>
-<script src="/src/game/raycast.js"></script>
-<script src="/src/game/shape2D.js"></script>
+<script src="/src/game/controller2D.js"></script>
+<script src="/src/game/body2D.js"></script>
 
 <script src="/src/net/loaders.js"></script>
 ```

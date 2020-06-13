@@ -25,4 +25,8 @@ hlp.Dictionary = class Dictionary {
     this.data[key.toString()] = null;
     return this;
   }
+
+  forEach(func) {
+    Object.keys(this.data).forEach(func);
+  }
 };
