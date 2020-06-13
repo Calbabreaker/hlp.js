@@ -45,6 +45,7 @@ hlp.dist = (...args) => {
   }
 };
 
+// randomGaussian with mean and standard distribution
 hlp.randomGaussian = (mean = 0, sd = 1) => {
   let y1, x1, x2, w;
   if (this._gaussianPrev) {

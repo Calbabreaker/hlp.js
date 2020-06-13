@@ -23,17 +23,17 @@ These are the script tags for the lastest hlp.js
 ```html
 <script src="/src/main.js"></script>
 
-<script src="/src/extra/dictionary.js"></script>
-<script src="/src/extra/audioPlayer.js"></script>
-<script src="/src/extra/strings.js"></script>
+<script src="/src/misc/dictionary.js"></script>
+<script src="/src/misc/audioPlayer.js"></script>
+<script src="/src/misc/strings.js"></script>
 
-<script src="/src/math/additions.js"></script>
+<script src="/src/math/basic.js"></script>
 <script src="/src/math/matrix.js"></script>
 <script src="/src/math/vector.js"></script>
 
 <script src="/src/graphics/canvas.js"></script>
-<script src="/src/graphics/renderer2D.js"></script>
 <script src="/src/graphics/rendererGL.js"></script>
+<script src="/src/graphics/renderer2D.js"></script>
 
 <script src="/src/game/calls.js"></script>
 <script src="/src/game/controller2D.js"></script>
