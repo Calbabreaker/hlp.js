@@ -24,6 +24,7 @@ These are the script tags for the lastest hlp.js
 <script src="/src/main.js"></script>
 
 <script src="/src/misc/dictionary.js"></script>
+<script src="/src/misc/misc.js"></script>
 
 <script src="/src/utils/strings.js"></script>
 <script src="/src/utils/array.js"></script>
@@ -43,6 +44,7 @@ These are the script tags for the lastest hlp.js
 <script src="/src/game/audioSynth.js"></script>
 
 <script src="/src/net/loaders.js"></script>
+<script src="/src/net/http.js"></script>
 ```
 
 To compile the source files yourselves into lib/hlp.js
