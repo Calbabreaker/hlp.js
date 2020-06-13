@@ -24,8 +24,9 @@ These are the script tags for the lastest hlp.js
 <script src="/src/main.js"></script>
 
 <script src="/src/misc/dictionary.js"></script>
-<script src="/src/misc/audioPlayer.js"></script>
-<script src="/src/misc/strings.js"></script>
+
+<script src="/src/utils/strings.js"></script>
+<script src="/src/utils/array.js"></script>
 
 <script src="/src/math/basic.js"></script>
 <script src="/src/math/matrix.js"></script>
@@ -39,6 +40,7 @@ These are the script tags for the lastest hlp.js
 <script src="/src/game/calls.js"></script>
 <script src="/src/game/controller2D.js"></script>
 <script src="/src/game/body2D.js"></script>
+<script src="/src/game/audioSynth.js"></script>
 
 <script src="/src/net/loaders.js"></script>
 ```

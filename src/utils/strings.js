@@ -55,7 +55,7 @@ hlp.copyToClipboard = async (str) => {
     textArea.select();
 
     const successful = document.execCommand("copy");
-    if (!successful) throw new Error("Copy fallback not sucessful!");
+    if (!successful) return alert("Copy fallback not sucessful!");
 
     document.body.removeChild(textArea);
   } else {

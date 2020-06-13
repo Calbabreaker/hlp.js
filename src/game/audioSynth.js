@@ -1,4 +1,4 @@
-class AudioPlayer {
+hlp.AudioSynth = class AudioSynth {
   constructor() {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.context = new AudioContext();
@@ -51,4 +51,4 @@ class AudioPlayer {
     this.gain.gain.value = vol;
     return this;
   }
-}
+};
