@@ -35,10 +35,6 @@ hlp.safeEscape = (unsafe) => {
   return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;").replace(/%/g, "&#37;");
 };
 
-hlp.onlyContainsSpaces = (str) => {
-  return !str.replace(/\s/g, "").length;
-};
-
 hlp.copyToClipboard = async (str) => {
   if (!navigator.clipboard) {
     // fallback for comapatipility

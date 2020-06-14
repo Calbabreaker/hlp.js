@@ -14,3 +14,5 @@ hlp.LEFT = "left";
 hlp.RIGHT = "right";
 hlp.START = "end";
 hlp.END = "end";
+
+console.log("--- hlp.js ---");

@@ -45,7 +45,7 @@ hlp.Canvas = class Canvas {
 
     // get all functions of renderer
     Object.getOwnPropertyNames(Object.getPrototypeOf(this._renderer))
-      .filter((p) => p[0] != "_")
+      .filter((p) => p[0] != "_" && typeof this._renderer[p] == "function")
       .forEach((func) => {
         this[func] = (...args) => this._renderer[func](...args);
       });
