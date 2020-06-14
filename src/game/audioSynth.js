@@ -6,7 +6,7 @@ hlp.AudioSynth = class AudioSynth {
   }
 
   play(freq, vol, wave, when = 0) {
-    if (!this.hasResseted) return console.error("Make sure you reset the AudioPlayer before playing!");
+    if (!this.hasResseted) throw new Error("Make sure you reset the AudioPlayer before playing!");
 
     if (freq != null) this.setFreq(freq);
     if (wave != null) this.setWaveType(wave);
@@ -45,6 +45,7 @@ hlp.AudioSynth = class AudioSynth {
 
   setFreq(freq) {
     this.oscillator.frequency.value = freq;
+    return this;
   }
 
   setVolume(vol) {

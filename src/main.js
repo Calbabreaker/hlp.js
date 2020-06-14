@@ -1,3 +1,8 @@
+if (hlp != null) {
+  alert("An instance of the hlp libary is already in use!");
+  console.error("An instance of the hlp libary is already in use!");
+}
+
 const hlp = {};
 
 // some constants
