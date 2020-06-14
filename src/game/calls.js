@@ -65,24 +65,31 @@ window.addEventListener("load", () => {
     }
   };
 
-  // create loading text if haven't
   let loading = document.getElementById("hlp_loading");
-  if (loading == null) {
-    loading = document.createElement("p");
-    loading.innerHTML = "Loading...";
-    loading.id = "hlp_loading";
-    document.body.appendChild(loading);
-  }
 
-  loading.style.position = "absolute";
-  loading.style.top = "10px";
-  loading.style.left = "10px";
+  // only create loading if user has preload
+  if (hlp.preload != null) {
+    // create loading text if haven't
+    if (loading == null) {
+      loading = document.createElement("p");
+      loading.innerHTML = "Loading...";
+      loading.id = "hlp_loading";
+      document.body.appendChild(loading);
+    }
+
+    loading.style.position = "absolute";
+    loading.style.top = "10px";
+    loading.style.left = "10px";
+  } else {
+    loading = null;
+    hlp.preload = async () => {};
+  }
 
   // wait until preload has handled the async things
   hlp.preload().then(() => {
-    document.body.removeChild(loading);
-    hlp.setup();
-    hlp._draw();
+    if (loading != null) document.body.removeChild(loading);
+    if (hlp.setup != null) hlp.setup();
+    hlp.start();
   });
 });
 
@@ -91,8 +98,10 @@ hlp.stop = () => {
 };
 
 hlp.start = () => {
-  hlp.looping = true;
-  requestAnimationFrame(hlp._draw);
+  if (hlp.draw != null) {
+    hlp.looping = true;
+    requestAnimationFrame(hlp._draw);
+  }
 };
 
 hlp.keyIsDown = (key) => {
@@ -115,9 +124,6 @@ hlp.unlockMouse = () => {
 };
 
 // functions for user to overide
-hlp.setup = () => {};
-hlp.draw = () => {};
-hlp.preload = async () => {};
 hlp.mousePressed = () => {};
 hlp.mouseMove = () => {};
 hlp.keyPressed = () => {};
