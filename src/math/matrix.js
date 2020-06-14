@@ -1,5 +1,4 @@
 // This creates a multi dimensional array and stores it in this.data
-// By Calbabreaker
 
 hlp.Matrix = class {
   constructor(rows = 0, cols = 0) {

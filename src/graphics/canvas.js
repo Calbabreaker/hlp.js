@@ -76,4 +76,8 @@ hlp.Canvas = class {
 
     this.resizeCanvas(this.aspectRatio != null ? newInnerHeight * this.aspectRatio : innerWidth, newInnerHeight);
   }
+
+  remove() {
+    document.body.removeChild(this.canvas);
+  }
 };

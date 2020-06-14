@@ -68,8 +68,8 @@ hlp.Body2D = class {
 
   draw(canvas) {
     canvas.beginShape();
-    canvas.fill(this.fill.r, this.fill.b, this.fill.g);
-    canvas.stroke(this.stroke.r, this.stroke.b, this.stroke.g);
+    canvas.fill(this.fill);
+    canvas.stroke(this.stroke);
     this.lines.forEach((line) => {
       canvas.vertex(line.a.x, line.a.y);
     });

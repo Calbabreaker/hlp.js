@@ -72,12 +72,12 @@ hlp.Vector = class {
   }
 
   magSq() {
-    // gets the length of the vector squared
+    // gets the len of the vector squared
     return this.x ** 2 + this.y ** 2 + this.z ** 2;
   }
 
   mag() {
-    // gets the length of the vector
+    // gets the len of the vector
     return hlp.sqrt(this.magSq());
   }
 
@@ -101,7 +101,7 @@ hlp.Vector = class {
   }
 
   setMag(len) {
-    // set the length of the vector
+    // set the len of the vector
     return this.normalise().mult(len);
   }
 
@@ -126,9 +126,13 @@ hlp.Vector = class {
     return this;
   }
 
-  static fromAngle(angle, length = 1) {
+  static fromAngle(angle, len = 1) {
     angle = hlp.toRadians(angle);
-    return new hlp.Vector(length * hlp.cos(angle), length * hlp.sin(angle), 0);
+    return new hlp.Vector(len * hlp.cos(angle), len * hlp.sin(angle), 0);
+  }
+
+  static random2D(len = 1) {
+    return hlp.Vector.fromAngle(hlp.random(0, 360)).mult(len);
   }
 
   // down here contains functions useful for 3d

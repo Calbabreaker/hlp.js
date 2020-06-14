@@ -1,17 +1,22 @@
 // uses Fisher-Yates Shuffle Algorithm
-hlp.shuffle = (arr, bool) => {
-  arr = bool ? arr : arr.slice();
+hlp.shuffle = (array, bool) => {
+  array = bool ? array : array.slice(); // create copy or not
 
-  let rnd,
-    tmp,
-    idx = arr.length;
-  while (idx > 1) {
-    rnd = (Math.random() * idx) | 0;
+  let random,
+    temp,
+    index = array.length;
+  while (index > 1) {
+    random = (Math.random() * index) | 0;
 
-    tmp = arr[--idx];
-    arr[idx] = arr[rnd];
-    arr[rnd] = tmp;
+    temp = array[--index];
+    array[index] = array[random];
+    array[random] = temp;
   }
 
-  return arr;
+  return array;
+};
+
+hlp.arrayRandom = (array) => {
+  const index = hlp.randInt(array.length);
+  return array[index];
 };

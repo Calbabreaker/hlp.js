@@ -32,7 +32,21 @@ hlp.constrain = (n, low, high) => {
 };
 
 hlp.random = (min, max) => {
+  if (max == null) {
+    max = min;
+    min = 0;
+  }
+
   return Math.random() * (min - max) + max;
+};
+
+hlp.randInt = (min, max) => {
+  if (max == null) {
+    max = min;
+    min = 0;
+  }
+
+  return hlp.floor(hlp.random(min, max + 1));
 };
 
 hlp.dist = (...args) => {
