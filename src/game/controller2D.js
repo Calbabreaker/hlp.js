@@ -1,4 +1,4 @@
-hlp.Controller2D = class Controller2D {
+hlp.Controller2D = class {
   constructor(canvas) {
     this.canvas = canvas;
     this.bodies = [];

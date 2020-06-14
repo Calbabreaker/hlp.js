@@ -1,4 +1,4 @@
-hlp.Renderer2D = class Renderer2D {
+hlp.Renderer2D = class {
   constructor(canvas) {
     this.canvas = canvas;
 

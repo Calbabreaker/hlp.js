@@ -1,7 +1,7 @@
 // This creates a multi dimensional array and stores it in this.data
 // By Calbabreaker
 
-hlp.Matrix = class Matrix {
+hlp.Matrix = class {
   constructor(rows = 0, cols = 0) {
     if (rows instanceof Array) {
       // create a new hlp.Matrix with data

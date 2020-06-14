@@ -1,6 +1,6 @@
 // a vector for storing positions and doing math with it
 
-hlp.Vector = class Vector {
+hlp.Vector = class {
   constructor(x = 0, y = 0, z = 0) {
     this.x = x;
     this.y = y;

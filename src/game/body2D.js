@@ -1,7 +1,7 @@
 // shapes so that physics and collision could be done easy
 
 // line for intersections
-hlp.Line = class Line {
+hlp.Line = class {
   constructor(x1, y1, x2, y2) {
     if (x1 instanceof hlp.Vector) {
       this.a = x1.copy();
@@ -14,7 +14,7 @@ hlp.Line = class Line {
 };
 
 // base shape2D for shapes to inherit
-hlp.Body2D = class Body2D {
+hlp.Body2D = class {
   constructor(x, y, lines = []) {
     this.pos = new hlp.Vector(x, y);
     this.lines = lines;
@@ -78,7 +78,7 @@ hlp.Body2D = class Body2D {
   }
 };
 
-hlp.Rectangle2D = class Rectangle2D extends hlp.Body2D {
+hlp.Rectangle2D = class extends hlp.Body2D {
   constructor(x, y, w, h) {
     super(x, y);
     w = w / 2;
@@ -90,7 +90,7 @@ hlp.Rectangle2D = class Rectangle2D extends hlp.Body2D {
   }
 };
 
-hlp.Triangle2D = class Triangle2D extends hlp.Body2D {
+hlp.Triangle2D = class extends hlp.Body2D {
   constructor(x1, y1, x2, y2, x3, y3) {
     // prettier-ignore
     super(x, y, [
@@ -101,7 +101,7 @@ hlp.Triangle2D = class Triangle2D extends hlp.Body2D {
   }
 };
 
-hlp.Polygon2D = class Polygon2D extends hlp.Body2D {
+hlp.Polygon2D = class extends hlp.Body2D {
   constructor(x, y, w, h = w, detail = 3) {
     // lots of detail = circle
     super(x, y, []);

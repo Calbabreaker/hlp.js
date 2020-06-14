@@ -1,4 +1,4 @@
-hlp.AudioSynth = class AudioSynth {
+hlp.AudioSynth = class {
   constructor() {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
     this.context = new AudioContext();

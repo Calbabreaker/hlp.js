@@ -37,6 +37,7 @@ hlp.safeEscape = (unsafe) => {
 
 hlp.copyToClipboard = async (str) => {
   if (!navigator.clipboard) {
+    console.warn("Navigator copy not supported. Falling back on experimental.");
     // fallback for comapatipility
     const textArea = document.createElement("textarea");
     textArea.value = text;

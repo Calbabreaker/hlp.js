@@ -1,4 +1,4 @@
-hlp.Colour = class Colour {
+hlp.Colour = class {
   constructor(r, b, g) {
     this.r = r;
     this.b = b;

@@ -1,6 +1,6 @@
 // the canvas object for canvas drawing
 
-hlp.Canvas = class Canvas {
+hlp.Canvas = class {
   constructor(width, height, renderer = hlp.hlp2D) {
     // initialize variables
     if (width === hlp.FULL) {

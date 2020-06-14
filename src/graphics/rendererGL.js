@@ -1,4 +1,4 @@
-class RendererGL {
+hlp.RendererGL = class {
   constructor(canvas) {
     this.canvas = canvas;
 
@@ -64,4 +64,4 @@ class RendererGL {
   }
 
   background() {}
-}
+};
