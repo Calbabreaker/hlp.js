@@ -11,7 +11,7 @@ hlp.Colour = class {
     this.c2 = c2;
     this.c3 = c3;
 
-    if (this.colourMode.substr(-1) === "a") this.a = a ?? 255;
+    if (this.colourMode.substr(-1) === "a") this.a = a || 255;
   }
 
   // creates string friendly for ctx
