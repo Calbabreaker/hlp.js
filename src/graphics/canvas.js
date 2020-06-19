@@ -100,60 +100,34 @@ hlp.Canvas = class {
     }
   }
 
-  arc(x, y, width, height, start) {
-    if (x instanceof hlp.Vector) {
-      this._renderer.arc(x.x, x.y, y, width);
-    } else {
-      this._renderer.arc(x, y, width, height);
-    }
-  }
-
   rect(x, y, width, height) {
-    if (x instanceof hlp.Vector) {
-      this._renderer.rect(x.x, x.y, y, width);
-    } else {
-      this._renderer.rect(x, y, width, height);
-    }
+    if (x instanceof hlp.Vector) this._renderer.rect(x.x, x.y, y, width);
+    else this._renderer.rect(x, y, width, height);
   }
 
   image(img, x, y, width = img.width, height = img.height) {
-    if (x instanceof hlp.Vector) {
-      this._renderer.image(img, x.x, x.y, y, width);
-    } else {
-      this._renderer.image(img, x, y, width, height);
-    }
+    if (x instanceof hlp.Vector) this._renderer.image(img, x.x, x.y, y, width);
+    else this._renderer.image(img, x, y, width, height);
   }
 
   triangle(x1, y1, x2, y2, x3, y3) {
-    if (x1 instanceof hlp.Vector) {
-      this._renderer.triangle(x1.x, x1.y, y1.x, y1.y, x2.x, x2.y);
-    } else {
-      this._renderer.triangle(x1, y1, x2, y2, x3, y3);
-    }
+    if (x1 instanceof hlp.Vector) this._renderer.triangle(x1.x, x1.y, y1.x, y1.y, x2.x, x2.y);
+    else this._renderer.triangle(x1, y1, x2, y2, x3, y3);
   }
 
   triangleInflate(x1, y1, x2, y2 = 1, x3, y3, inflateAmount = 1) {
-    if (x1 instanceof hlp.Vector) {
-      this._renderer.triangleInflate(x1, y1, x2, y2);
-    } else {
-      this._renderer.triangleInflate(new Vector(x1, y1), new Vector(x2, y2), new Vector(x3, y3), inflateAmount);
-    }
+    if (x1 instanceof hlp.Vector) this._renderer.triangleInflate(x1, y1, x2, y2);
+    else this._renderer.triangleInflate(new Vector(x1, y1), new Vector(x2, y2), new Vector(x3, y3), inflateAmount);
   }
 
   point(x, y) {
-    if (x instanceof hlp.Vector) {
-      this._renderer.point(x.x, x.y);
-    } else {
-      this._renderer.point(x, y);
-    }
+    if (x instanceof hlp.Vector) this._renderer.point(x.x, x.y);
+    else this._renderer.point(x, y);
   }
 
   line(x1, y1, x2, y2) {
-    if (x1 instanceof hlp.Vector) {
-      this._renderer.line(x1.x, x1.y, y1.x, y1.y);
-    } else {
-      this._renderer.line(x1, y1, x2, y2);
-    }
+    if (x1 instanceof hlp.Vector) this._renderer.line(x1.x, x1.y, y1.x, y1.y);
+    else this._renderer.line(x1, y1, x2, y2);
   }
 
   // make a rectangle that fills the screen (clears it)
@@ -166,11 +140,8 @@ hlp.Canvas = class {
   }
 
   translate(x, y = 0) {
-    if (x instanceof hlp.Vector) {
-      this._renderer.translate(x.x, x.y);
-    } else {
-      this._renderer.translate(x, y);
-    }
+    if (x instanceof hlp.Vector) this._renderer.translate(x.x, x.y);
+    else this._renderer.translate(x, y);
   }
 
   rotate(x) {
@@ -178,11 +149,8 @@ hlp.Canvas = class {
   }
 
   scale(x, y = 0) {
-    if (x instanceof hlp.Vector) {
-      this._renderer.scale(x.x, x.y);
-    } else {
-      this._renderer.scale(x, y);
-    }
+    if (x instanceof hlp.Vector) this._renderer.scale(x.x, x.y);
+    else this._renderer.scale(x, y);
   }
 
   // push and pop to restore and save states
@@ -196,11 +164,8 @@ hlp.Canvas = class {
 
   // TEXT STUFF DOWN HERE
   text(str, x, y) {
-    if (x instanceof hlp.Vector) {
-      this._renderer.text(str, x.x, x.y);
-    } else {
-      this._renderer.text(str, x, y);
-    }
+    if (x instanceof hlp.Vector) this._renderer.text(str, x.x, x.y);
+    else this._renderer.text(str, x, y);
   }
 
   textFont(font) {

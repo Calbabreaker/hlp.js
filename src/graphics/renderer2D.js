@@ -67,12 +67,6 @@ hlp.Renderer2D = class {
     } else this.ctx.lineTo(x, y);
   }
 
-  arc(x, y, w, h, start) {
-    this.beginShape();
-    this.ctx.arc(x, y, w, h, start);
-    this.endShape();
-  }
-
   rect(x, y, width, height) {
     if (this._doFill) this.ctx.fillRect(x, y, width, height);
     if (this._doStroke) this.ctx.strokeRect(x, y, width, height);
