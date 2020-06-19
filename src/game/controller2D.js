@@ -40,6 +40,10 @@ hlp.Controller2D = class {
 
   update() {}
 
+  forEach(func) {
+    this.bodies.forEach(func);
+  }
+
   raycast(x, y, angle, clipStart = 0, clipEnd = 10000, forwardHeading) {
     // shoots a ray with an angle from a location
     const hits = [];
@@ -47,7 +51,6 @@ hlp.Controller2D = class {
     const pos4 = hlp.Vector.add(pos3, hlp.Vector.fromAngle(angle, clipEnd));
     this.bodies.forEach((body) => {
       body.lines.forEach((line) => {
-        // anonymous function so return is like a continue
         const pos1 = line.a;
         const pos2 = line.b;
 

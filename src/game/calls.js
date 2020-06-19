@@ -8,7 +8,6 @@ window.addEventListener("load", () => {
   hlp.keyCodePressingDict = {};
 
   // handle all the calls
-  hlp._timeLastFrame = performance.now();
   hlp.deltaTime = 0;
   hlp.mouseIsLocked = false;
 
@@ -28,6 +27,10 @@ window.addEventListener("load", () => {
 
   document.addEventListener("mousedown", (event) => {
     hlp.mousePressed();
+  });
+
+  document.addEventListener("mouseup", (event) => {
+    hlp.mouseReleased();
   });
 
   // add to dictionary on keydown and removes and keyup
@@ -89,6 +92,9 @@ window.addEventListener("load", () => {
   hlp.preload().then(() => {
     if (loading != null) document.body.removeChild(loading);
     if (hlp.setup != null) hlp.setup();
+
+    hlp._timeStarted = performance.now();
+    hlp._timeLastFrame = performance.now();
     hlp.start();
   });
 });
@@ -102,6 +108,10 @@ hlp.start = () => {
     hlp.looping = true;
     requestAnimationFrame(hlp._draw);
   }
+};
+
+hlp.millis = () => {
+  return performance.now() - hlp._timeStarted;
 };
 
 hlp.keyIsDown = (key) => {
@@ -125,6 +135,7 @@ hlp.unlockMouse = () => {
 
 // functions for user to overide
 hlp.mousePressed = () => {};
+hlp.mouseReleased = () => {};
 hlp.mouseMove = () => {};
 hlp.keyPressed = () => {};
 hlp.keyReleased = () => {};

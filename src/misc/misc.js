@@ -10,3 +10,7 @@ hlp.rainbow = () => {
 hlp.rainbowSeizure = () => {
   setInterval(hlp.rainbow, 1);
 };
+
+hlp.sleep = async (ms) => {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+};

@@ -6,18 +6,23 @@ if (window.hlp != null) {
   window.hlp = hlp;
 
   // some constants
-  hlp.FULL = 0x00;
-  hlp.hlp2D = 0x01;
-  hlp.hlpWEBGL = 0x02;
+  hlp.FULL = "FULL";
+  hlp.hlp2D = "hlp2D";
+  hlp.hlpWEBGL = "hlpWEGL";
 
-  hlp.json = 0x10;
-  hlp.text = 0x11;
-  hlp.blob = 0x12;
+  hlp.json = "json";
+  hlp.text = "text";
+  hlp.blob = "blob";
+
+  hlp.RGB = "RGB";
+  hlp.RGBA = "RGBA";
+  hlp.HSL = "HSL";
+  hlp.HSLA = "HSLA";
 
   hlp.CENTER = "center";
   hlp.LEFT = "left";
   hlp.RIGHT = "right";
-  hlp.START = "end";
+  hlp.START = "start";
   hlp.END = "end";
 
   console.log("--- hlp.js ---");

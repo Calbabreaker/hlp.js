@@ -10,6 +10,7 @@ hlp.HALF_PI = hlp.PI / 2;
 hlp.QUARTER_PI = hlp.PI / 4;
 
 hlp._y2Guass = 0;
+hlp._gaussianPrev = false;
 
 hlp.map = (value, low1, high1, low2, high2) => {
   return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1);
@@ -62,7 +63,7 @@ hlp.dist = (...args) => {
 // randomGaussian with mean and standard distribution
 hlp.randomGaussian = (mean = 0, sd = 1) => {
   let y1, x1, x2, w;
-  if (this._gaussianPrev) {
+  if (hlp._gaussianPrev) {
     y1 = hlp._y2Guass;
     hlp._gaussianPrev = false;
   } else {

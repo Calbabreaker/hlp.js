@@ -13,7 +13,9 @@ hlp.preload = async () => {
   font = await hlp.loadFont("AmaticSC.ttf");
 };
 
-hlp.setup = () => {};
+hlp.setup = () => {
+  hlp.changeFPS(60);
+};
 
 hlp.draw = () => {
   canvas.push();

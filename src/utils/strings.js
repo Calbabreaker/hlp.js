@@ -1,12 +1,12 @@
 // useful for parsing strings
 
 hlp.regexEscape = (str) => {
-  return str.replace(/[-\/\\^$*+?.()|[\]{}]/g, "\\$&");
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
 
 hlp.smartSplit = (str, charSplit = " ", insideChar, charToDiscludeInsideChar = "") => {
   // regex to avoid double chars
-  let formattedStr = str.split(new RegExp(`${charSplit}+`, "g"));
+  let formattedStr = str.split(new RegExp(`${hlp.regexEscape(charSplit)}+`, "g"));
   if (!formattedStr.slice(-1)[0]) formattedStr.pop(); // if last element is empty string
 
   if (insideChar != null) {

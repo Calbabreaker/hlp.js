@@ -14,46 +14,26 @@ hlp.Renderer2D = class {
     this._fontSize = 10;
     this._prevStates = [];
 
+    this._cacheFill = null;
+    this._cacheStroke = null;
+
     this.width = this.canvas.width;
     this.height = this.canvas.height;
   }
 
-  fill(...args) {
+  fill(str) {
     this._doFill = true;
-    if (typeof args[0] == "string") {
-      // if fill type is with string (hexidecimal, rgb(), ect.)
-      this.ctx.fillStyle == args[0];
-    } else if (args[0] instanceof hlp.Colour) {
-      this.ctx.fillStyle = `rgb(${args[0].r}, ${args[0].g}, ${args[0].b})`;
-    } else {
-      if (args.length == 1) {
-        // if only one argument
-        this.ctx.fillStyle = `rgb(${args[0]}, ${args[0]}, ${args[0]})`;
-      } else if (args.length == 3) {
-        // for all colours
-        this.ctx.fillStyle = `rgb(${args[0]}, ${args[1]}, ${args[2]})`;
-      } else if (args.length >= 4) {
-        // with alpha
-        this.ctx.fillStyle = `rgb(${args[0]}, ${args[1]}, ${args[2]}, ${args[3]})`;
-      }
+    if (str !== this._cacheFill) {
+      this.ctx.fillStyle = str;
+      this._cacheFill = str;
     }
   }
 
-  stroke(...args) {
-    // same thing as fill
+  stroke(str) {
     this._doStroke = true;
-    if (typeof args[0] == "string") {
-      this.ctx.strokeStyle == args[0];
-    } else if (args[0] instanceof hlp.Colour) {
-      this.ctx.strokeStyle = `rgb(${args[0].r}, ${args[0].g}, ${args[0].b})`;
-    } else {
-      if (args.length == 1) {
-        this.ctx.strokeStyle = `rgb(${args[0]}, ${args[0]}, ${args[0]})`;
-      } else if (args.length == 3) {
-        this.ctx.strokeStyle = `rgb(${args[0]}, ${args[1]}, ${args[2]})`;
-      } else if (args.length >= 4) {
-        this.ctx.strokeStyle = `rgb(${args[0]}, ${args[1]}, ${args[2]}, ${args[3]})`;
-      }
+    if (str !== this._cacheStroke) {
+      this.ctx.strokeStyle = str;
+      this._cacheStroke = str;
     }
   }
 
@@ -70,20 +50,16 @@ hlp.Renderer2D = class {
   }
 
   beginShape() {
-    if (this._firstPosShape._using) throw new Error("Cannot begin shape before closing!");
     this.ctx.beginPath();
   }
 
-  endShape(close = true) {
-    if (!this._firstPosShape._using) throw new Error("Cannot close shape before beggining!");
+  endShape(close) {
     if (close) this.ctx.closePath(this._firstPosShape.x, this._firstPosShape.y);
     if (this._doFill) this.ctx.fill();
     if (this._doStroke) this.ctx.stroke();
-    this._firstPosShape._using = false;
   }
 
   vertex(x, y) {
-    if (x instanceof hlp.Vector) (y = x.y), (x = x.x);
     if (!this._firstPosShape._using) {
       this._firstPosShape.set(x, y);
       this._firstPosShape._using = true;
@@ -91,46 +67,38 @@ hlp.Renderer2D = class {
     } else this.ctx.lineTo(x, y);
   }
 
+  arc(x, y, w, h, start) {
+    this.beginShape();
+    this.ctx.arc(x, y, w, h, start);
+    this.endShape();
+  }
+
   rect(x, y, width, height) {
     if (this._doFill) this.ctx.fillRect(x, y, width, height);
     if (this._doStroke) this.ctx.strokeRect(x, y, width, height);
   }
 
-  image(img, x, y, width = img.width, height = img.height) {
+  image(img, x, y, width, height) {
     this.ctx.drawImage(img, x, y, width, height);
   }
 
   triangle(x1, y1, x2, y2, x3, y3) {
     this.beginShape();
-    if (x1 instanceof hlp.Vector) {
-      this.vertex(x1);
-      this.vertex(y1);
-      this.vertex(x2);
-    } else {
-      this.vertex(x1, y1);
-      this.vertex(x2, y2);
-      this.vertex(x3, y3);
-    }
-
+    this.vertex(x1, y1);
+    this.vertex(x2, y2);
+    this.vertex(x3, y3);
     this.endShape();
   }
 
-  triangleInflate(x1, y1, x2, y2, x3, y3) {
-    let v1, v2, v3;
-    if (typeof x1 == "number") {
-      v1 = new hlp.Vector(x1, y1);
-      v2 = new hlp.Vector(x2, y2);
-      v3 = new hlp.Vector(x3, y3);
-    }
-
+  triangleInflate(v1, v2, v3, inflateAmount) {
     // calculate middle
     const center = new hlp.Vector(v1.x + v2.x + v3.x, v1.y + v2.y + v3.y).div(3);
     v1 = hlp.Vector.sub(v1, center);
     v2 = hlp.Vector.sub(v2, center);
     v3 = hlp.Vector.sub(v3, center);
 
-    // inflate tri by 1 px
-    this.triangle(v1.setMag(v1.mag() + 1).add(center), v2.setMag(v2.mag() + 1).add(center), v3.setMag(v3.mag() + 1).add(center));
+    // inflate tri by inflantAmount px
+    this.triangle(v1.setMag(v1.mag() + inflateAmount).add(center), v2.setMag(v2.mag() + inflateAmount).add(center), v3.setMag(v3.mag() + inflateAmount).add(center));
   }
 
   point(x, y) {
@@ -139,35 +107,25 @@ hlp.Renderer2D = class {
 
   line(x1, y1, x2, y2) {
     this.beginShape();
-    if (x1 instanceof hlp.Vector) {
-      this.vertex(x1);
-      this.vertex(y1);
-    } else {
-      this.vertex(x1, y1);
-      this.vertex(x2, y2);
-    }
-
+    this.vertex(x1, y1);
+    this.vertex(x2, y2);
     this.endShape(false);
   }
 
   // make a rectangle that fills the screen (clears it)
-  background(...args) {
-    this.push();
-    this.fill(...args);
-    this.noStroke();
+  background() {
     this.rect(0, 0, this.width, this.height);
-    this.pop();
   }
 
-  translate(x, y = 0) {
+  translate(x, y) {
     this.ctx.translate(x, y);
   }
 
   rotate(x) {
-    this.ctx.rotate(hlp.toRadians(x));
+    this.ctx.rotate(x);
   }
 
-  scale(x, y = 0) {
+  scale(x, y) {
     this.ctx.scale(x, y);
   }
 
