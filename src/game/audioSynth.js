@@ -1,55 +1,82 @@
+// this is a synth to create simple sounds
+// this runs in threads so that multiple sounds can be created
+// the thread is a index in the player instead of an onject so not instanciating performance issues
+
 hlp.AudioSynth = class {
   constructor() {
     const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (AudioContext == null) return alert("Your browser does not support the AudioContext!");
     this.context = new AudioContext();
-    this.reset();
+    this.threads = {};
+    this._counter = 0;
   }
 
-  play(freq, vol, wave, when = 0) {
-    if (!this.hasResseted) throw new Error("Make sure you reset the AudioPlayer before playing!");
+  play(thread, freq, vol, wave, when = 0) {
+    if (freq != null) this.setFreq(thread, freq);
+    if (wave != null) this.setWaveType(thread, wave);
+    if (vol != null) this.setVolume(thread, vol);
 
-    if (freq != null) this.setFreq(freq);
-    if (wave != null) this.setWaveType(wave);
-    if (vol != null) this.setVolume(vol);
-    this.oscillator.start(when);
-
-    this.hasResseted = false;
+    const selThread = this.threads[thread];
+    selThread.startTime = when;
+    selThread.oscillator.start(selThread.startTime);
     return this;
   }
 
-  stop(when = 0, useExpRamp = false) {
+  stop(thread, when = 0, useExpRamp = false) {
+    const selThread = this.threads[thread];
+    const timeNow = this.context.currentTime + selThread.startTime;
+    if (useExpRamp) this.setVolume(thread, 0.00001, when, true);
+
+    selThread.oscillator.stop(this.context.currentTime + when);
+    return this;
+  }
+
+  dispose(thread) {
+    delete this.threads[thread];
+  }
+
+  newThread(filter = this.context.destination) {
+    const selThread = {};
+    this.context.resume();
+
+    // basic setup of oscillator
+    selThread.gain = this.context.createGain();
+    selThread.gain.connect(filter);
+    selThread.oscillator = this.context.createOscillator();
+    selThread.oscillator.connect(selThread.gain);
+    selThread.compressor = this.context.createDynamicsCompressor();
+    selThread.compressor.connect(this.context.destination);
+    selThread.startTime = 0;
+
+    this.threads[this._counter] = selThread;
+    this._counter++;
+
+    return this._counter - 1;
+  }
+
+  setWaveType(thread, wave) {
+    this.threads[thread].oscillator.type = wave;
+    return this;
+  }
+
+  setFreq(thread, freq, when = 0) {
+    const selThread = this.threads[thread];
+    const timeNow = this.context.currentTime + selThread.startTime;
+    selThread.oscillator.frequency.setTargetAtTime(freq, timeNow + when, 0);
+    return this;
+  }
+
+  setVolume(thread, vol, when = 0, useExpRamp = false) {
+    const selThread = this.threads[thread];
+    const timeNow = this.context.currentTime + selThread.startTime;
+
     if (useExpRamp) {
-      this.gain.gain.setValueAtTime(this.gain.gain.value, this.context.currentTime);
-      this.gain.gain.exponentialRampToValueAtTime(0.00001, this.context.currentTime + when);
+      selThread.gain.gain.setValueAtTime(selThread.gain.gain.value, this.context.currentTime); // reset the gain
+      selThread.gain.gain.exponentialRampToValueAtTime(vol, timeNow + when);
+    } else {
+      selThread.gain.gain.value = vol;
     }
 
-    this.oscillator.stop(this.context.currentTime + when);
-    return this;
-  }
-
-  reset(filter = this.context.destination) {
-    this.gain = this.context.createGain();
-    this.gain.connect(filter);
-    this.oscillator = this.context.createOscillator();
-    this.oscillator.connect(this.gain);
-    this.compressor = this.context.createDynamicsCompressor();
-    this.compressor.connect(this.context.destination);
-    this.hasResseted = true;
-    return this;
-  }
-
-  setWaveType(wave) {
-    this.oscillator.type = wave;
-    return this;
-  }
-
-  setFreq(freq) {
-    this.oscillator.frequency.value = freq;
-    return this;
-  }
-
-  setVolume(vol) {
-    this.gain.gain.value = vol;
     return this;
   }
 };

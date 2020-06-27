@@ -21,17 +21,9 @@ hlp.loadImage = (url) => {
 };
 
 hlp.loadBytes = (url) => {
-  return new Promise(async (resolve) => {
-    const reader = new FileReader();
-    reader.onload = function () {
-      const arrayBuffer = this.result;
-      const array = new Uint8Array(arrayBuffer);
-      resolve(array);
-    };
-
-    const fileData = await hlp.loadStrings(url);
-    reader.readAsArrayBuffer(new File([fileData], url));
-  });
+  const response = await fetch(url);
+  const data = await response.arrayBuffer();
+  return new Int8Array(data);
 };
 
 hlp.loadSound = (url) => {
