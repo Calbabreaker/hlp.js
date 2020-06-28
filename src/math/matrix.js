@@ -275,15 +275,6 @@ hlp.Matrix = class {
     ]);
   }
 
-  static createProjectionOrtho() {
-    return new hlp.Matrix([
-      [1, 0, 0, 0],
-      [0, 1, 0, 0],
-      [0, 0, 0, 0],
-      [0, 0, 0, 0],
-    ]);
-  }
-
   static createProjectionPerspect(fovDegrees, aspectRatio, near, far) {
     const fovRadians = hlp.toRadians(fovDegrees);
     return new hlp.Matrix([

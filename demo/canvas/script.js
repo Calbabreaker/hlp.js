@@ -9,8 +9,9 @@ let img;
 let font;
 
 hlp.preload = async () => {
-  img = await hlp.loadImage("cool.png");
-  font = await hlp.loadFont("AmaticSC.ttf");
+  const result = await Promise.all([hlp.loadImage("cool.png"), hlp.loadFont("AmaticSC.ttf")]);
+  img = result[0];
+  font = result[1];
 };
 
 hlp.setup = () => {

@@ -99,9 +99,7 @@ window.addEventListener("load", () => {
   });
 });
 
-hlp.stop = () => {
-  hlp.looping = false;
-};
+hlp.stop = () => (hlp.looping = false);
 
 hlp.start = () => {
   if (hlp.draw != null) {
@@ -110,17 +108,9 @@ hlp.start = () => {
   }
 };
 
-hlp.millis = () => {
-  return performance.now() - hlp._timeStarted;
-};
-
-hlp.keyIsDown = (key) => {
-  return hlp.keyPressingDict[key];
-};
-
-hlp.keyCodeIsDown = (keyCode) => {
-  return hlp.keyCodePressingDict[keyCode];
-};
+hlp.millis = () => performance.now() - hlp._timeStarted;
+hlp.keyIsDown = (key) => hlp.keyPressingDict[key];
+hlp.keyCodeIsDown = (keyCode) => hlp.keyCodePressingDict[keyCode];
 
 hlp.changeFPS = (fps) => {
   hlp.targetFPS = fps;
@@ -129,9 +119,7 @@ hlp.changeFPS = (fps) => {
   hlp._timeLastFrame = performance.now();
 };
 
-hlp.unlockMouse = () => {
-  document.exitPointerLock();
-};
+hlp.unlockMouse = () => document.exitPointerLock();
 
 // functions for user to overide
 hlp.mousePressed = () => {};

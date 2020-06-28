@@ -20,7 +20,7 @@ hlp.loadImage = (url) => {
   });
 };
 
-hlp.loadBytes = (url) => {
+hlp.loadBytes = async (url) => {
   const response = await fetch(url);
   const data = await response.arrayBuffer();
   return new Int8Array(data);
