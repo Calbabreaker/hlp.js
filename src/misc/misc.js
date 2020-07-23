@@ -1,4 +1,4 @@
-// anything that doesn't belong to any file
+// anything that are to small and so don't belong to any file
 hlp.rainbow = () => {
   [...document.querySelectorAll("*")].forEach((element) => {
     element.style.backgroundColor = "#" + Math.floor(Math.random() * 16777215).toString(16);

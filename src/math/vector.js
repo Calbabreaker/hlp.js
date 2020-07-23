@@ -126,6 +126,14 @@ hlp.Vector = class {
     return this;
   }
 
+  toString() {
+    return `x: ${this.x}, y: ${this.y}, z: ${this.z}`;
+  }
+
+  toArray() {
+    return [this.x, this.y, this.z];
+  }
+
   static fromAngle(angle, len = 1) {
     angle = hlp.toRadians(angle);
     return new hlp.Vector(len * hlp.cos(angle), len * hlp.sin(angle), 0);

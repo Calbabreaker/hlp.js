@@ -63,10 +63,10 @@ hlp.Matrix = class {
     if (matrix.cols != 4 || matrix.rows != 4) throw new Error("matrix must have 4 cols and 4 rows!");
 
     const newVec = new hlp.Vector(vec.x, vec.y, vec.z);
-    newVec.x = vec.x * matrix.get(0, 0) + vec.y * matrix.get(1, 0) + vec.z * matrix.get(2, 0) + matrix.get(3, 0);
-    newVec.y = vec.x * matrix.get(0, 1) + vec.y * matrix.get(1, 1) + vec.z * matrix.get(2, 1) + matrix.get(3, 1);
-    newVec.z = vec.x * matrix.get(0, 2) + vec.y * matrix.get(1, 2) + vec.z * matrix.get(2, 2) + matrix.get(3, 2);
-    const w = vec.x * matrix.get(0, 3) + vec.y * matrix.get(1, 3) + vec.z * matrix.get(2, 3) + matrix.get(3, 3);
+    newVec.x = vec.x * matrix.data[0, 0] + vec.y * matrix.data[1, 0] + vec.z * matrix.data[2, 0] + matrix.data[3, 0];
+    newVec.y = vec.x * matrix.data[0, 1] + vec.y * matrix.data[1, 1] + vec.z * matrix.data[2, 1] + matrix.data[3, 1];
+    newVec.z = vec.x * matrix.data[0, 2] + vec.y * matrix.data[1, 2] + vec.z * matrix.data[2, 2] + matrix.data[3, 2];
+    const w = vec.x * matrix.data[0, 3] + vec.y * matrix.data[1, 3] + vec.z * matrix.data[2, 3] + matrix.data[3, 3];
 
     if (w != 0) newVec.div(w);
     return newVec;
@@ -75,15 +75,15 @@ hlp.Matrix = class {
   static quickInverse(m) {
     // only for rotation/translation matrixs
     const matrix = new hlp.Matrix([
-      [m.get(0, 0), m.get(1, 0), m.get(2, 0), 0],
-      [m.get(0, 1), m.get(1, 1), m.get(2, 1), 0],
-      [m.get(0, 2), m.get(1, 2), m.get(2, 2), 0],
+      [m.data[0, 0], m.data[1, 0], m.data[2, 0], 0],
+      [m.data[0, 1], m.data[1, 1], m.data[2, 1], 0],
+      [m.data[0, 2], m.data[1, 2], m.data[2, 2], 0],
       [0, 0, 0, 0],
     ]);
 
-    matrix.set(3, 0, -(m.get(3, 0) * matrix.get(0, 0) + m.get(3, 1) * matrix.get(1, 0) + m.get(3, 2) * matrix.get(2, 0)));
-    matrix.set(3, 1, -(m.get(3, 0) * matrix.get(0, 1) + m.get(3, 1) * matrix.get(1, 1) + m.get(3, 2) * matrix.get(2, 1)));
-    matrix.set(3, 2, -(m.get(3, 0) * matrix.get(0, 2) + m.get(3, 1) * matrix.get(1, 2) + m.get(3, 2) * matrix.get(2, 2)));
+    matrix.set(3, 0, -(m.data[3, 0] * matrix.data[0, 0] + m.data[3, 1] * matrix.data[1, 0] + m.data[3, 2] * matrix.data[2, 0]));
+    matrix.set(3, 1, -(m.data[3, 0] * matrix.data[0, 1] + m.data[3, 1] * matrix.data[1, 1] + m.data[3, 2] * matrix.data[2, 1]));
+    matrix.set(3, 2, -(m.data[3, 0] * matrix.data[0, 2] + m.data[3, 1] * matrix.data[1, 2] + m.data[3, 2] * matrix.data[2, 2]));
     matrix.set(3, 3, 1);
     return matrix;
   }
@@ -158,16 +158,7 @@ hlp.Matrix = class {
     // sets every val in matrix to n
     return this.map(() => n);
   }
-
-  set(row, col, val) {
-    this.data[row][col] = val;
-    return this;
-  }
-
-  get(row, col) {
-    return this.data[row][col];
-  }
-
+  
   constrain(min, max) {
     // constrains every val in matrix
     return this.map((val) => hlp.min(hlp.max(val, min), max));

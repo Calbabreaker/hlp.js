@@ -33,6 +33,7 @@ hlp.AudioSynth = class {
 
   dispose(thread) {
     delete this.threads[thread];
+    return this;
   }
 
   newThread(filter = this.context.destination) {

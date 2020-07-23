@@ -11,6 +11,7 @@ hlp.Colour = class {
     this.c2 = c2;
     this.c3 = c3;
 
+    // if string ends with A (alpha)
     if (this.colourMode.substr(-1) === "a") this.a = a || 255;
   }
 
@@ -19,6 +20,7 @@ hlp.Colour = class {
     return hlp.Colour.toString(this.c1, this.c2, this.c3, this.a, this.colourMode);
   }
 
+  // creates a string friendly with css styles
   static toString(c1, c2 = c1, c3 = c1, a = 255, colourMode = hlp.RBG) {
     if (colourMode === hlp.RBG) {
       return `rgb(${c1}, ${c2}, ${c3}, ${a})`;
