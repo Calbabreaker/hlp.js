@@ -26,7 +26,7 @@ hlp.Renderer2D = class {
     if (str !== this._cacheFill) {
       this.ctx.fillStyle = str;
       this._cacheFill = str;
-    }
+    } 
   }
 
   stroke(str) {

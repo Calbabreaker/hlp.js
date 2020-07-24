@@ -4,25 +4,25 @@ hlp.Dictionary = class Dictionary {
   }
 
   contains(key) {
-    return this.data[key.toString()] != null;
+    return this.data[key] != null;
   }
 
   get(key) {
-    return this.data[key.toString()];
+    return this.data[key];
   }
 
   set(key, val) {
-    this.data[key.toString()] = val;
+    this.data[key] = val;
     return this;
   }
 
   add(key, val) {
-    this.data[key.toString()] = val;
+    this.data[key] = val;
     return this;
   }
 
   remove(key) {
-    this.data[key.toString()] = null;
+    this.data[key] = null;
     return this;
   }
 

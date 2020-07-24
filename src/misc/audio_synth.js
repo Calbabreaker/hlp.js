@@ -8,7 +8,7 @@ hlp.AudioSynth = class {
     if (AudioContext == null) return alert("Your browser does not support the AudioContext!");
     this.context = new AudioContext();
     this.threads = {};
-    this._counter = 0;
+    this.uniqueIdGen = new hlp.UniqueIDGen();
   }
 
   play(thread, freq, vol, wave, when = 0) {
@@ -49,10 +49,10 @@ hlp.AudioSynth = class {
     selThread.compressor.connect(this.context.destination);
     selThread.startTime = 0;
 
-    this.threads[this._counter] = selThread;
-    this._counter++;
+    const id = this.uniqueIdGen.gen();
+    this.threads[id] = selThread;
 
-    return this._counter - 1;
+    return id;
   }
 
   setWaveType(thread, wave) {
