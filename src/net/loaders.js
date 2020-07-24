@@ -1,4 +1,4 @@
-// loadind functions that uses promises
+// loading functions that uses promises
 
 hlp.loadString = async (url) => {
   const response = await fetch(url);

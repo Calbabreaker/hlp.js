@@ -185,22 +185,21 @@ hlp.Canvas = class {
   }
 
   resizeCanvas(w, h) {
-    if (this.isFull) this.aspectRatio = this.height / this.width;
-    this._renderer._rendererResize(w, h);
+    if (this._renderer != null) this._renderer.rendererResize(w, h);
 
     this.width = w;
     this.height = h;
-    if (this.cavnas != null) {
+    if (this.canvas != null) {
       this.canvas.width = this.width;
       this.canvas.height = this.height;
     }
   }
 
   _resizeFull() {
-    let newInnerHeight = innerHeight;
+    let newInnerHeight = window.innerHeight;
     if (this.aspectRatio != null) {
-      const aspectHeight = innerWidth / this.aspectRatio;
-      if (aspectHeight < innerHeight) newInnerHeight = aspectHeight;
+      const aspectHeight = window.innerWidth / this.aspectRatio;
+      if (aspectHeight < window.innerHeight) newInnerHeight = aspectHeight;
     }
 
     this.resizeCanvas(this.aspectRatio != null ? newInnerHeight * this.aspectRatio : innerWidth, newInnerHeight);

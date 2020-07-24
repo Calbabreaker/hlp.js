@@ -26,7 +26,7 @@ hlp.Renderer2D = class {
     if (str !== this._cacheFill) {
       this.ctx.fillStyle = str;
       this._cacheFill = str;
-    } 
+    }
   }
 
   stroke(str) {
@@ -158,8 +158,8 @@ hlp.Renderer2D = class {
     this.ctx.textAlign = mode;
   }
 
-  _rendererResize(w, h) {
+  rendererResize(w, h) {
     this.width = w;
-    this.hirght = h;
+    this.height = h;
   }
 };
