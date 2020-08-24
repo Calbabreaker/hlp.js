@@ -1,29 +1,16 @@
+// init of hlp
 if (window.hlp != null) {
-  alert("An instance of the hlp libary is already in use!");
-  console.error("An instance of the hlp libary is already in use! Things will not work as expected.");
+  alert("Cannot import hlp, instance of the hlp libary is already in use!");
+  console.error("Cannot import hlp, instance of the hlp libary is already in use!");
 } else {
   const hlp = {};
   window.hlp = hlp;
 
-  // some constants
-  hlp.FULL = "FULL";
-  hlp.hlp2D = "hlp2D";
-  hlp.hlpWEBGL = "hlpWEGL";
+  // import all the modules
+  hlp.Canvas = require("./graphics/canvas");
 
-  hlp.json = "json";
-  hlp.text = "text";
-  hlp.blob = "blob";
-
-  hlp.RGB = "RGB";
-  hlp.RGBA = "RGBA";
-  hlp.HSL = "HSL";
-  hlp.HSLA = "HSLA";
-
-  hlp.CENTER = "center";
-  hlp.LEFT = "left";
-  hlp.RIGHT = "right";
-  hlp.START = "start";
-  hlp.END = "end";
+  Object.assign(hlp, require("./misc/constants"));
+  Object.assign(hlp, require("./math/calculations"));
 
   console.log("--- hlp.js ---");
 }

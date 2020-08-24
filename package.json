@@ -1,0 +1,31 @@
+{
+  "name": "hlp.js",
+  "version": "1.0.2",
+  "description": "A library to help you with common javascript things",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "build": "webpack --mode=production & webpack --mode=production --env.MINIMIZE"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Calbabreaker/hlp.js.git"
+  },
+  "keywords": [
+    "library",
+    "javascript",
+    "helper"
+  ],
+  "author": "Calbabreaker",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/Calbabreaker/hlp.js/issues"
+  },
+  "homepage": "https://github.com/Calbabreaker/hlp.js#readme",
+  "devDependencies": {
+    "webpack": "^4.44.1",
+    "webpack-cli": "^3.3.12"
+  },
+  "dependencies": {}
+}

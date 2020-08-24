@@ -16,50 +16,22 @@ Comming Soon!
 
 The demo folder contains demos for different things. Go to the [repl](https://hlpjs.calbabreaker1.repl.co/demo).
 
-## SRC files
+## Source files
 
-These are the script tags for the lastest hlp.js
+All of the source files for hlp are located in src/
 
-```html
-<script src="/src/main.js"></script>
+To compile the source files yourselves into build/hlp.js and build/hlp.min.js
 
-<script src="/src/math/matrix.js"></script>
-<script src="/src/math/vector.js"></script>
-<script src="/src/math/basic.js"></script>
-
-<script src="/src/graphics/rendererGL.js"></script>
-<script src="/src/graphics/colour.js"></script>
-<script src="/src/graphics/canvas.js"></script>
-<script src="/src/graphics/renderer2D.js"></script>
-
-<script src="/src/net/loaders.js"></script>
-<script src="/src/net/http.js"></script>
-
-<script src="/src/game/calls.js"></script>
-<script src="/src/game/controller2D.js"></script>
-<script src="/src/game/body2D.js"></script>
-<script src="/src/game/ecs_world.js"></script>
-<script src="/src/game/ecs_primitives.js"></script>
-
-<script src="/src/misc/misc.js"></script>
-<script src="/src/misc/audio_synth.js"></script>
-
-<script src="/src/utils/array.js"></script>
-<script src="/src/utils/strings.js"></script>
-<script src="/src/utils/unique_id_gen.js"></script>
-<script src="/src/utils/dictionary.js"></script>
-```
-
-To compile the source files yourselves into lib/hlp.js
+First install dependencies
 
 ```sh
-sh scripts/compile.sh
+npm install
 ```
 
-To minify the compiled file
+Then run (uses webpack)
 
 ```sh
-sh scripts/minify.sh
+npm run build
 ```
 
 ## LICENSE

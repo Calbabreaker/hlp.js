@@ -1,6 +1,8 @@
-// a vector for storing positions and doing math with it
+import {} from "./trigonometry"
+import from "./calculations"
 
-hlp.Vector = class {
+// a vector for storing positions and doing math with it
+class Vector {
   constructor(x = 0, y = 0, z = 0) {
     this.x = x;
     this.y = y;
@@ -9,7 +11,7 @@ hlp.Vector = class {
 
   add(val) {
     // adds every axis with a number or a vector
-    if (val instanceof hlp.Vector) (this.x += val.x), (this.y += val.y), (this.z += val.z);
+    if (val instanceof Vector) (this.x += val.x), (this.y += val.y), (this.z += val.z);
     else (this.x += val), (this.y += val), (this.z += val);
     return this;
   }
@@ -20,7 +22,7 @@ hlp.Vector = class {
   }
 
   sub(val) {
-    if (val instanceof hlp.Vector) (this.x -= val.x), (this.y -= val.y), (this.z -= val.z);
+    if (val instanceof Vector) (this.x -= val.x), (this.y -= val.y), (this.z -= val.z);
     else (this.x -= val), (this.y -= val), (this.z -= val);
     return this;
   }
@@ -30,7 +32,7 @@ hlp.Vector = class {
   }
 
   div(val) {
-    if (val instanceof hlp.Vector) (this.x /= val.x), (this.y /= val.y), (this.z /= val.z);
+    if (val instanceof Vector) (this.x /= val.x), (this.y /= val.y), (this.z /= val.z);
     else (this.x /= val), (this.y /= val), (this.z /= val);
     return this;
   }
@@ -40,7 +42,7 @@ hlp.Vector = class {
   }
 
   mult(val) {
-    if (val instanceof hlp.Vector) (this.x *= val.x), (this.y *= val.y), (this.z *= val.z);
+    if (val instanceof Vector) (this.x *= val.x), (this.y *= val.y), (this.z *= val.z);
     else (this.x *= val), (this.y *= val), (this.z *= val);
     return this;
   }
@@ -50,7 +52,7 @@ hlp.Vector = class {
   }
 
   static crossProduct(v1, v2) {
-    const vector = new hlp.Vector();
+    const vector = new Vector();
     vector.x = v1.y * v2.z - v1.z * v2.y;
     vector.y = v1.z * v2.x - v1.x * v2.z;
     vector.z = v1.x * v2.y - v1.y * v2.x;
@@ -61,8 +63,8 @@ hlp.Vector = class {
     return this.x * vec2.x + this.y * vec2.y + this.z * vec2.z;
   }
 
-  copy() {
-    return new hlp.Vector(this.x, this.y, this.z);
+  clone() {
+    return new Vector(this.x, this.y, this.z);
   }
 
   set(x = 0, y = 0, z = 0) {
@@ -78,7 +80,7 @@ hlp.Vector = class {
 
   mag() {
     // gets the len of the vector
-    return hlp.sqrt(this.magSq());
+    return sqrt(this.magSq());
   }
 
   normalise() {
@@ -93,7 +95,7 @@ hlp.Vector = class {
   }
 
   dist(vec) {
-    return hlp.dist(this.x, this.y, this.z, vec.x, vec.y, vec.z);
+    return dist(this.x, this.y, this.z, vec.x, vec.y, vec.z);
   }
 
   static dist(vec1, vec2) {
@@ -106,22 +108,22 @@ hlp.Vector = class {
   }
 
   heading() {
-    const h = hlp.atan2(this.y, this.x);
-    return hlp.toDegrees(h);
+    const h = atan2(this.y, this.x);
+    return toDegrees(h);
   }
 
   rotate(a) {
-    const newHeading = hlp.toRadians(this.heading() + a);
+    const newHeading = radians(this.heading() + a);
     const mag = this.mag();
-    this.x = hlp.cos(newHeading) * mag;
-    this.y = hlp.sin(newHeading) * mag;
+    this.x = cos(newHeading) * mag;
+    this.y = sin(newHeading) * mag;
     return this;
   }
 
   rotateTo(a) {
     const mag = this.mag();
-    this.x = hlp.cos(a) * mag;
-    this.y = hlp.sin(a) * mag;
+    this.x = cos(a) * mag;
+    this.y = sin(a) * mag;
     return this;
   }
 
@@ -134,11 +136,13 @@ hlp.Vector = class {
   }
 
   static fromAngle(angle, len = 1) {
-    angle = hlp.toRadians(angle);
-    return new hlp.Vector(len * hlp.cos(angle), len * hlp.sin(angle), 0);
+    angle = radians(angle);
+    return new Vector(len * Math.cos(angle), len * sin(angle), 0);
   }
 
   static random2D(len = 1) {
-    return hlp.Vector.fromAngle(hlp.random(0, 360)).mult(len);
+    return Vector.fromAngle(random(0, 360)).mult(len);
   }
 };
+
+export default Vector;
