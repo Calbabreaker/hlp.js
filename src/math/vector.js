@@ -119,10 +119,9 @@ hlp.Vector = class {
   }
 
   rotateTo(a) {
-    const heading = this.heading();
     const mag = this.mag();
-    this.x = hlp.cos(heading) * mag;
-    this.y = hlp.sin(heading) * mag;
+    this.x = hlp.cos(a) * mag;
+    this.y = hlp.sin(a) * mag;
     return this;
   }
 
@@ -141,16 +140,5 @@ hlp.Vector = class {
 
   static random2D(len = 1) {
     return hlp.Vector.fromAngle(hlp.random(0, 360)).mult(len);
-  }
-
-  // down here contains functions useful for 3d
-  static intersectPlane(planePoint, planeNormal, lineStart, lineEnd) {
-    planeNormal = hlp.Vector.normalise(planeNormal);
-    const planeDirection = -planeNormal.dotProduct(planePoint);
-    const ad = lineStart.dotProduct(planeNormal);
-    const bd = lineEnd.dotProduct(planeNormal);
-    const t = (-planeDirection - ad) / (bd - ad);
-    const newLine = hlp.Vector.sub(lineEnd, lineStart).mult(t).add(lineStart);
-    return newLine;
   }
 };

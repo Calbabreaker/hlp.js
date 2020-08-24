@@ -9,6 +9,10 @@ hlp.FOUR_PI = hlp.PI * 4;
 hlp.HALF_PI = hlp.PI / 2;
 hlp.QUARTER_PI = hlp.PI / 4;
 
+// contants so faster calculation when converting
+hlp._DEG_TO_RAD = hlp.PI / 180;
+hlp._RAD_TO_DEG = 180 / hlp.PI;
+
 hlp._y2Guass = 0;
 hlp._gaussianPrev = false;
 
@@ -17,11 +21,11 @@ hlp.map = (value, low1, high1, low2, high2) => {
 };
 
 hlp.toRadians = (degrees) => {
-  return (degrees * hlp.PI) / 180;
+  return degrees * hlp._DEG_TO_RAD;
 };
 
 hlp.toDegrees = (radians) => {
-  return radians * (180 / hlp.PI);
+  return radians * hlp._RAD_TO_DEG;
 };
 
 hlp.lerp = (start, stop, amt) => {
