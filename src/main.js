@@ -7,7 +7,7 @@ if (window.hlp != null) {
   window.hlp = hlp;
 
   // import all the modules
-  hlp.Canvas = require("./graphics/canvas");
+  hlp.Canvas = require("./graphics/canvas").default;
 
   Object.assign(hlp, require("./misc/constants"));
   Object.assign(hlp, require("./math/calculations"));

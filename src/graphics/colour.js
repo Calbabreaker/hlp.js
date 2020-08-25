@@ -1,5 +1,7 @@
-hlp.Colour = class {
-  constructor(c1, c2, c3, a = 255, colourMode = hlp.RGB) {
+import * as constants from "../misc/constants";
+
+class Colour {
+  constructor(c1, c2, c3, a = 255, colourMode = constants.RGB) {
     this.colourMode = colourMode;
 
     this.a = 255;
@@ -17,13 +19,15 @@ hlp.Colour = class {
 
   // creates string friendly for ctx
   toString() {
-    return hlp.Colour.toString(this.c1, this.c2, this.c3, this.a, this.colourMode);
+    return Colour.toString(this.c1, this.c2, this.c3, this.a, this.colourMode);
   }
 
   // creates a string friendly with css styles
-  static toString(c1, c2 = c1, c3 = c1, a = 255, colourMode = hlp.RBG) {
-    if (colourMode === hlp.RBG) {
+  static toString(c1, c2 = c1, c3 = c1, a = 255, colourMode = constants.RGB) {
+    if (colourMode === constants.RGB) {
       return `rgb(${c1}, ${c2}, ${c3}, ${a})`;
     }
   }
-};
+}
+
+export default Colour;

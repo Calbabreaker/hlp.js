@@ -1,5 +1,4 @@
-import {} from "./trigonometry"
-import from "./calculations"
+import * as math from "./calculations";
 
 // a vector for storing positions and doing math with it
 class Vector {
@@ -80,7 +79,7 @@ class Vector {
 
   mag() {
     // gets the len of the vector
-    return sqrt(this.magSq());
+    return math.sqrt(this.magSq());
   }
 
   normalise() {
@@ -95,7 +94,7 @@ class Vector {
   }
 
   dist(vec) {
-    return dist(this.x, this.y, this.z, vec.x, vec.y, vec.z);
+    return math.dist(this.x, this.y, this.z, vec.x, vec.y, vec.z);
   }
 
   static dist(vec1, vec2) {
@@ -108,22 +107,22 @@ class Vector {
   }
 
   heading() {
-    const h = atan2(this.y, this.x);
+    const h = math.atan2(this.y, this.x);
     return toDegrees(h);
   }
 
   rotate(a) {
     const newHeading = radians(this.heading() + a);
     const mag = this.mag();
-    this.x = cos(newHeading) * mag;
-    this.y = sin(newHeading) * mag;
+    this.x = math.cos(newHeading) * mag;
+    this.y = math.sin(newHeading) * mag;
     return this;
   }
 
   rotateTo(a) {
     const mag = this.mag();
-    this.x = cos(a) * mag;
-    this.y = sin(a) * mag;
+    this.x = math.cos(a) * mag;
+    this.y = math.sin(a) * mag;
     return this;
   }
 
@@ -136,13 +135,13 @@ class Vector {
   }
 
   static fromAngle(angle, len = 1) {
-    angle = radians(angle);
-    return new Vector(len * Math.cos(angle), len * sin(angle), 0);
+    angle = math.radians(angle);
+    return new Vector(len * math.cos(angle), len * math.sin(angle), 0);
   }
 
   static random2D(len = 1) {
-    return Vector.fromAngle(random(0, 360)).mult(len);
+    return Vector.fromAngle(math.random(0, 360)).mult(len);
   }
-};
+}
 
 export default Vector;

@@ -7,8 +7,8 @@ export const E = Math.E;
 export const DEG_TO_RAD = Math.PI / 180;
 export const RAD_TO_DEG = 180 / Math.PI;
 
-export const FULL = "FULL";
-export const hlp2D = "hlp2D";
+export const FULL = "full";
+export const renderer2D = "renderer2D";
 
 export const JSON = "json";
 export const TEXT = "text";
@@ -16,8 +16,8 @@ export const BLOB = "blob";
 
 export const RGB = "rgb";
 export const RGBA = "rgba";
-export const HSL = "HSL";
-export const HSLA = "HSLA";
+export const HSL = "hsl";
+export const HSLA = "hsla";
 
 export const CENTER = "center";
 export const LEFT = "left";

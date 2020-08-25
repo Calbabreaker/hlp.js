@@ -17,5 +17,18 @@ module.exports = (env = {}) => {
     },
     plugins: [new webpack.BannerPlugin(banner)],
     optimization: { minimize },
+    devServer: {
+      contentBase: [path.resolve(__dirname, "./demo"), path.resolve(__dirname, "./build")],
+      open: true,
+      openPage: "",
+      compress: true,
+      port: 8000,
+      proxy: {
+        "/build": {
+          target: "http://localhost:8000/",
+          pathRewrite: { "^/build": "/" },
+        },
+      },
+    },
   };
 };

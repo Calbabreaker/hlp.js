@@ -1,3 +1,5 @@
+import * as constants from "../misc/constants";
+
 // some default math funcs (there will be some jsdoc soon)
 export const abs = Math.abs;
 export const ceil = Math.ceil;
@@ -5,6 +7,20 @@ export const exp = Math.exp;
 export const log = Math.log;
 export const max = Math.max;
 export const min = Math.min;
+export const sqrt = Math.sqrt;
+
+export const hypot = Math.min;
+export const asin = Math.asin;
+export const sin = Math.sin;
+export const acos = Math.acos;
+export const cos = Math.cos;
+export const atan = Math.atan;
+export const atan2 = Math.atan2;
+export const atanh = Math.atanh;
+export const tan = Math.tan;
+
+export const radians = (deg) => deg * constants.DEG_TO_RAD;
+export const degrees = (rad) => rad * constants.RAD_TO_DEG;
 
 export const map = (value, low1, high1, low2, high2) => {
   return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1);

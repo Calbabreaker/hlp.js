@@ -1,7 +1,6 @@
 /*!
- * hlp.js v1.0.2 by Calbabreaker 2020-08-24 
+ * hlp.js v1.0.2 by Calbabreaker 2020-08-25 
  * Free to use. GPL-3.0.
- * 
  */
 /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -102,7 +101,10 @@ if (window.hlp != null) {
   window.hlp = hlp;
 
   // import all the modules
-  hlp.Canvas = __webpack_require__(1);
+  hlp.Canvas = __webpack_require__(1).default;
+
+  Object.assign(hlp, __webpack_require__(2));
+  Object.assign(hlp, __webpack_require__(3));
 
   console.log("--- hlp.js ---");
 }
@@ -325,6 +327,154 @@ class Canvas {
 }
 
 /* harmony default export */ __webpack_exports__["default"] = (Canvas);
+
+
+/***/ }),
+/* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PI", function() { return PI; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TWO_PI", function() { return TWO_PI; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FOUR_PI", function() { return FOUR_PI; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HALF_PI", function() { return HALF_PI; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QUARTER_PI", function() { return QUARTER_PI; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "E", function() { return E; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DEG_TO_RAD", function() { return DEG_TO_RAD; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RAD_TO_DEG", function() { return RAD_TO_DEG; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "FULL", function() { return FULL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hlp2D", function() { return hlp2D; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "JSON", function() { return JSON; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "TEXT", function() { return TEXT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "BLOB", function() { return BLOB; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RGB", function() { return RGB; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RGBA", function() { return RGBA; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HSL", function() { return HSL; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "HSLA", function() { return HSLA; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CENTER", function() { return CENTER; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LEFT", function() { return LEFT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RIGHT", function() { return RIGHT; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "START", function() { return START; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "END", function() { return END; });
+const PI = Math.PI;
+const TWO_PI = Math.PI * 2;
+const FOUR_PI = Math.PI * 4;
+const HALF_PI = Math.PI / 2;
+const QUARTER_PI = Math.PI / 4;
+const E = Math.E;
+const DEG_TO_RAD = Math.PI / 180;
+const RAD_TO_DEG = 180 / Math.PI;
+
+const FULL = "FULL";
+const hlp2D = "hlp2D";
+
+const JSON = "json";
+const TEXT = "text";
+const BLOB = "blob";
+
+const RGB = "rgb";
+const RGBA = "rgba";
+const HSL = "HSL";
+const HSLA = "HSLA";
+
+const CENTER = "center";
+const LEFT = "left";
+const RIGHT = "right";
+const START = "start";
+const END = "end";
+
+
+/***/ }),
+/* 3 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "abs", function() { return abs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ceil", function() { return ceil; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "exp", function() { return exp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "log", function() { return log; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "max", function() { return max; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "min", function() { return min; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "map", function() { return map; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "lerp", function() { return lerp; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "constrain", function() { return constrain; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "random", function() { return random; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "randInt", function() { return randInt; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dist", function() { return dist; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "randomGaussian", function() { return randomGaussian; });
+// some default math funcs (there will be some jsdoc soon)
+const abs = Math.abs;
+const ceil = Math.ceil;
+const exp = Math.exp;
+const log = Math.log;
+const max = Math.max;
+const min = Math.min;
+
+const map = (value, low1, high1, low2, high2) => {
+  return low2 + ((high2 - low2) * (value - low1)) / (high1 - low1);
+};
+
+const lerp = (start, stop, amt) => {
+  return amt * (stop - start) + start;
+};
+
+const constrain = (n, low, high) => {
+  return Math.max(Math.min(n, high), low);
+};
+
+const random = (min, max) => {
+  if (max == null) {
+    max = min;
+    min = 0;
+  }
+
+  return Math.random() * (min - max) + max;
+};
+
+const randInt = (min, max) => {
+  if (max == null) {
+    max = min;
+    min = 0;
+  }
+
+  return Math.floor(Math.random(min, max + 1));
+};
+
+const dist = (...args) => {
+  if (args.length == 4) {
+    // 2d
+    return Math.hypot(args[2] - args[0], args[3] - args[1]);
+  } else if (args.length == 6) {
+    // 3d
+    return Math.hypot(args[3] - args[0], args[4] - args[1], args[5] - args[2]);
+  }
+};
+
+let y2Guass = 0;
+let gaussianPrev = false;
+
+// randomGaussian with mean and standard distribution
+const randomGaussian = (mean = 0, sd = 1) => {
+  let y1, x1, x2, w;
+  if (gaussianPrev) {
+    y1 = y2Guass;
+    gaussianPrev = false;
+  } else {
+    do {
+      x1 = Math.random(0, 2) - 1;
+      x2 = Math.random(0, 2) - 1;
+      w = x1 * x1 + x2 * x2;
+    } while (w >= 1);
+    w = Math.sqrt((-2 * Math.log(w)) / w);
+    y1 = x1 * w;
+    y2Guass = x2 * w;
+    gaussianPrev = true;
+  }
+
+  return y1 * sd + mean;
+};
 
 
 /***/ })

@@ -6,6 +6,7 @@
     "lib": "lib"
   },
   "scripts": {
+    "dev": "webpack-dev-server --mode development --host 0.0.0.0 --hot --open --useLocalIp",
     "build": "webpack --mode=production & webpack --mode=production --env.MINIMIZE"
   },
   "repository": {
@@ -27,5 +28,7 @@
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12"
   },
-  "dependencies": {}
+  "dependencies": {
+    "webpack-dev-server": "^3.11.0"
+  }
 }

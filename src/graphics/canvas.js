@@ -1,9 +1,14 @@
+import Renderer2D from "./renderer2D";
+import Vector from "../math/vector";
+import Colour from "./colour";
+import * as constants from "../misc/constants";
+
 // the canvas object for canvas drawing
 
 class Canvas {
-  constructor(width, height, renderer = hlp.hlp2D) {
+  constructor(width, height, renderer = constants.renderer2D) {
     // initialize variables
-    if (width === hlp.FULL) {
+    if (width === constants.FULL) {
       if (height != null) this.aspectRatio = height;
       this.isFull = true;
       this._resizeFull();
@@ -20,8 +25,8 @@ class Canvas {
     this.canvas.height = this.height;
     this.canvas.requestPointerLock = this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock;
 
-    if (renderer == hlp.hlp2D) {
-      this._renderer = new hlp.Renderer2D(this.canvas);
+    if (renderer == constants.renderer2D) {
+      this._renderer = new Renderer2D(this.canvas);
     } else return console.error("Unknown Renderer!");
 
     document.body.appendChild(this.canvas); // adds to the body
@@ -32,8 +37,8 @@ class Canvas {
       });
     }
 
-    this.mouse = new hlp.Vector(0, 0);
-    this.mouseMovement = new hlp.Vector(0, 0);
+    this.mouse = new Vector(0, 0);
+    this.mouseMovement = new Vector(0, 0);
 
     document.body.addEventListener("mousemove", (event) => {
       const clientRect = this.canvas.getBoundingClientRect();
@@ -46,12 +51,12 @@ class Canvas {
     if (typeof c1 == "string") {
       // if using string
       this._renderer.fill(c1);
-    } else if (c1 instanceof hlp.Colour) {
-      // if using cool hlp colour
+    } else if (c1 instanceof Colour) {
+      // if using cool colour
       this._renderer.fill(c1.toString());
     } else {
       // just numbers
-      this._renderer.fill(hlp.Colour.toString(c1, c2, c3, a));
+      this._renderer.fill(Colour.toString(c1, c2, c3, a));
     }
   }
 
@@ -59,10 +64,10 @@ class Canvas {
     // same thing as fill
     if (typeof c1 == "string") {
       this._renderer.stroke(c1);
-    } else if (c1 instanceof hlp.Colour) {
+    } else if (c1 instanceof Colour) {
       this._renderer.stroke(c1.toString());
     } else {
-      this._renderer.stroke(hlp.Colour.toString(c1, c2, c3, a));
+      this._renderer.stroke(Colour.toString(c1, c2, c3, a));
     }
   }
 
@@ -89,7 +94,7 @@ class Canvas {
   }
 
   vertex(x, y) {
-    if (x instanceof hlp.Vector) {
+    if (x instanceof Vector) {
       // if vector, treat x as a vector
       this._renderer.vertex(x.x, x.y);
     } else {
@@ -99,32 +104,32 @@ class Canvas {
   }
 
   rect(x, y, width, height) {
-    if (x instanceof hlp.Vector) this._renderer.rect(x.x, x.y, y, width);
+    if (x instanceof Vector) this._renderer.rect(x.x, x.y, y, width);
     else this._renderer.rect(x, y, width, height);
   }
 
   image(img, x, y, width = img.width, height = img.height) {
-    if (x instanceof hlp.Vector) this._renderer.image(img, x.x, x.y, y, width);
+    if (x instanceof Vector) this._renderer.image(img, x.x, x.y, y, width);
     else this._renderer.image(img, x, y, width, height);
   }
 
   triangle(x1, y1, x2, y2, x3, y3) {
-    if (x1 instanceof hlp.Vector) this._renderer.triangle(x1.x, x1.y, y1.x, y1.y, x2.x, x2.y);
+    if (x1 instanceof Vector) this._renderer.triangle(x1.x, x1.y, y1.x, y1.y, x2.x, x2.y);
     else this._renderer.triangle(x1, y1, x2, y2, x3, y3);
   }
 
   triangleInflate(x1, y1, x2, y2 = 1, x3, y3, inflateAmount = 1) {
-    if (x1 instanceof hlp.Vector) this._renderer.triangleInflate(x1, y1, x2, y2);
+    if (x1 instanceof Vector) this._renderer.triangleInflate(x1, y1, x2, y2);
     else this._renderer.triangleInflate(new Vector(x1, y1), new Vector(x2, y2), new Vector(x3, y3), inflateAmount);
   }
 
   point(x, y) {
-    if (x instanceof hlp.Vector) this._renderer.point(x.x, x.y);
+    if (x instanceof Vector) this._renderer.point(x.x, x.y);
     else this._renderer.point(x, y);
   }
 
   line(x1, y1, x2, y2) {
-    if (x1 instanceof hlp.Vector) this._renderer.line(x1.x, x1.y, y1.x, y1.y);
+    if (x1 instanceof Vector) this._renderer.line(x1.x, x1.y, y1.x, y1.y);
     else this._renderer.line(x1, y1, x2, y2);
   }
 
@@ -138,16 +143,16 @@ class Canvas {
   }
 
   translate(x, y = 0) {
-    if (x instanceof hlp.Vector) this._renderer.translate(x.x, x.y);
+    if (x instanceof Vector) this._renderer.translate(x.x, x.y);
     else this._renderer.translate(x, y);
   }
 
   rotate(x) {
-    this._renderer.rotate(hlp.toRadians(x));
+    this._renderer.rotate(toRadians(x));
   }
 
   scale(x, y = 0) {
-    if (x instanceof hlp.Vector) this._renderer.scale(x.x, x.y);
+    if (x instanceof Vector) this._renderer.scale(x.x, x.y);
     else this._renderer.scale(x, y);
   }
 
@@ -162,7 +167,7 @@ class Canvas {
 
   // TEXT STUFF DOWN HERE
   text(str, x, y) {
-    if (x instanceof hlp.Vector) this._renderer.text(str, x.x, x.y);
+    if (x instanceof Vector) this._renderer.text(str, x.x, x.y);
     else this._renderer.text(str, x, y);
   }
 

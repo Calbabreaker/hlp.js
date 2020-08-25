@@ -1,4 +1,6 @@
-hlp.Renderer2D = class {
+import Vector from "../math/vector";
+
+class Renderer2D {
   constructor(canvas) {
     this.canvas = canvas;
 
@@ -8,7 +10,7 @@ hlp.Renderer2D = class {
 
     this._doFill = true;
     this._doStroke = true;
-    this._firstPosShape = new hlp.Vector(0, 0);
+    this._firstPosShape = new Vector(0, 0);
     this._firstPosShape._using = false;
     this._font = "Arial";
     this._fontSize = 10;
@@ -86,7 +88,7 @@ hlp.Renderer2D = class {
 
   triangleInflate(v1, v2, v3, inflateAmount) {
     // calculate middle
-    const center = new hlp.Vector(v1.x + v2.x + v3.x, v1.y + v2.y + v3.y).div(3);
+    const center = new Vector(v1.x + v2.x + v3.x, v1.y + v2.y + v3.y).div(3);
     v1 = hlp.Vector.sub(v1, center);
     v2 = hlp.Vector.sub(v2, center);
     v3 = hlp.Vector.sub(v3, center);
@@ -162,4 +164,6 @@ hlp.Renderer2D = class {
     this.width = w;
     this.height = h;
   }
-};
+}
+
+export default Renderer2D;
