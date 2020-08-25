@@ -1,4 +1,4 @@
-hlp.httpPost = async (url, type, data, options = {}) => {
+export const httpPost = async (url, type, data, options = {}) => {
   const response = await fetch(url, {
     method: "POST",
     mode: options.mode || "cors",
@@ -12,7 +12,7 @@ hlp.httpPost = async (url, type, data, options = {}) => {
     body: JSON.stringify(data),
   });
 
-  if (type == hlp.json) return await response.json();
-  else if (type == hlp.blob) return await response.blob();
+  if (type == hlp.JSON) return await response.json();
+  else if (type == hlp.BLOB) return await response.blob();
   else return await response.text();
 };

@@ -1,11 +1,5 @@
-hlp.ECSComponent = class {
-  constructor() {}
-};
+export const System = class {};
 
-hlp.ECSSystem = class {
-  constructor() {}
-};
+export const Entity = class {};
 
-hlp.ECSEntity = class {
-  constructor() {}
-};
+export const Component = class {};

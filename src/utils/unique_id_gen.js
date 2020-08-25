@@ -1,4 +1,4 @@
-hlp.UniqueIDGen = class {
+class UniqueIDGen {
   constructor(incrementerCount = 5) {
     this.increments = new Array(incrementerCount).fill(0);
     this.incrementPointer = 0;
@@ -19,4 +19,6 @@ hlp.UniqueIDGen = class {
 
     return id;
   }
-};
+}
+
+export default UniqueIDGen;

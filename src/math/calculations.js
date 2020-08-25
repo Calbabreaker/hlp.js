@@ -11,7 +11,7 @@ export const min = Math.min;
 export const sqrt = Math.sqrt;
 export const round = Math.round;
 
-export const hypot = Math.min;
+export const hypot = Math.hypot;
 export const asin = Math.asin;
 export const sin = Math.sin;
 export const acos = Math.acos;

@@ -1,4 +1,4 @@
-hlp.Dictionary = class Dictionary {
+class Dictionary {
   constructor() {
     this.data = {};
   }
@@ -22,11 +22,13 @@ hlp.Dictionary = class Dictionary {
   }
 
   remove(key) {
-    this.data[key] = null;
+    delete this.data[key];
     return this;
   }
 
   forEach(func) {
     Object.keys(this.data).forEach(func);
   }
-};
+}
+
+export default Dictionary;

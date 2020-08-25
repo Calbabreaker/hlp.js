@@ -1,8 +1,12 @@
-hlp.ECSWorld = class {
+import Dictionary from "../utils/dictionary";
+import UniqueIDGen from "../utils/unique_id_gen";
+import * as ECS from "./ecs_primitives";
+
+class World {
   constructor() {
-    this.components = new hlp.Dictionary();
-    this.systems = new hlp.Dictionary();
-    this.uniqueIdGen = new hlp.UniqueIDGen();
+    this.components = new Dictionary();
+    this.systems = new Dictionary();
+    this.uniqueIdGen = new UniqueIDGen();
   }
 
   registerComponent(name, properties) {}
@@ -10,4 +14,6 @@ hlp.ECSWorld = class {
   registerSystem(systemGroup, systemClass) {}
 
   createEntity(properties) {}
-};
+}
+
+export default World;

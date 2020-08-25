@@ -1,12 +1,11 @@
 // useful for parsing strings
 
-hlp.regexEscape = (str) => {
+export const regexEscape = (str) => {
   return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
 
-hlp.smartSplit = (str, charSplit = " ", insideChar, charToDiscludeInsideChar = "") => {
-  // regex to avoid double chars
-  let formattedStr = str.split(new RegExp(`${hlp.regexEscape(charSplit)}+`, "g"));
+export const smartSplit = (str, charSplit = " ", insideChar, charToDiscludeInsideChar = "") => {
+  let formattedStr = str.split(new RegExp(`${hlp.regexEscape(charSplit)}+`, "g")); // regex to avoid double chars
   if (!formattedStr.slice(-1)[0]) formattedStr.pop(); // if last element is empty string
 
   if (insideChar != null) {
@@ -31,11 +30,11 @@ hlp.smartSplit = (str, charSplit = " ", insideChar, charToDiscludeInsideChar = "
   return formattedStr;
 };
 
-hlp.safeEscape = (unsafe) => {
+export const safeEscape = (unsafe) => {
   return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;").replace(/%/g, "&#37;");
 };
 
-hlp.copyToClipboard = async (str) => {
+export const copyToClipboard = async (str) => {
   if (!navigator.clipboard) {
     console.warn("Navigator copy not supported. Falling back on experimental.");
     // fallback for comapatipility

@@ -1,6 +1,5 @@
-import "./Vector";
+import Vector from "./vector";
 import * as math from "./calculations";
-import * as math from "./trigonometry";
 
 // This creates a multi dimensional array and stores it in this.data
 class Matrix {
