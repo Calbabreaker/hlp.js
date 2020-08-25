@@ -1,28 +1,28 @@
-const canvas = new hlp.Canvas();
+class Game extends hlp.Engine {
+  async preload() {
+    this.img = await hlp.loadImage("cool.png");
+    this.font = await hlp.loadFont("AmaticSC.ttf");
+  }
 
-let img;
-let font;
+  setup() {
+    this.canvas = new hlp.Canvas();
+  }
 
-hlp.preload = async () => {
-  const result = await Promise.all([hlp.loadImage("cool.png"), hlp.loadFont("AmaticSC.ttf")]);
-  img = result[0];
-  font = result[1];
-};
+  draw() {
+    this.canvas.push();
+    this.canvas.background(0);
+    this.canvas.image(this.img, this.canvas.width / 2, this.canvas.height / 2);
 
-hlp.setup = () => {
-  hlp.changeFPS(60);
-};
+    this.canvas.fill(0, 255, 100);
+    this.canvas.textSize(44);
+    this.canvas.textFont(this.font);
+    this.canvas.text("Me rn", 250, 250);
+    this.canvas.text(hlp.round(this.fps), 10, this.canvas.height - 10);
 
-hlp.draw = () => {
-  canvas.push();
-  canvas.background(0);
-  canvas.image(img, canvas.width / 2, canvas.height / 2);
+    this.canvas.rect(this.canvas.mouse, 50, 50);
 
-  canvas.fill(0, 255, 100);
-  canvas.textSize(44);
-  canvas.textFont(font);
-  canvas.text("Me rn", 250, 250);
-  canvas.text(hlp.round(hlp.fps), 10, canvas.height - 10);
+    this.canvas.pop();
+  }
+}
 
-  canvas.pop();
-};
+const game = new Game();
