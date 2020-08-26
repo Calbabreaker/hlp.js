@@ -1,5 +1,5 @@
-export const System = class {};
+export class System {}
 
-export const Entity = class {};
+export class Entity {}
 
-export const Component = class {};
+export class Component {}

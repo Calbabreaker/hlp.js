@@ -1,7 +1,7 @@
 import * as math from "./calculations";
 
 // a vector for storing positions and doing math with it
-class Vector {
+export class Vector {
   constructor(x = 0, y = 0, z = 0) {
     this.x = x;
     this.y = y;
@@ -143,5 +143,3 @@ class Vector {
     return Vector.fromAngle(math.random(0, 360)).mult(len);
   }
 }
-
-export default Vector;

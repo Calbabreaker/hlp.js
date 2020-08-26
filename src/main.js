@@ -7,18 +7,18 @@ if (window.hlp != null) {
   window.hlp = hlp;
 
   // import all the modules
-  hlp.Engine = require("./game/engine").default;
-  hlp.ECSWorld = require("./game/ecs_world").default;
+  Object.assign(hlp, require("./game/engine"));
+  Object.assign(hlp, require("./game/ecs_world"));
   Object.assign(hlp, require("./game/ecs_primitives"));
 
-  hlp.Canvas = require("./graphics/canvas").default;
-  hlp.Colour = require("./graphics/colour").default;
+  Object.assign(hlp, require("./graphics/canvas"));
+  Object.assign(hlp, require("./graphics/colour"));
 
   Object.assign(hlp, require("./math/calculations"));
-  hlp.Matrix = require("./math/matrix").default;
-  hlp.Vector = require("./math/vector").default;
+  Object.assign(hlp, require("./math/matrix"));
+  Object.assign(hlp, require("./math/vector"));
 
-  hlp.AudioSynth = require("./misc/audio_synth.js").default;
+  Object.assign(hlp, require("./misc/audio_synth.js"));
   Object.assign(hlp, require("./misc/constants"));
   Object.assign(hlp, require("./misc/misc"));
 
@@ -26,9 +26,9 @@ if (window.hlp != null) {
   Object.assign(hlp, require("./net/http"));
 
   Object.assign(hlp, require("./utils/array"));
-  hlp.Dictionary = require("./utils/dictionary");
+  Object.assign(hlp, require("./utils/dictionary"));
   Object.assign(hlp, require("./utils/strings"));
-  hlp.UniqueIDGen = require("./utils/unique_id_gen");
+  Object.assign(hlp, require("./utils/unique_id_gen"));
 
   console.log("--- hlp.js ---");
 }

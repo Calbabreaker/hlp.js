@@ -1,7 +1,7 @@
 // contains calls for preload, setup and draw and more
 
 // class to extend from
-class Engine {
+export class Engine {
   constructor(targetFPS = 60) {
     this.keyPressingDict = {};
     this.keyCodePressingDict = {};
@@ -151,5 +151,3 @@ class Engine {
   // draw() {}
   // setup() {}
 }
-
-export default Engine;

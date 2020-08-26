@@ -1,6 +1,6 @@
-import Vector from "../math/vector";
+import { Vector } from "../math/vector";
 
-class Renderer2D {
+export class Renderer2D {
   constructor(canvas) {
     this.canvas = canvas;
 
@@ -165,5 +165,3 @@ class Renderer2D {
     this.height = h;
   }
 }
-
-export default Renderer2D;

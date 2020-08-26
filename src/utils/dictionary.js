@@ -1,4 +1,4 @@
-class Dictionary {
+export class Dictionary {
   constructor() {
     this.data = {};
   }
@@ -30,5 +30,3 @@ class Dictionary {
     Object.keys(this.data).forEach(func);
   }
 }
-
-export default Dictionary;

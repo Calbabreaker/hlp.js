@@ -1,8 +1,8 @@
-import Vector from "./vector";
+import { Vector } from "./vector";
 import * as math from "./calculations";
 
 // This creates a multi dimensional array and stores it in this.data
-class Matrix {
+export class Matrix {
   constructor(rows = 0, cols = 0) {
     if (rows instanceof Array) {
       // create a new Matrix with data
@@ -290,5 +290,3 @@ class Matrix {
     ]);
   }
 }
-
-export default Matrix;

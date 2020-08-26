@@ -1,6 +1,6 @@
 import * as constants from "../misc/constants";
 
-class Colour {
+export class Colour {
   constructor(c1, c2, c3, a = 255, colourMode = constants.RGB) {
     this.colourMode = colourMode;
 
@@ -29,5 +29,3 @@ class Colour {
     }
   }
 }
-
-export default Colour;

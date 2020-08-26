@@ -1,11 +1,11 @@
-import Renderer2D from "./renderer2D";
-import Vector from "../math/vector";
-import Colour from "./colour";
+import { Renderer2D } from "./renderer2D";
+import { Vector } from "../math/vector";
+import { Colour } from "./colour";
 import * as constants from "../misc/constants";
 
 // the canvas object for canvas drawing
 
-class Canvas {
+export class Canvas {
   constructor(width, height, renderer = constants.renderer2D) {
     // initialize variables
     if (width === constants.FULL) {
@@ -212,5 +212,3 @@ class Canvas {
     document.body.removeChild(this.canvas);
   }
 }
-
-export default Canvas;

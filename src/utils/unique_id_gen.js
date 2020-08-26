@@ -1,4 +1,4 @@
-class UniqueIDGen {
+export class UniqueIDGen {
   constructor(incrementerCount = 5) {
     this.increments = new Array(incrementerCount).fill(0);
     this.incrementPointer = 0;
@@ -20,5 +20,3 @@ class UniqueIDGen {
     return id;
   }
 }
-
-export default UniqueIDGen;
