@@ -1,5 +1,5 @@
 /*!
- * hlp.js v1.0.2 by Calbabreaker 2020-08-28 
+ * hlp.js v1.0.2 by Calbabreaker 2020-08-29 
  * Free to use. GPL-3.0.
  */
 /******/ (function(modules) { // webpackBootstrap
@@ -94,7 +94,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "abs", function() { return abs; });
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "abs", function() { return abs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ceil", function() { return ceil; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "floor", function() { return floor; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "exp", function() { return exp; });
@@ -175,7 +175,7 @@ const randInt = (min, max) => {
     min = 0;
   }
 
-  return Math.floor(Math.random(min, max + 1));
+  return Math.floor(module.exports.random(min, max + 1));
 };
 
 const dist = (...args) => {
@@ -212,6 +212,7 @@ const randomGaussian = (mean = 0, sd = 1) => {
   return y1 * sd + mean;
 };
 
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(10)(module)))
 
 /***/ }),
 /* 1 */
@@ -451,14 +452,13 @@ class Colour {
     if (this.colourMode.substr(-1) === "a") this.a = a || 255;
   }
 
-  // creates string friendly for ctx
   toString() {
     return Colour.toString(this.c1, this.c2, this.c3, this.a, this.colourMode);
   }
 
   // creates a string friendly with css styles
   static toString(c1, c2 = c1, c3 = c1, a = 255, colourMode = _misc_constants__WEBPACK_IMPORTED_MODULE_0__["RGB"]) {
-    if (colourMode === _misc_constants__WEBPACK_IMPORTED_MODULE_0__["RGB"]) {
+    if (colourMode === _misc_constants__WEBPACK_IMPORTED_MODULE_0__["RGB"] || colourMode == _misc_constants__WEBPACK_IMPORTED_MODULE_0__["RGBA"]) {
       return `rgb(${c1}, ${c2}, ${c3}, ${a})`;
     }
   }
@@ -570,23 +570,23 @@ if (window.hlp != null) {
   Object.assign(hlp, __webpack_require__(9));
   Object.assign(hlp, __webpack_require__(6));
 
-  Object.assign(hlp, __webpack_require__(17));
+  Object.assign(hlp, __webpack_require__(18));
   Object.assign(hlp, __webpack_require__(3));
 
   Object.assign(hlp, __webpack_require__(0));
-  Object.assign(hlp, __webpack_require__(10));
+  Object.assign(hlp, __webpack_require__(11));
   Object.assign(hlp, __webpack_require__(1));
 
-  Object.assign(hlp, __webpack_require__(11));
-  Object.assign(hlp, __webpack_require__(2));
   Object.assign(hlp, __webpack_require__(12));
-
+  Object.assign(hlp, __webpack_require__(2));
   Object.assign(hlp, __webpack_require__(13));
-  Object.assign(hlp, __webpack_require__(14));
 
+  Object.assign(hlp, __webpack_require__(14));
   Object.assign(hlp, __webpack_require__(15));
-  Object.assign(hlp, __webpack_require__(5));
+
   Object.assign(hlp, __webpack_require__(16));
+  Object.assign(hlp, __webpack_require__(5));
+  Object.assign(hlp, __webpack_require__(17));
   Object.assign(hlp, __webpack_require__(4));
 
   console.log("--- hlp.js ---");
@@ -605,8 +605,8 @@ __webpack_require__.r(__webpack_exports__);
 // class to extend from
 class Engine {
   constructor(targetFPS = 60) {
-    this.keyPressingDict = {};
-    this.keyCodePressingDict = {};
+    this._keyPressingDict = {};
+    this._keyCodePressingDict = {};
 
     // handle all the calls
     this.deltaTime = 0;
@@ -786,6 +786,36 @@ class World {
 
 /***/ }),
 /* 10 */
+/***/ (function(module, exports) {
+
+module.exports = function(originalModule) {
+	if (!originalModule.webpackPolyfill) {
+		var module = Object.create(originalModule);
+		// module.parent = undefined by default
+		if (!module.children) module.children = [];
+		Object.defineProperty(module, "loaded", {
+			enumerable: true,
+			get: function() {
+				return module.l;
+			}
+		});
+		Object.defineProperty(module, "id", {
+			enumerable: true,
+			get: function() {
+				return module.i;
+			}
+		});
+		Object.defineProperty(module, "exports", {
+			enumerable: true
+		});
+		module.webpackPolyfill = 1;
+	}
+	return module;
+};
+
+
+/***/ }),
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -867,22 +897,6 @@ class Matrix {
 
     if (w != 0) newVec.div(w);
     return newVec;
-  }
-
-  static quickInverse(m) {
-    // only for rotation/translation matrixs
-    const matrix = new Matrix([
-      [m.data[(0, 0)], m.data[(1, 0)], m.data[(2, 0)], 0],
-      [m.data[(0, 1)], m.data[(1, 1)], m.data[(2, 1)], 0],
-      [m.data[(0, 2)], m.data[(1, 2)], m.data[(2, 2)], 0],
-      [0, 0, 0, 0],
-    ]);
-
-    matrix.set(3, 0, -(m.data[(3, 0)] * matrix.data[(0, 0)] + m.data[(3, 1)] * matrix.data[(1, 0)] + m.data[(3, 2)] * matrix.data[(2, 0)]));
-    matrix.set(3, 1, -(m.data[(3, 0)] * matrix.data[(0, 1)] + m.data[(3, 1)] * matrix.data[(1, 1)] + m.data[(3, 2)] * matrix.data[(2, 1)]));
-    matrix.set(3, 2, -(m.data[(3, 0)] * matrix.data[(0, 2)] + m.data[(3, 1)] * matrix.data[(1, 2)] + m.data[(3, 2)] * matrix.data[(2, 2)]));
-    matrix.set(3, 3, 1);
-    return matrix;
   }
 
   static mult(a, b) {
@@ -1088,7 +1102,7 @@ class Matrix {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1179,7 +1193,7 @@ class AudioSynth {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1207,7 +1221,7 @@ const sleep = async (ms) => {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1262,7 +1276,7 @@ const loadFont = async (url) => {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1289,7 +1303,7 @@ const httpPost = async (url, type, data, options = {}) => {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1320,7 +1334,7 @@ const getRandom = (array) => {
 
 
 /***/ }),
-/* 16 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1392,7 +1406,7 @@ const copyToClipboard = async (str) => {
 
 
 /***/ }),
-/* 17 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1603,7 +1617,7 @@ class canvas_Canvas {
 
     // initialize the canvas (creates new one)
     this.canvas = document.createElement("canvas");
-    this.canvas.classList.add("hlpDefaultCanvas");
+    this.canvas.classList.add("hlpCanvas");
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.canvas.requestPointerLock = this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock;

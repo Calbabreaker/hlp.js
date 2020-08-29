@@ -74,22 +74,6 @@ export class Matrix {
     return newVec;
   }
 
-  static quickInverse(m) {
-    // only for rotation/translation matrixs
-    const matrix = new Matrix([
-      [m.data[(0, 0)], m.data[(1, 0)], m.data[(2, 0)], 0],
-      [m.data[(0, 1)], m.data[(1, 1)], m.data[(2, 1)], 0],
-      [m.data[(0, 2)], m.data[(1, 2)], m.data[(2, 2)], 0],
-      [0, 0, 0, 0],
-    ]);
-
-    matrix.set(3, 0, -(m.data[(3, 0)] * matrix.data[(0, 0)] + m.data[(3, 1)] * matrix.data[(1, 0)] + m.data[(3, 2)] * matrix.data[(2, 0)]));
-    matrix.set(3, 1, -(m.data[(3, 0)] * matrix.data[(0, 1)] + m.data[(3, 1)] * matrix.data[(1, 1)] + m.data[(3, 2)] * matrix.data[(2, 1)]));
-    matrix.set(3, 2, -(m.data[(3, 0)] * matrix.data[(0, 2)] + m.data[(3, 1)] * matrix.data[(1, 2)] + m.data[(3, 2)] * matrix.data[(2, 2)]));
-    matrix.set(3, 3, 1);
-    return matrix;
-  }
-
   static mult(a, b) {
     return new Matrix(a.rows, a.cols).mult(b);
   }

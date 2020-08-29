@@ -9,7 +9,14 @@ Comming Soon!
 
 ## Demo
 
-The demo folder contains demos for different things. Go to the [repl](https://hlpjs.calbabreaker1.repl.co/demo).
+The demo folder contains demos for different things. Or go to the [repl](https://hlpjs.calbabreaker1.repl.co/demo).
+
+## Plans
+
+- Add ecs system
+- Add webgl support
+- Add easy dom system
+- Add easy promise.all system for preload
 
 ## Source files
 

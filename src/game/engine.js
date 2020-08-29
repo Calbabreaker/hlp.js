@@ -3,8 +3,8 @@
 // class to extend from
 export class Engine {
   constructor(targetFPS = 60) {
-    this.keyPressingDict = {};
-    this.keyCodePressingDict = {};
+    this._keyPressingDict = {};
+    this._keyCodePressingDict = {};
 
     // handle all the calls
     this.deltaTime = 0;

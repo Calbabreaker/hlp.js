@@ -17,14 +17,13 @@ export class Colour {
     if (this.colourMode.substr(-1) === "a") this.a = a || 255;
   }
 
-  // creates string friendly for ctx
   toString() {
     return Colour.toString(this.c1, this.c2, this.c3, this.a, this.colourMode);
   }
 
   // creates a string friendly with css styles
   static toString(c1, c2 = c1, c3 = c1, a = 255, colourMode = constants.RGB) {
-    if (colourMode === constants.RGB) {
+    if (colourMode === constants.RGB || colourMode == constants.RGBA) {
       return `rgb(${c1}, ${c2}, ${c3}, ${a})`;
     }
   }

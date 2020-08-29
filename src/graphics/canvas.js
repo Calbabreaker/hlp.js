@@ -20,7 +20,7 @@ export class Canvas {
 
     // initialize the canvas (creates new one)
     this.canvas = document.createElement("canvas");
-    this.canvas.classList.add("hlpDefaultCanvas");
+    this.canvas.classList.add("hlpCanvas");
     this.canvas.width = this.width;
     this.canvas.height = this.height;
     this.canvas.requestPointerLock = this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock;
