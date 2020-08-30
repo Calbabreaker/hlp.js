@@ -17,7 +17,7 @@ export class Vector {
 
   static add(vec, val) {
     // same as normal add but creates a new vector
-    return vec.copy().add(val);
+    return vec.clone().add(val);
   }
 
   sub(val) {
@@ -27,7 +27,7 @@ export class Vector {
   }
 
   static sub(vec, val) {
-    return vec.copy().sub(val);
+    return vec.clone().sub(val);
   }
 
   div(val) {
@@ -37,7 +37,7 @@ export class Vector {
   }
 
   static div(vec, val) {
-    return vec.copy().div(val);
+    return vec.clone().div(val);
   }
 
   mult(val) {
@@ -47,7 +47,7 @@ export class Vector {
   }
 
   static mult(vec, val) {
-    return vec.copy().mult(val);
+    return vec.clone().mult(val);
   }
 
   static crossProduct(v1, v2) {
@@ -90,7 +90,7 @@ export class Vector {
   }
 
   static normalise(vec) {
-    return vec.copy().normalise();
+    return vec.clone().normalise();
   }
 
   dist(vec) {

@@ -23,7 +23,7 @@ class Game extends hlp.Engine {
     this.canvas.text(hlp.round(this.fps), 10, this.canvas.height - 10);
 
     // draw rect at mouse pos
-    this.canvas.rect(this.canvas.mouse, 50, 50);
+    this.canvas.rect(hlp.Vector.sub(this.canvas.mouse, 25), 50, 50);
 
     this.canvas.pop();
   }
