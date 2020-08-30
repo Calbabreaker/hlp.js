@@ -1,32 +1,36 @@
 export class Dictionary {
-  constructor() {
-    this.data = {};
+  constructor(data = {}) {
+    this.data = data;
+
+    return new Proxy(this, {
+      get(target, name, receiver) {
+        if (Reflect.has(target, name)) return Reflect.get(target, name, receiver);
+        return target.data[name];
+      },
+      set(target, name, value, receiver) {
+        if (Reflect.has(target, name)) return Reflect.set(target, name, value, receiver);
+        target.data[name] = value;
+      },
+      deleteProperty(target, name, receiver) {
+        if (Reflect.has(target, name)) return Reflect.set(target, name, receiver);
+        delete target.data[name];
+      },
+    });
   }
 
   contains(key) {
     return this.data[key] != null;
   }
 
-  get(key) {
-    return this.data[key];
+  clone() {
+    return new Dictionary(this.data);
   }
 
-  set(key, val) {
-    this.data[key] = val;
-    return this;
+  serialise() {
+    return JSON.stringify(this.data);
   }
 
-  add(key, val) {
-    this.data[key] = val;
-    return this;
-  }
-
-  remove(key) {
-    delete this.data[key];
-    return this;
-  }
-
-  forEach(func) {
-    Object.keys(this.data).forEach(func);
+  deserialise(str) {
+    return new Dictionary(JSON.parse(str));
   }
 }

@@ -1,5 +1,5 @@
 /*!
- * hlp.js v1.0.2 by Calbabreaker 2020-08-29 
+ * hlp.js v1.0.2 by Calbabreaker 2020-08-30 
  * Free to use. GPL-3.0.
  */
 /******/ (function(modules) { // webpackBootstrap
@@ -504,35 +504,39 @@ class UniqueIDGen {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Dictionary", function() { return Dictionary; });
 class Dictionary {
-  constructor() {
-    this.data = {};
+  constructor(data = {}) {
+    this.data = data;
+
+    return new Proxy(this, {
+      get(target, name, receiver) {
+        if (Reflect.has(target, name)) return Reflect.get(target, name, receiver);
+        return target.data[name];
+      },
+      set(target, name, value, receiver) {
+        if (Reflect.has(target, name)) return Reflect.set(target, name, value, receiver);
+        target.data[name] = value;
+      },
+      deleteProperty(target, name, receiver) {
+        if (Reflect.has(target, name)) return Reflect.set(target, name, receiver);
+        delete target.data[name];
+      },
+    });
   }
 
   contains(key) {
     return this.data[key] != null;
   }
 
-  get(key) {
-    return this.data[key];
+  clone() {
+    return new Dictionary(this.data);
   }
 
-  set(key, val) {
-    this.data[key] = val;
-    return this;
+  serialise() {
+    return JSON.stringify(this.data);
   }
 
-  add(key, val) {
-    this.data[key] = val;
-    return this;
-  }
-
-  remove(key) {
-    delete this.data[key];
-    return this;
-  }
-
-  forEach(func) {
-    Object.keys(this.data).forEach(func);
+  deserialise(str) {
+    return new Dictionary(JSON.parse(str));
   }
 }
 
@@ -570,7 +574,7 @@ if (window.hlp != null) {
   Object.assign(hlp, __webpack_require__(9));
   Object.assign(hlp, __webpack_require__(6));
 
-  Object.assign(hlp, __webpack_require__(18));
+  Object.assign(hlp, __webpack_require__(19));
   Object.assign(hlp, __webpack_require__(3));
 
   Object.assign(hlp, __webpack_require__(0));
@@ -587,6 +591,7 @@ if (window.hlp != null) {
   Object.assign(hlp, __webpack_require__(16));
   Object.assign(hlp, __webpack_require__(5));
   Object.assign(hlp, __webpack_require__(17));
+  Object.assign(hlp, __webpack_require__(18));
   Object.assign(hlp, __webpack_require__(4));
 
   console.log("--- hlp.js ---");
@@ -1339,6 +1344,105 @@ const getRandom = (array) => {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DOMList", function() { return DOMList; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "selectDOM", function() { return selectDOM; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "createDOM", function() { return createDOM; });
+// acts like kindof a normal dom element except it contains and modifies many elements
+class DOMList {
+  constructor(nodeList) {
+    // make _nodeList "hidden"
+    Object.defineProperty(this, "_nodeList", {
+      enumerable: false,
+      writable: true,
+      value: (this._nodeList = [...nodeList]),
+    });
+
+    // this is so users can get elements using the index operator
+    Object.assign(this, nodeList);
+
+    if (window.Proxy == null) return console.error("Browser does not support Proxy! (required for hlp.DOMList)");
+
+    // proxy for styling
+    // need to put in func somehow
+    // prettier-ignore
+    this.style = new Proxy({}, {
+      get(target, name) {
+        let output = "";
+        nodeList.forEach((node) => {
+          if (node.style[name] != null) {
+            output += node.style[name];
+          }
+        });
+
+        return output;
+      },
+      set(target, name, value) {
+        nodeList.forEach((node) => {
+          if (node.style[name] != null) {
+            node.style[name] = value;
+          }
+        });
+      },
+    });
+
+    // uses proxy to intercept get and set
+    return new Proxy(this, {
+      get(target, name, receiver) {
+        // if DOMList has a property of name then just use that
+        if (Reflect.has(target, name)) return Reflect.get(target, name, receiver);
+
+        // else get property in a string of every node
+        let output = "";
+        // when user calls function it needs to return a funcion so this does here
+        let isFunc = false;
+        nodeList.forEach((node) => {
+          if (typeof node[name] == "function") {
+            const funcOut = node[name]();
+            if (funcOut != null) output += funcOut;
+            isFunc = true;
+          } else if (node[name] != null) {
+            output += node[name];
+          }
+        });
+
+        return isFunc ? () => output : output;
+      },
+      set(target, name, value, receiver) {
+        // same thing but set instead
+        if (Reflect.has(target, name)) return Reflect.set(target, name, value, receiver);
+
+        // set every node
+        nodeList.forEach((node) => {
+          if (node[name] != null) {
+            node[name] = value;
+          }
+        });
+      },
+    });
+  }
+
+  toArray() {
+    return this._nodeList;
+  }
+}
+// helper function for easier use
+const selectDOM = (selector) => {
+  const nodeList = document.querySelectorAll(selector);
+  return new DOMList(nodeList);
+};
+
+const createDOM = (name) => {
+  const element = document.createElement(name);
+  return new DOMList([element]);
+};
+
+
+/***/ }),
+/* 18 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "regexEscape", function() { return regexEscape; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "smartSplit", function() { return smartSplit; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "safeEscape", function() { return safeEscape; });
@@ -1406,7 +1510,7 @@ const copyToClipboard = async (str) => {
 
 
 /***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

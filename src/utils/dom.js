@@ -11,6 +11,8 @@ export class DOMList {
     // this is so users can get elements using the index operator
     Object.assign(this, nodeList);
 
+    if (window.Proxy == null) return console.error("Browser does not support Proxy! (required for hlp.DOMList)");
+
     // proxy for styling
     // need to put in func somehow
     // prettier-ignore
@@ -38,9 +40,7 @@ export class DOMList {
     return new Proxy(this, {
       get(target, name, receiver) {
         // if DOMList has a property of name then just use that
-        if (Reflect.has(target, name)) {
-          return Reflect.get(target, name, receiver);
-        }
+        if (Reflect.has(target, name)) return Reflect.get(target, name, receiver);
 
         // else get property in a string of every node
         let output = "";
@@ -60,9 +60,7 @@ export class DOMList {
       },
       set(target, name, value, receiver) {
         // same thing but set instead
-        if (Reflect.has(target, name)) {
-          return Reflect.set(target, name, value, receiver);
-        }
+        if (Reflect.has(target, name)) return Reflect.set(target, name, value, receiver);
 
         // set every node
         nodeList.forEach((node) => {
