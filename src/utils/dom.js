@@ -4,8 +4,8 @@ export class DOMList {
     // make _nodeList "hidden"
     Object.defineProperty(this, "_nodeList", {
       enumerable: false,
-      writable: true,
-      value: (this._nodeList = [...nodeList]),
+      writable: false,
+      value: [...nodeList],
     });
 
     // this is so users can get elements using the index operator
@@ -43,20 +43,30 @@ export class DOMList {
         if (Reflect.has(target, name)) return Reflect.get(target, name, receiver);
 
         // else get property in a string of every node
-        let output = "";
+        const output = [];
         // when user calls function it needs to return a funcion so this does here
-        let isFunc = false;
+        const nodeFuncs = [];
         nodeList.forEach((node) => {
           if (typeof node[name] == "function") {
-            const funcOut = node[name]();
-            if (funcOut != null) output += funcOut;
-            isFunc = true;
-          } else if (node[name] != null) {
-            output += node[name];
+            // had to be this to avoid illegal invocation
+            nodeFuncs.push(node);
+          } else if (node[name] != null && nodeFuncs.length < 1) {
+            output.push(node[name]);
           }
         });
 
-        return isFunc ? () => output : output;
+        if (nodeFuncs.length > 0) {
+          return (...args) => {
+            const outputFunc = [];
+            nodeFuncs.forEach((node) => {
+              outputFunc.push(node[name](...args));
+            });
+
+            return outputFunc;
+          };
+        } else {
+          return output;
+        }
       },
       set(target, name, value, receiver) {
         // same thing but set instead

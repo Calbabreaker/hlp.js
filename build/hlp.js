@@ -94,7 +94,7 @@
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "abs", function() { return abs; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "abs", function() { return abs; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ceil", function() { return ceil; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "floor", function() { return floor; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "exp", function() { return exp; });
@@ -175,7 +175,7 @@ const randInt = (min, max) => {
     min = 0;
   }
 
-  return Math.floor(module.exports.random(min, max + 1));
+  return Math.floor(random(min, max + 1));
 };
 
 const dist = (...args) => {
@@ -212,7 +212,6 @@ const randomGaussian = (mean = 0, sd = 1) => {
   return y1 * sd + mean;
 };
 
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(10)(module)))
 
 /***/ }),
 /* 1 */
@@ -472,6 +471,7 @@ class Colour {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UniqueIDGen", function() { return UniqueIDGen; });
+// not to be used for cryptoagraphy
 class UniqueIDGen {
   constructor(incrementerCount = 5) {
     this.increments = new Array(incrementerCount).fill(0);
@@ -502,41 +502,44 @@ class UniqueIDGen {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Dictionary", function() { return Dictionary; });
-class Dictionary {
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Map", function() { return Map; });
+class Map {
   constructor(data = {}) {
-    this.data = data;
+    Object.defineProperty(this, "_data", {
+      enumerable: false,
+      writable: true,
+      value: Object.assign({}, data),
+    });
 
     return new Proxy(this, {
       get(target, name, receiver) {
         if (Reflect.has(target, name)) return Reflect.get(target, name, receiver);
-        return target.data[name];
+        return target._data[name];
       },
       set(target, name, value, receiver) {
         if (Reflect.has(target, name)) return Reflect.set(target, name, value, receiver);
-        target.data[name] = value;
+        target._data[name] = value;
       },
-      deleteProperty(target, name, receiver) {
-        if (Reflect.has(target, name)) return Reflect.set(target, name, receiver);
-        delete target.data[name];
+      deleteProperty(target, name) {
+        delete target._data[name];
       },
     });
   }
 
   contains(key) {
-    return this.data[key] != null;
+    return this._data[key] != null;
   }
 
   clone() {
-    return new Dictionary(this.data);
+    return new Map(this._data);
   }
 
   serialise() {
-    return JSON.stringify(this.data);
+    return JSON.stringify(this._data);
   }
 
   deserialise(str) {
-    return new Dictionary(JSON.parse(str));
+    return new Map(JSON.parse(str));
   }
 }
 
@@ -574,24 +577,24 @@ if (window.hlp != null) {
   Object.assign(hlp, __webpack_require__(9));
   Object.assign(hlp, __webpack_require__(6));
 
-  Object.assign(hlp, __webpack_require__(19));
+  Object.assign(hlp, __webpack_require__(18));
   Object.assign(hlp, __webpack_require__(3));
 
   Object.assign(hlp, __webpack_require__(0));
-  Object.assign(hlp, __webpack_require__(11));
+  Object.assign(hlp, __webpack_require__(10));
   Object.assign(hlp, __webpack_require__(1));
 
-  Object.assign(hlp, __webpack_require__(12));
+  Object.assign(hlp, __webpack_require__(11));
   Object.assign(hlp, __webpack_require__(2));
+  Object.assign(hlp, __webpack_require__(12));
+
   Object.assign(hlp, __webpack_require__(13));
-
   Object.assign(hlp, __webpack_require__(14));
-  Object.assign(hlp, __webpack_require__(15));
 
-  Object.assign(hlp, __webpack_require__(16));
+  Object.assign(hlp, __webpack_require__(15));
   Object.assign(hlp, __webpack_require__(5));
+  Object.assign(hlp, __webpack_require__(16));
   Object.assign(hlp, __webpack_require__(17));
-  Object.assign(hlp, __webpack_require__(18));
   Object.assign(hlp, __webpack_require__(4));
 
   console.log("--- hlp.js ---");
@@ -767,7 +770,7 @@ class Engine {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "World", function() { return World; });
-/* harmony import */ var _utils_dictionary__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
+/* harmony import */ var _utils_map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
 /* harmony import */ var _utils_unique_id_gen__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
 /* harmony import */ var _ecs_primitives__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
 
@@ -776,8 +779,8 @@ __webpack_require__.r(__webpack_exports__);
 
 class World {
   constructor() {
-    this.components = new _utils_dictionary__WEBPACK_IMPORTED_MODULE_0__["Dictionary"]();
-    this.systems = new _utils_dictionary__WEBPACK_IMPORTED_MODULE_0__["Dictionary"]();
+    this.components = new _utils_map__WEBPACK_IMPORTED_MODULE_0__["Map"]();
+    this.systems = new _utils_map__WEBPACK_IMPORTED_MODULE_0__["Map"]();
     this.uniqueIdGen = new _utils_unique_id_gen__WEBPACK_IMPORTED_MODULE_1__["UniqueIDGen"]();
   }
 
@@ -791,36 +794,6 @@ class World {
 
 /***/ }),
 /* 10 */
-/***/ (function(module, exports) {
-
-module.exports = function(originalModule) {
-	if (!originalModule.webpackPolyfill) {
-		var module = Object.create(originalModule);
-		// module.parent = undefined by default
-		if (!module.children) module.children = [];
-		Object.defineProperty(module, "loaded", {
-			enumerable: true,
-			get: function() {
-				return module.l;
-			}
-		});
-		Object.defineProperty(module, "id", {
-			enumerable: true,
-			get: function() {
-				return module.i;
-			}
-		});
-		Object.defineProperty(module, "exports", {
-			enumerable: true
-		});
-		module.webpackPolyfill = 1;
-	}
-	return module;
-};
-
-
-/***/ }),
-/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1107,7 +1080,7 @@ class Matrix {
 
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1198,7 +1171,7 @@ class AudioSynth {
 
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1226,7 +1199,7 @@ const sleep = async (ms) => {
 
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1281,7 +1254,7 @@ const loadFont = async (url) => {
 
 
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1308,16 +1281,25 @@ const httpPost = async (url, type, data, options = {}) => {
 
 
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "shuffle", function() { return shuffle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "getRandom", function() { return getRandom; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "arrGetRandom", function() { return arrGetRandom; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "arrShuffle", function() { return arrShuffle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Set", function() { return Set; });
+/* harmony import */ var _math_calculations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+
+
+const arrGetRandom = (array) => {
+  const index = _math_calculations__WEBPACK_IMPORTED_MODULE_0__["randInt"](array.length - 1);
+  return array[index];
+};
+
 // uses Fisher-Yates Shuffle Algorithm
-const shuffle = (array, createCopy) => {
-  array = createCopy ? array : array.slice(); // create copy or not
+const arrShuffle = (array, modifyOriginal = false) => {
+  array = modifyOriginal ? array : array.slice();
 
   let random,
     temp,
@@ -1329,17 +1311,76 @@ const shuffle = (array, createCopy) => {
     array[random] = temp;
   }
 
-  return array;
+  return undefined;
 };
 
-const getRandom = (array) => {
-  const index = hlp.randInt(array.length);
-  return array[index];
-};
+// like a normal array but with more features
+class Set {
+  constructor(count = 0) {
+    Object.defineProperty(this, "_array", {
+      enumerable: false,
+      writable: true,
+      // use prexisting array or new Array with count
+      value: typeof count == "Array" ? count.slice() : new Array(count).fill(),
+    });
+
+    return new Proxy(this, {
+      get(target, name, receiver) {
+        const index = Number(name);
+        // first check the index
+        if (!isNaN(index)) {
+          return target._array[index];
+        } else {
+          // if not then check if name is in Set
+          if (Reflect.has(target, name)) return Reflect.get(target, name, receiver);
+          // then if funcition
+          if (typeof target._array[name] == "function") {
+            // create a function that does the call
+            return (...args) => {
+              let result = target._array[name](...args);
+              if (result instanceof Array) target._array = result;
+            };
+          } else {
+            // else return the array[name] property
+            return target._array[name];
+          }
+        }
+      },
+      set(target, name, value, receiver) {
+        const index = Number(name);
+        if (!isNaN(index)) {
+          target._array[name] = value;
+        } else {
+          return Reflect.set(target, name, value, receiver);
+        }
+      },
+    });
+  }
+
+  getRandom() {
+    return arrGetRandom(this._array);
+  }
+
+  shuffle() {
+    arrShuffle(this._array, true);
+  }
+
+  toArray() {
+    return this._array;
+  }
+
+  serialise() {
+    return JSON.stringify(this._array);
+  }
+
+  deserialise(str) {
+    return new Set(JSON.parse(str));
+  }
+}
 
 
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1353,8 +1394,8 @@ class DOMList {
     // make _nodeList "hidden"
     Object.defineProperty(this, "_nodeList", {
       enumerable: false,
-      writable: true,
-      value: (this._nodeList = [...nodeList]),
+      writable: false,
+      value: [...nodeList],
     });
 
     // this is so users can get elements using the index operator
@@ -1392,20 +1433,30 @@ class DOMList {
         if (Reflect.has(target, name)) return Reflect.get(target, name, receiver);
 
         // else get property in a string of every node
-        let output = "";
+        const output = [];
         // when user calls function it needs to return a funcion so this does here
-        let isFunc = false;
+        const nodeFuncs = [];
         nodeList.forEach((node) => {
           if (typeof node[name] == "function") {
-            const funcOut = node[name]();
-            if (funcOut != null) output += funcOut;
-            isFunc = true;
-          } else if (node[name] != null) {
-            output += node[name];
+            // had to be this to avoid illegal invocation
+            nodeFuncs.push(node);
+          } else if (node[name] != null && nodeFuncs.length < 1) {
+            output.push(node[name]);
           }
         });
 
-        return isFunc ? () => output : output;
+        if (nodeFuncs.length > 0) {
+          return (...args) => {
+            const outputFunc = [];
+            nodeFuncs.forEach((node) => {
+              outputFunc.push(node[name](...args));
+            });
+
+            return outputFunc;
+          };
+        } else {
+          return output;
+        }
       },
       set(target, name, value, receiver) {
         // same thing but set instead
@@ -1438,7 +1489,7 @@ const createDOM = (name) => {
 
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1510,7 +1561,7 @@ const copyToClipboard = async (str) => {
 
 
 /***/ }),
-/* 19 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

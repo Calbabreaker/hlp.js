@@ -1,3 +1,4 @@
+// not to be used for cryptoagraphy
 export class UniqueIDGen {
   constructor(incrementerCount = 5) {
     this.increments = new Array(incrementerCount).fill(0);

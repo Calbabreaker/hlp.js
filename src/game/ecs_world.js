@@ -1,11 +1,11 @@
-import { Dictionary } from "../utils/dictionary";
+import { Map } from "../utils/map";
 import { UniqueIDGen } from "../utils/unique_id_gen";
 import * as ECS from "./ecs_primitives";
 
 export class World {
   constructor() {
-    this.components = new Dictionary();
-    this.systems = new Dictionary();
+    this.components = new Map();
+    this.systems = new Map();
     this.uniqueIdGen = new UniqueIDGen();
   }
 

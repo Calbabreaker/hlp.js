@@ -51,7 +51,7 @@ export const randInt = (min, max) => {
     min = 0;
   }
 
-  return Math.floor(module.exports.random(min, max + 1));
+  return Math.floor(random(min, max + 1));
 };
 
 export const dist = (...args) => {
