@@ -1,7 +1,6 @@
 # The hlp.js Library
 
 Welcome to The hlp.js library where there is bunch of useful tools.
-You will see different sections for the different parts to the library.
 
 ## Documentation
 
@@ -15,12 +14,11 @@ The demo folder contains demos for different things. Or go to the [repl](https:/
 
 - Add ecs system
 - Add webgl support
-- Add easy dom system
 - Add easy promise.all system for preload
 
 ## Source files
 
-All of the source files for hlp are located in src/
+All of the source files for hlp are located in src/. Read README [here](./src/README.md)
 
 To compile the source files yourselves into build/hlp.js and build/hlp.min.js (minified version)
 
@@ -44,4 +42,4 @@ npm run dev
 
 ## LICENSE
 
-GPL-3.0
+This library is free to use with the license: GPL-3.0
