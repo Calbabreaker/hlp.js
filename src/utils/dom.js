@@ -51,7 +51,8 @@ export class DOMList {
             // had to be this to avoid illegal invocation
             nodeFuncs.push(node);
           } else if (node[name] != null && nodeFuncs.length < 1) {
-            output.push(node[name]);
+            let out = node[name];
+            if (out) output.push(out);
           }
         });
 
@@ -59,7 +60,8 @@ export class DOMList {
           return (...args) => {
             const outputFunc = [];
             nodeFuncs.forEach((node) => {
-              outputFunc.push(node[name](...args));
+              let out = node[name](...args);
+              if (out) outputFunc.push(out);
             });
 
             return outputFunc;

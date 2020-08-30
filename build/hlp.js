@@ -987,7 +987,7 @@ class Matrix {
     return this;
   }
 
-  copy() {
+  clone() {
     return Matrix.map(this, (val) => val);
   }
 
@@ -996,7 +996,7 @@ class Matrix {
       const array = [];
       this.data.forEach((cols) => array.push(...cols));
       return array;
-    } else return this.copy().data;
+    } else return this.clone().data;
   }
 
   static createFromVector(vector) {
@@ -1441,7 +1441,8 @@ class DOMList {
             // had to be this to avoid illegal invocation
             nodeFuncs.push(node);
           } else if (node[name] != null && nodeFuncs.length < 1) {
-            output.push(node[name]);
+            let out = node[name];
+            if (out) output.push(out);
           }
         });
 
@@ -1449,7 +1450,8 @@ class DOMList {
           return (...args) => {
             const outputFunc = [];
             nodeFuncs.forEach((node) => {
-              outputFunc.push(node[name](...args));
+              let out = node[name](...args);
+              if (out) outputFunc.push(out);
             });
 
             return outputFunc;

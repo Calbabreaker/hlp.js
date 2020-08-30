@@ -184,7 +184,7 @@ export class Matrix {
     return this;
   }
 
-  copy() {
+  clone() {
     return Matrix.map(this, (val) => val);
   }
 
@@ -193,7 +193,7 @@ export class Matrix {
       const array = [];
       this.data.forEach((cols) => array.push(...cols));
       return array;
-    } else return this.copy().data;
+    } else return this.clone().data;
   }
 
   static createFromVector(vector) {
