@@ -27,6 +27,7 @@ if (window.hlp != null) {
 
   Object.assign(hlp, require("./utils/array"));
   Object.assign(hlp, require("./utils/dictionary"));
+  Object.assign(hlp, require("./utils/dom"));
   Object.assign(hlp, require("./utils/strings"));
   Object.assign(hlp, require("./utils/unique_id_gen"));
 
