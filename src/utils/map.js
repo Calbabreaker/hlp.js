@@ -29,6 +29,12 @@ export class Map {
     return new Map(this._data);
   }
 
+  forEach(func) {
+    for (let item in this._data) {
+      func(item);
+    }
+  }
+
   serialise() {
     return JSON.stringify(this._data);
   }

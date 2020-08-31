@@ -36,7 +36,7 @@ export const safeEscape = (unsafe) => {
 
 export const copyToClipboard = async (str) => {
   if (!navigator.clipboard) {
-    console.warn("Navigator copy not supported. Falling back on experimental.");
+    console.warn("Navigator copy not supported. Using manual copy.");
     // fallback for comapatipility
     const textArea = document.createElement("textarea");
     textArea.value = text;

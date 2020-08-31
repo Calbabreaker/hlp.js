@@ -11,8 +11,6 @@ export class DOMList {
     // this is so users can get elements using the index operator
     Object.assign(this, nodeList);
 
-    if (window.Proxy == null) return console.error("Browser does not support Proxy! (required for hlp.DOMList)");
-
     // proxy for styling
     // need to put in func somehow
     // prettier-ignore
@@ -86,6 +84,12 @@ export class DOMList {
 
   toArray() {
     return this._nodeList;
+  }
+
+  forEach(func) {
+    for (let i = 0; i < this._nodeList.length; i++) {
+      func(this._nodeList[i], i);
+    }
   }
 }
 // helper function for easier use

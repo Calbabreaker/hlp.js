@@ -23,8 +23,10 @@ export class Colour {
 
   // creates a string friendly with css styles
   static toString(c1, c2 = c1, c3 = c1, a = 255, colourMode = constants.RGB) {
-    if (colourMode === constants.RGB || colourMode == constants.RGBA) {
-      return `rgb(${c1}, ${c2}, ${c3}, ${a})`;
+    if (colourMode == constants.RGB || colourMode == constants.RGBA) {
+      return `rgb(${c1}, ${c2}, ${c3}, ${a})`; // red, green, blue, alpha
+    } else if (colourMode == constants.HSL || colourMode == constants.HSLA) {
+      return `hsl(${c1}, ${c2}%, ${c3}%, ${a})`; // hue, saturation, lightness, alpha
     }
   }
 }

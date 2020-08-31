@@ -1,6 +1,6 @@
 // contains calls for preload, setup and draw and more
 
-// class to extend from
+// class to be extended from
 export class Engine {
   constructor(targetFPS = 60) {
     this._keyPressingDict = {};
