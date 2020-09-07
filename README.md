@@ -15,6 +15,9 @@ The demo folder contains demos for different things. Or go to the [repl](https:/
 - Add ecs system
 - Add webgl support
 - Add easy promise.all system for preload
+- Better interface with the canvas
+- Add documentation with jsdoc
+- Setup cdn?
 
 ## Source files
 
