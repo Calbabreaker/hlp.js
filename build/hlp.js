@@ -1,5 +1,5 @@
 /*!
- * hlp.js v1.0.2 by Calbabreaker 2020-08-30 
+ * hlp.js v1.0.2 by Calbabreaker 2020-09-12 
  * Free to use. GPL-3.0.
  */
 /******/ (function(modules) { // webpackBootstrap
@@ -85,7 +85,7 @@
 /******/
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 7);
+/******/ 	return __webpack_require__(__webpack_require__.s = 8);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -95,14 +95,11 @@
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "abs", function() { return abs; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ceil", function() { return ceil; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "floor", function() { return floor; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "exp", function() { return exp; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "log", function() { return log; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "max", function() { return max; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "min", function() { return min; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sqrt", function() { return sqrt; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "round", function() { return round; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "hypot", function() { return hypot; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "asin", function() { return asin; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sin", function() { return sin; });
@@ -112,6 +109,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "atan2", function() { return atan2; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "atanh", function() { return atanh; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "tan", function() { return tan; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "round", function() { return round; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "floor", function() { return floor; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ceiling", function() { return ceiling; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sigmoid", function() { return sigmoid; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "dsigmoid", function() { return dsigmoid; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "relu", function() { return relu; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "drelu", function() { return drelu; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "radians", function() { return radians; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "degrees", function() { return degrees; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "map", function() { return map; });
@@ -126,14 +130,11 @@ __webpack_require__.r(__webpack_exports__);
 
 // some default math funcs (there will be some jsdoc soon)
 const abs = Math.abs;
-const ceil = Math.ceil;
-const floor = Math.floor;
 const exp = Math.exp;
 const log = Math.log;
 const max = Math.max;
 const min = Math.min;
 const sqrt = Math.sqrt;
-const round = Math.round;
 
 const hypot = Math.hypot;
 const asin = Math.asin;
@@ -144,6 +145,38 @@ const atan = Math.atan;
 const atan2 = Math.atan2;
 const atanh = Math.atanh;
 const tan = Math.tan;
+
+const round = (num, decimalPlaces = 0) => {
+  const numToRound = num * 10 ** decimalPlaces;
+  return Math.round(numToRound) / 10 ** decimalPlaces;
+};
+
+const floor = (num, decimalPlaces = 0) => {
+  const numToRound = num * 10 ** decimalPlaces;
+  return Math.floor(numToRound) / 10 ** decimalPlaces;
+};
+
+const ceiling = (num, decimalPlaces = 0) => {
+  const numToRound = num * 10 ** decimalPlaces;
+  return Math.ceil(numToRound) / 10 ** decimalPlaces;
+};
+
+// ml activation functions
+const sigmoid = (n) => {
+  return 1 / (1 + Math.exp(-n));
+};
+
+const dsigmoid = (n) => {
+  return sigmoid(n) * (1 - sigmoid(n));
+};
+
+const relu = (n) => {
+  return n < 0 ? 0.1 * n : n;
+};
+
+const drelu = (n) => {
+  return n < 0 ? 0.5 : 1;
+};
 
 const radians = (deg) => deg * _misc_constants__WEBPACK_IMPORTED_MODULE_0__["DEG_TO_RAD"];
 const degrees = (rad) => rad * _misc_constants__WEBPACK_IMPORTED_MODULE_0__["RAD_TO_DEG"];
@@ -457,8 +490,10 @@ class Colour {
 
   // creates a string friendly with css styles
   static toString(c1, c2 = c1, c3 = c1, a = 255, colourMode = _misc_constants__WEBPACK_IMPORTED_MODULE_0__["RGB"]) {
-    if (colourMode === _misc_constants__WEBPACK_IMPORTED_MODULE_0__["RGB"] || colourMode == _misc_constants__WEBPACK_IMPORTED_MODULE_0__["RGBA"]) {
-      return `rgb(${c1}, ${c2}, ${c3}, ${a})`;
+    if (colourMode == _misc_constants__WEBPACK_IMPORTED_MODULE_0__["RGB"] || colourMode == _misc_constants__WEBPACK_IMPORTED_MODULE_0__["RGBA"]) {
+      return `rgb(${c1}, ${c2}, ${c3}, ${a})`; // red, green, blue, alpha
+    } else if (colourMode == _misc_constants__WEBPACK_IMPORTED_MODULE_0__["HSL"] || colourMode == _misc_constants__WEBPACK_IMPORTED_MODULE_0__["HSLA"]) {
+      return `hsl(${c1}, ${c2}%, ${c3}%, ${a})`; // hue, saturation, lightness, alpha
     }
   }
 }
@@ -534,6 +569,12 @@ class Map {
     return new Map(this._data);
   }
 
+  forEach(func) {
+    for (let item in this._data) {
+      func(item);
+    }
+  }
+
   serialise() {
     return JSON.stringify(this._data);
   }
@@ -550,6 +591,76 @@ class Map {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "choose", function() { return choose; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "shuffle", function() { return shuffle; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "sum", function() { return sum; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "product", function() { return product; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "mean", function() { return mean; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "randomise", function() { return randomise; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "min", function() { return min; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "max", function() { return max; });
+/* harmony import */ var _math_calculations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+
+
+const choose = (array) => {
+  const index = _math_calculations__WEBPACK_IMPORTED_MODULE_0__["randInt"](array.length - 1);
+  return array[index];
+};
+
+// uses Fisher-Yates Shuffle Algorithm
+const shuffle = (array) => {
+  let random,
+    temp,
+    index = array.length;
+  while (index > 1) {
+    random = (Math.random() * index) | 0;
+    temp = array[--index];
+    array[index] = array[random];
+    array[random] = temp;
+  }
+
+  return undefined;
+};
+
+const sum = (array) => {
+  let sum = 0;
+  array.forEach((item) => (sum += item));
+  return sum;
+};
+
+const product = (array) => {
+  let sum = 0;
+  array.forEach((item) => (product *= item));
+  return sum;
+};
+
+const mean = (array) => {
+  const arrSum = sum(array);
+  const mean = arrSum / array.length;
+  return mean;
+};
+
+const randomise = (array, min, max) => {
+  for (let i = 0; i < array.length; i++) {
+    array[i] = _math_calculations__WEBPACK_IMPORTED_MODULE_0__["random"](min, max);
+  }
+};
+
+const min = (array) => {
+  return Math.min(...array);
+};
+
+const max = (array) => {
+  return Math.max(...array);
+};
+
+
+/***/ }),
+/* 7 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "System", function() { return System; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Entity", function() { return Entity; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Component", function() { return Component; });
@@ -561,7 +672,7 @@ class Component {}
 
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // init of hlp
@@ -572,29 +683,35 @@ if (window.hlp != null) {
   const hlp = {};
   window.hlp = hlp;
 
-  // import all the modules
-  Object.assign(hlp, __webpack_require__(8));
-  Object.assign(hlp, __webpack_require__(9));
-  Object.assign(hlp, __webpack_require__(6));
+  if (window.Proxy == null) alert("Your browser does not support Proxy which is required in some modules in hlp.js!");
 
-  Object.assign(hlp, __webpack_require__(18));
+  // import all the modules
+  Object.assign(hlp, __webpack_require__(9));
+  Object.assign(hlp, __webpack_require__(10));
+  Object.assign(hlp, __webpack_require__(7));
+
+  Object.assign(hlp, __webpack_require__(19));
   Object.assign(hlp, __webpack_require__(3));
 
   Object.assign(hlp, __webpack_require__(0));
-  Object.assign(hlp, __webpack_require__(10));
+  Object.assign(hlp, __webpack_require__(11));
   Object.assign(hlp, __webpack_require__(1));
 
-  Object.assign(hlp, __webpack_require__(11));
-  Object.assign(hlp, __webpack_require__(2));
   Object.assign(hlp, __webpack_require__(12));
-
+  Object.assign(hlp, __webpack_require__(2));
   Object.assign(hlp, __webpack_require__(13));
-  Object.assign(hlp, __webpack_require__(14));
 
+  Object.assign(hlp, __webpack_require__(14));
   Object.assign(hlp, __webpack_require__(15));
-  Object.assign(hlp, __webpack_require__(5));
-  Object.assign(hlp, __webpack_require__(16));
+
+  hlp.string = {};
+  Object.assign(hlp.string, __webpack_require__(16));
+  hlp.array = {};
+  Object.assign(hlp.array, __webpack_require__(6));
+
   Object.assign(hlp, __webpack_require__(17));
+  Object.assign(hlp, __webpack_require__(5));
+  Object.assign(hlp, __webpack_require__(18));
   Object.assign(hlp, __webpack_require__(4));
 
   console.log("--- hlp.js ---");
@@ -602,7 +719,7 @@ if (window.hlp != null) {
 
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -610,7 +727,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Engine", function() { return Engine; });
 // contains calls for preload, setup and draw and more
 
-// class to extend from
+// class to be extended from
 class Engine {
   constructor(targetFPS = 60) {
     this._keyPressingDict = {};
@@ -645,14 +762,14 @@ class Engine {
 
       // add to dictionary on keydown and removes and keyup
       document.addEventListener("keydown", (event) => {
-        this.keyPressingDict[event.key] = true;
-        this.keyCodePressingDict[event.code] = true;
+        this._keyPressingDict[event.key] = true;
+        this._keyCodePressingDict[event.code] = true;
         this.keyPressed();
       });
 
       document.addEventListener("keyup", (event) => {
-        this.keyPressingDict[event.key] = false;
-        this.keyCodePressingDict[event.code] = false;
+        this._keyPressingDict[event.key] = false;
+        this._keyCodePressingDict[event.code] = false;
         this.keyReleased();
       });
 
@@ -703,7 +820,7 @@ class Engine {
         this.frameCount++;
         this.fps = 1000 / deltaTimeMS; // calculate real fps
         this.deltaTime = deltaTimeMS / 1000; // calculate deltaTime in secs
-        this.draw(); // the user draw it
+        this.draw(); // the user draw function
         this._timeLastFrame = now;
       }
     } catch (err) {
@@ -729,11 +846,11 @@ class Engine {
   }
 
   keyIsDown(key) {
-    this.keyPressingDict[key];
+    this._keyPressingDict[key];
   }
 
   keyCodeIsDown(keyCode) {
-    this.keyCodePressingDict[keyCode];
+    this._keyCodePressingDict[keyCode];
   }
 
   changeFPS(fps) {
@@ -756,7 +873,7 @@ class Engine {
   keyReleased() {}
   lockedMouseMove() {}
   unlockedMouseMove() {}
-  // these functions wont be called if use didn't overide
+  // these functions wont be called if user didn't overide
   // async preload() {}
   // draw() {}
   // setup() {}
@@ -764,7 +881,7 @@ class Engine {
 
 
 /***/ }),
-/* 9 */
+/* 10 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -772,7 +889,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "World", function() { return World; });
 /* harmony import */ var _utils_map__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(5);
 /* harmony import */ var _utils_unique_id_gen__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(4);
-/* harmony import */ var _ecs_primitives__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(6);
+/* harmony import */ var _ecs_primitives__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(7);
 
 
 
@@ -793,7 +910,7 @@ class World {
 
 
 /***/ }),
-/* 10 */
+/* 11 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -907,12 +1024,12 @@ class Matrix {
     }
   }
 
-  randomize(min = 0, max = 1) {
+  randomise(min = 0, max = 1) {
     // sets every element to random number between min and max
     return this.map(() => _calculations__WEBPACK_IMPORTED_MODULE_1__["random"](min, max));
   }
 
-  randomizeGuassian(mean = 0, sd = 1) {
+  randomiseGuassian(mean = 0, sd = 1) {
     return this.map(() => _calculations__WEBPACK_IMPORTED_MODULE_1__["randomGaussian"](mean, sd));
   }
 
@@ -1080,7 +1197,7 @@ class Matrix {
 
 
 /***/ }),
-/* 11 */
+/* 12 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1171,7 +1288,7 @@ class AudioSynth {
 
 
 /***/ }),
-/* 12 */
+/* 13 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1199,7 +1316,7 @@ const sleep = async (ms) => {
 
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1254,7 +1371,7 @@ const loadFont = async (url) => {
 
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1281,38 +1398,86 @@ const httpPost = async (url, type, data, options = {}) => {
 
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "arrGetRandom", function() { return arrGetRandom; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "arrShuffle", function() { return arrShuffle; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Set", function() { return Set; });
-/* harmony import */ var _math_calculations__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(0);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "regexEscape", function() { return regexEscape; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "smartSplit", function() { return smartSplit; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "safeEscape", function() { return safeEscape; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "copyToClipboard", function() { return copyToClipboard; });
+// useful for parsing strings
 
-
-const arrGetRandom = (array) => {
-  const index = _math_calculations__WEBPACK_IMPORTED_MODULE_0__["randInt"](array.length - 1);
-  return array[index];
+const regexEscape = (str) => {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
 };
 
-// uses Fisher-Yates Shuffle Algorithm
-const arrShuffle = (array, modifyOriginal = false) => {
-  array = modifyOriginal ? array : array.slice();
+const smartSplit = (str, charSplit = " ", insideChar, charToDiscludeInsideChar = "") => {
+  let formattedStr = str.split(new RegExp(`${hlp.regexEscape(charSplit)}+`, "g")); // regex to avoid double chars
+  if (!formattedStr.slice(-1)[0]) formattedStr.pop(); // if last element is empty string
 
-  let random,
-    temp,
-    index = array.length;
-  while (index > 1) {
-    random = (Math.random() * index) | 0;
-    temp = array[--index];
-    array[index] = array[random];
-    array[random] = temp;
+  if (insideChar != null) {
+    // dont spilt inside the insideChar
+    for (let i = 0; i < formattedStr.length; i++) {
+      // if insdeChar is in portion of formstr
+      if (formattedStr[i].includes(insideChar)) {
+        // loop until end of string at start of the portion of the insidechar
+        formattedStr.slice(i + 1).forEach((str, j) => {
+          const stringIndex = str.indexOf(insideChar);
+          if (stringIndex != -1 && str[stringIndex + 1] != charToDiscludeInsideChar) {
+            // get string bewteen the inside chars
+            const bewtweenInsideChar = formattedStr.slice(i, j + i + 2).join(charSplit);
+            formattedStr.splice(i, j + 2, bewtweenInsideChar.replace(charToDiscludeInsideChar, "")); // replace
+            return;
+          }
+        });
+      }
+    }
   }
 
-  return undefined;
+  return formattedStr;
 };
+
+const safeEscape = (unsafe) => {
+  return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;").replace(/%/g, "&#37;");
+};
+
+const copyToClipboard = async (str) => {
+  if (!navigator.clipboard) {
+    console.warn("Navigator copy not supported. Using manual copy.");
+    // fallback for comapatipility
+    const textArea = document.createElement("textarea");
+    textArea.value = text;
+
+    // avoid scrolling to bottom
+    textArea.style.top = "0";
+    textArea.style.left = "0";
+    textArea.style.position = "fixed";
+
+    document.body.appendChild(textArea);
+    textArea.focus();
+    textArea.select();
+
+    const successful = document.execCommand("copy");
+    if (!successful) return alert("Copy fallback not sucessful!");
+
+    document.body.removeChild(textArea);
+  } else {
+    await navigator.clipboard.writeText(str);
+  }
+};
+
+
+/***/ }),
+/* 17 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Set", function() { return Set; });
+/* harmony import */ var _primitives_array__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(6);
+
 
 // like a normal array but with more features
 class Set {
@@ -1321,7 +1486,7 @@ class Set {
       enumerable: false,
       writable: true,
       // use prexisting array or new Array with count
-      value: typeof count == "Array" ? count.slice() : new Array(count).fill(),
+      value: count instanceof Array ? count.slice() : new Array(count).fill(),
     });
 
     return new Proxy(this, {
@@ -1333,7 +1498,7 @@ class Set {
         } else {
           // if not then check if name is in Set
           if (Reflect.has(target, name)) return Reflect.get(target, name, receiver);
-          // then if funcition
+          // then if function
           if (typeof target._array[name] == "function") {
             // create a function that does the call
             return (...args) => {
@@ -1341,7 +1506,7 @@ class Set {
               if (result instanceof Array) target._array = result;
             };
           } else {
-            // else return the array[name] property
+            // else return property in the array object
             return target._array[name];
           }
         }
@@ -1357,12 +1522,12 @@ class Set {
     });
   }
 
-  getRandom() {
-    return arrGetRandom(this._array);
+  log() {
+    console.log(this._array);
   }
 
-  shuffle() {
-    arrShuffle(this._array, true);
+  clone() {
+    return this._array.slice();
   }
 
   toArray() {
@@ -1378,9 +1543,17 @@ class Set {
   }
 }
 
+// create funcs from arr thing
+const funcs = Object.keys(_primitives_array__WEBPACK_IMPORTED_MODULE_0__);
+funcs.forEach((func) => {
+  Set.prototype[func] = function (...args) {
+    return _primitives_array__WEBPACK_IMPORTED_MODULE_0__[func](...[this._array, ...args]);
+  };
+});
+
 
 /***/ }),
-/* 16 */
+/* 18 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1400,8 +1573,6 @@ class DOMList {
 
     // this is so users can get elements using the index operator
     Object.assign(this, nodeList);
-
-    if (window.Proxy == null) return console.error("Browser does not support Proxy! (required for hlp.DOMList)");
 
     // proxy for styling
     // need to put in func somehow
@@ -1477,6 +1648,12 @@ class DOMList {
   toArray() {
     return this._nodeList;
   }
+
+  forEach(func) {
+    for (let i = 0; i < this._nodeList.length; i++) {
+      func(this._nodeList[i], i);
+    }
+  }
 }
 // helper function for easier use
 const selectDOM = (selector) => {
@@ -1491,79 +1668,7 @@ const createDOM = (name) => {
 
 
 /***/ }),
-/* 17 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "regexEscape", function() { return regexEscape; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "smartSplit", function() { return smartSplit; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "safeEscape", function() { return safeEscape; });
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "copyToClipboard", function() { return copyToClipboard; });
-// useful for parsing strings
-
-const regexEscape = (str) => {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
-};
-
-const smartSplit = (str, charSplit = " ", insideChar, charToDiscludeInsideChar = "") => {
-  let formattedStr = str.split(new RegExp(`${hlp.regexEscape(charSplit)}+`, "g")); // regex to avoid double chars
-  if (!formattedStr.slice(-1)[0]) formattedStr.pop(); // if last element is empty string
-
-  if (insideChar != null) {
-    // dont spilt inside the insideChar
-    for (let i = 0; i < formattedStr.length; i++) {
-      // if insdeChar is in portion of formstr
-      if (formattedStr[i].includes(insideChar)) {
-        // loop until end of string at start of the portion of the insidechar
-        formattedStr.slice(i + 1).forEach((str, j) => {
-          const stringIndex = str.indexOf(insideChar);
-          if (stringIndex != -1 && str[stringIndex + 1] != charToDiscludeInsideChar) {
-            // get string bewteen the inside chars
-            const bewtweenInsideChar = formattedStr.slice(i, j + i + 2).join(charSplit);
-            formattedStr.splice(i, j + 2, bewtweenInsideChar.replace(charToDiscludeInsideChar, "")); // replace
-            return;
-          }
-        });
-      }
-    }
-  }
-
-  return formattedStr;
-};
-
-const safeEscape = (unsafe) => {
-  return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;").replace(/%/g, "&#37;");
-};
-
-const copyToClipboard = async (str) => {
-  if (!navigator.clipboard) {
-    console.warn("Navigator copy not supported. Falling back on experimental.");
-    // fallback for comapatipility
-    const textArea = document.createElement("textarea");
-    textArea.value = text;
-
-    // avoid scrolling to bottom
-    textArea.style.top = "0";
-    textArea.style.left = "0";
-    textArea.style.position = "fixed";
-
-    document.body.appendChild(textArea);
-    textArea.focus();
-    textArea.select();
-
-    const successful = document.execCommand("copy");
-    if (!successful) return alert("Copy fallback not sucessful!");
-
-    document.body.removeChild(textArea);
-  } else {
-    await navigator.clipboard.writeText(str);
-  }
-};
-
-
-/***/ }),
-/* 18 */
+/* 19 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
