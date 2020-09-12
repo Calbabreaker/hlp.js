@@ -14,8 +14,8 @@ function doTest(testName, testFunc, testNum = 10) {
 
 doTest("buffer", Math.random);
 
-const array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-const set = new hlp.Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+let array = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+let set = new hlp.Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
 
 // hlp test
 doTest("hlp.Set random", () => {
@@ -24,17 +24,7 @@ doTest("hlp.Set random", () => {
 
 // js test
 doTest("array random", () => {
-  array.map(() => hlp.random(1, 2));
-});
-
-// hlp test
-doTest("hlp.Set random", () => {
-  set.map(() => hlp.random(1, 2));
-});
-
-// js test
-doTest("array random", () => {
-  array.map(() => hlp.random(1, 2));
+  array = array.map(() => hlp.random(1, 2));
 });
 
 // hlp test
@@ -44,5 +34,15 @@ doTest("hlp.Set random", () => {
 
 // js test
 doTest("array random", () => {
-  array.map(() => hlp.random(1, 2));
+  array = array.map(() => hlp.random(1, 2));
+});
+
+// hlp test
+doTest("hlp.Set random", () => {
+  set.map(() => hlp.random(1, 2));
+});
+
+// js test
+doTest("array random", () => {
+  array = array.map(() => hlp.random(1, 2));
 });

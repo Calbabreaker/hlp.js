@@ -2,14 +2,11 @@ import * as constants from "../misc/constants";
 
 // some default math funcs (there will be some jsdoc soon)
 export const abs = Math.abs;
-export const ceil = Math.ceil;
-export const floor = Math.floor;
 export const exp = Math.exp;
 export const log = Math.log;
 export const max = Math.max;
 export const min = Math.min;
 export const sqrt = Math.sqrt;
-export const round = Math.round;
 
 export const hypot = Math.hypot;
 export const asin = Math.asin;
@@ -20,6 +17,38 @@ export const atan = Math.atan;
 export const atan2 = Math.atan2;
 export const atanh = Math.atanh;
 export const tan = Math.tan;
+
+export const round = (num, decimalPlaces = 0) => {
+  const numToRound = num * 10 ** decimalPlaces;
+  return Math.round(numToRound) / 10 ** decimalPlaces;
+};
+
+export const floor = (num, decimalPlaces = 0) => {
+  const numToRound = num * 10 ** decimalPlaces;
+  return Math.floor(numToRound) / 10 ** decimalPlaces;
+};
+
+export const ceiling = (num, decimalPlaces = 0) => {
+  const numToRound = num * 10 ** decimalPlaces;
+  return Math.ceil(numToRound) / 10 ** decimalPlaces;
+};
+
+// ml activation functions
+export const sigmoid = (n) => {
+  return 1 / (1 + Math.exp(-n));
+};
+
+export const dsigmoid = (n) => {
+  return sigmoid(n) * (1 - sigmoid(n));
+};
+
+export const relu = (n) => {
+  return n < 0 ? 0.1 * n : n;
+};
+
+export const drelu = (n) => {
+  return n < 0 ? 0.5 : 1;
+};
 
 export const radians = (deg) => deg * constants.DEG_TO_RAD;
 export const degrees = (rad) => rad * constants.RAD_TO_DEG;

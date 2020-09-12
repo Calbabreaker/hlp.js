@@ -104,12 +104,12 @@ export class Matrix {
     }
   }
 
-  randomize(min = 0, max = 1) {
+  randomise(min = 0, max = 1) {
     // sets every element to random number between min and max
     return this.map(() => math.random(min, max));
   }
 
-  randomizeGuassian(mean = 0, sd = 1) {
+  randomiseGuassian(mean = 0, sd = 1) {
     return this.map(() => math.randomGaussian(mean, sd));
   }
 

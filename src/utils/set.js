@@ -1,26 +1,4 @@
-import * as math from "../math/calculations";
-
-export const arrayChoose = (array) => {
-  const index = math.randInt(array.length - 1);
-  return array[index];
-};
-
-// uses Fisher-Yates Shuffle Algorithm
-export const arrayShuffle = (array, modifyOriginal = true) => {
-  array = modifyOriginal ? array : array.slice();
-
-  let random,
-    temp,
-    index = array.length;
-  while (index > 1) {
-    random = (Math.random() * index) | 0;
-    temp = array[--index];
-    array[index] = array[random];
-    array[random] = temp;
-  }
-
-  return this;
-};
+import * as arr from "../primitives/array";
 
 // like a normal array but with more features
 export class Set {
@@ -29,7 +7,7 @@ export class Set {
       enumerable: false,
       writable: true,
       // use prexisting array or new Array with count
-      value: typeof count == "Array" ? count.slice() : new Array(count).fill(),
+      value: count instanceof Array ? count.slice() : new Array(count).fill(),
     });
 
     return new Proxy(this, {
@@ -41,7 +19,7 @@ export class Set {
         } else {
           // if not then check if name is in Set
           if (Reflect.has(target, name)) return Reflect.get(target, name, receiver);
-          // then if funcition
+          // then if function
           if (typeof target._array[name] == "function") {
             // create a function that does the call
             return (...args) => {
@@ -49,7 +27,7 @@ export class Set {
               if (result instanceof Array) target._array = result;
             };
           } else {
-            // else return the array[name] property
+            // else return property in the array object
             return target._array[name];
           }
         }
@@ -65,12 +43,12 @@ export class Set {
     });
   }
 
-  choose() {
-    return arrayChoose(this._array);
+  log() {
+    console.log(this._array);
   }
 
-  shuffle() {
-    arrayShuffle(this._array, true);
+  clone() {
+    return this._array.slice();
   }
 
   toArray() {
@@ -85,3 +63,11 @@ export class Set {
     return new Set(JSON.parse(str));
   }
 }
+
+// create funcs from arr thing
+const funcs = Object.keys(arr);
+funcs.forEach((func) => {
+  Set.prototype[func] = function (...args) {
+    return arr[func](...[this._array, ...args]);
+  };
+});

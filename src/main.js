@@ -6,6 +6,8 @@ if (window.hlp != null) {
   const hlp = {};
   window.hlp = hlp;
 
+  if (window.Proxy == null) alert("Your browser does not support Proxy which is required in some modules in hlp.js!");
+
   // import all the modules
   Object.assign(hlp, require("./game/engine"));
   Object.assign(hlp, require("./game/ecs_world"));
@@ -25,10 +27,14 @@ if (window.hlp != null) {
   Object.assign(hlp, require("./net/loaders"));
   Object.assign(hlp, require("./net/http"));
 
+  hlp.string = {};
+  Object.assign(hlp.string, require("./primitives/strings"));
+  hlp.array = {};
+  Object.assign(hlp.array, require("./primitives/array"));
+
   Object.assign(hlp, require("./utils/set"));
   Object.assign(hlp, require("./utils/map"));
   Object.assign(hlp, require("./utils/dom"));
-  Object.assign(hlp, require("./utils/strings"));
   Object.assign(hlp, require("./utils/unique_id_gen"));
 
   console.log("--- hlp.js ---");
