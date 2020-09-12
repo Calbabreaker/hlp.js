@@ -35,14 +35,14 @@ export class Engine {
 
       // add to dictionary on keydown and removes and keyup
       document.addEventListener("keydown", (event) => {
-        this.keyPressingDict[event.key] = true;
-        this.keyCodePressingDict[event.code] = true;
+        this._keyPressingDict[event.key] = true;
+        this._keyCodePressingDict[event.code] = true;
         this.keyPressed();
       });
 
       document.addEventListener("keyup", (event) => {
-        this.keyPressingDict[event.key] = false;
-        this.keyCodePressingDict[event.code] = false;
+        this._keyPressingDict[event.key] = false;
+        this._keyCodePressingDict[event.code] = false;
         this.keyReleased();
       });
 
@@ -93,7 +93,7 @@ export class Engine {
         this.frameCount++;
         this.fps = 1000 / deltaTimeMS; // calculate real fps
         this.deltaTime = deltaTimeMS / 1000; // calculate deltaTime in secs
-        this.draw(); // the user draw it
+        this.draw(); // the user draw function
         this._timeLastFrame = now;
       }
     } catch (err) {
@@ -119,11 +119,11 @@ export class Engine {
   }
 
   keyIsDown(key) {
-    this.keyPressingDict[key];
+    this._keyPressingDict[key];
   }
 
   keyCodeIsDown(keyCode) {
-    this.keyCodePressingDict[keyCode];
+    this._keyCodePressingDict[keyCode];
   }
 
   changeFPS(fps) {
@@ -146,7 +146,7 @@ export class Engine {
   keyReleased() {}
   lockedMouseMove() {}
   unlockedMouseMove() {}
-  // these functions wont be called if use didn't overide
+  // these functions wont be called if user didn't overide
   // async preload() {}
   // draw() {}
   // setup() {}

@@ -1,12 +1,12 @@
 import * as math from "../math/calculations";
 
-export const arrGetRandom = (array) => {
+export const arrayChoose = (array) => {
   const index = math.randInt(array.length - 1);
   return array[index];
 };
 
 // uses Fisher-Yates Shuffle Algorithm
-export const arrShuffle = (array, modifyOriginal = false) => {
+export const arrayShuffle = (array, modifyOriginal = true) => {
   array = modifyOriginal ? array : array.slice();
 
   let random,
@@ -65,12 +65,12 @@ export class Set {
     });
   }
 
-  getRandom() {
-    return arrGetRandom(this._array);
+  choose() {
+    return arrayChoose(this._array);
   }
 
   shuffle() {
-    arrShuffle(this._array, true);
+    arrayShuffle(this._array, true);
   }
 
   toArray() {
