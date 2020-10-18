@@ -77,7 +77,7 @@ export class Engine {
     if (this.setup != null) this.setup();
     this._timeStarted = performance.now();
     this._timeLastFrame = performance.now();
-    this.start();
+    this.resume();
   }
 
   _draw() {
@@ -107,7 +107,7 @@ export class Engine {
     this.looping = false;
   }
 
-  start() {
+  resume() {
     if (this.draw != null) {
       this.looping = true;
       this._draw();

@@ -13,7 +13,7 @@ if (window.hlp != null) {
   Object.assign(hlp, require("./game/ecs_world"));
   Object.assign(hlp, require("./game/ecs_primitives"));
 
-  Object.assign(hlp, require("./graphics/canvas"));
+  Object.assign(hlp, require("./graphics/canvas_graphics"));
   Object.assign(hlp, require("./graphics/colour"));
 
   Object.assign(hlp, require("./math/calculations"));

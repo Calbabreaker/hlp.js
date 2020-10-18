@@ -5,7 +5,7 @@ class Game extends hlp.Engine {
   }
 
   setup() {
-    this.canvas = new hlp.Canvas();
+    this.canvas = new hlp.CanvasGraphics();
   }
 
   draw() {

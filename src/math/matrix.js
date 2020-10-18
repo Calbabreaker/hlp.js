@@ -252,7 +252,7 @@ export class Matrix {
     ]);
   }
 
-  static createProjectionPerspect(fovDegrees, aspectRatio, near, far) {
+  static createPerspective(fovDegrees, aspectRatio, near, far) {
     const fovRadians = toRadians(fovDegrees);
     return new Matrix([
       [aspectRatio * fovRadians, 0, 0, 0],
