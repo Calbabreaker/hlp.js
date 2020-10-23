@@ -60,14 +60,14 @@ export class AudioSynth {
 
   setFreq(thread, freq, when = 0) {
     const selThread = this.threads[thread];
-    const timeNow = this.context.currentTime + selThread.startTime;
+    const timeNow = this.context.currentTime;
     selThread.oscillator.frequency.setTargetAtTime(freq, timeNow + when, 0);
     return this;
   }
 
   setVolume(thread, vol, when = 0, useExpRamp = false) {
     const selThread = this.threads[thread];
-    const timeNow = this.context.currentTime + selThread.startTime;
+    const timeNow = this.context.currentTime;
 
     if (useExpRamp) {
       selThread.gain.gain.setValueAtTime(selThread.gain.gain.value, this.context.currentTime); // reset the gain

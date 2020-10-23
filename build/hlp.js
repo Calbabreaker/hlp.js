@@ -1,5 +1,5 @@
 /*!
- * hlp.js v1.0.2 by Calbabreaker 2020-09-12 
+ * hlp.js v1.0.2 by Calbabreaker 2020-10-23 
  * Free to use. GPL-3.0.
  */
 /******/ (function(modules) { // webpackBootstrap
@@ -804,7 +804,7 @@ class Engine {
     if (this.setup != null) this.setup();
     this._timeStarted = performance.now();
     this._timeLastFrame = performance.now();
-    this.start();
+    this.resume();
   }
 
   _draw() {
@@ -834,7 +834,7 @@ class Engine {
     this.looping = false;
   }
 
-  start() {
+  resume() {
     if (this.draw != null) {
       this.looping = true;
       this._draw();
@@ -1172,7 +1172,7 @@ class Matrix {
     ]);
   }
 
-  static createProjectionPerspect(fovDegrees, aspectRatio, near, far) {
+  static createPerspective(fovDegrees, aspectRatio, near, far) {
     const fovRadians = toRadians(fovDegrees);
     return new Matrix([
       [aspectRatio * fovRadians, 0, 0, 0],
@@ -1266,14 +1266,14 @@ class AudioSynth {
 
   setFreq(thread, freq, when = 0) {
     const selThread = this.threads[thread];
-    const timeNow = this.context.currentTime + selThread.startTime;
+    const timeNow = this.context.currentTime;
     selThread.oscillator.frequency.setTargetAtTime(freq, timeNow + when, 0);
     return this;
   }
 
   setVolume(thread, vol, when = 0, useExpRamp = false) {
     const selThread = this.threads[thread];
-    const timeNow = this.context.currentTime + selThread.startTime;
+    const timeNow = this.context.currentTime;
 
     if (useExpRamp) {
       selThread.gain.gain.setValueAtTime(selThread.gain.gain.value, this.context.currentTime); // reset the gain
@@ -1676,7 +1676,7 @@ const createDOM = (name) => {
 __webpack_require__.r(__webpack_exports__);
 
 // EXPORTS
-__webpack_require__.d(__webpack_exports__, "Canvas", function() { return /* binding */ canvas_Canvas; });
+__webpack_require__.d(__webpack_exports__, "CanvasGraphics", function() { return /* binding */ canvas_graphics_CanvasGraphics; });
 
 // EXTERNAL MODULE: ./src/math/vector.js
 var vector = __webpack_require__(1);
@@ -1856,16 +1856,12 @@ var colour = __webpack_require__(3);
 // EXTERNAL MODULE: ./src/misc/constants.js
 var constants = __webpack_require__(2);
 
-// CONCATENATED MODULE: ./src/graphics/canvas.js
+// CONCATENATED MODULE: ./src/graphics/canvas_base.js
 
 
 
-
-
-// the canvas object for canvas drawing
-
-class canvas_Canvas {
-  constructor(width, height, renderer = constants["renderer2D"]) {
+class canvas_base_CanvasBase {
+  constructor(width, height) {
     // initialize variables
     if (width === constants["FULL"]) {
       if (height != null) this.aspectRatio = height;
@@ -1884,10 +1880,6 @@ class canvas_Canvas {
     this.canvas.height = this.height;
     this.canvas.requestPointerLock = this.canvas.requestPointerLock || this.canvas.mozRequestPointerLock;
 
-    if (renderer == constants["renderer2D"]) {
-      this._renderer = new renderer2D_Renderer2D(this.canvas);
-    } else return console.error("Unknown Renderer!");
-
     document.body.appendChild(this.canvas); // adds to the body
 
     if (this.isFull) {
@@ -1904,6 +1896,54 @@ class canvas_Canvas {
       this.mouse.set(event.clientX - clientRect.left, event.clientY - clientRect.top);
       this.mouseMovement.set(event.movementX, event.movementY);
     });
+  }
+
+  lockMouse() {
+    this.canvas.requestPointerLock();
+  }
+
+  resizeCanvas(w, h) {
+    if (this._renderer != null) this._renderer.rendererResize(w, h);
+
+    this.width = w;
+    this.height = h;
+    if (this.canvas != null) {
+      this.canvas.width = this.width;
+      this.canvas.height = this.height;
+    }
+  }
+
+  _resizeFull() {
+    let newInnerHeight = window.innerHeight;
+    if (this.aspectRatio != null) {
+      const aspectHeight = window.innerWidth / this.aspectRatio;
+      if (aspectHeight < window.innerHeight) newInnerHeight = aspectHeight;
+    }
+
+    this.resizeCanvas(this.aspectRatio != null ? newInnerHeight * this.aspectRatio : innerWidth, newInnerHeight);
+  }
+
+  remove() {
+    document.body.removeChild(this.canvas);
+  }
+}
+
+// CONCATENATED MODULE: ./src/graphics/canvas_graphics.js
+
+
+
+
+
+
+// the canvas object for canvas drawing
+
+class canvas_graphics_CanvasGraphics extends canvas_base_CanvasBase {
+  constructor(width, height, renderer = constants["renderer2D"]) {
+    super(width, height);
+
+    if (renderer == constants["renderer2D"]) {
+      this._renderer = new renderer2D_Renderer2D(this.canvas);
+    } else return console.error("Unknown Renderer!");
   }
 
   fill(c1, c2, c3, a) {
@@ -2040,35 +2080,6 @@ class canvas_Canvas {
 
   textAlign(mode) {
     this._renderer.textAlign(mode);
-  }
-
-  lockMouse() {
-    this.canvas.requestPointerLock();
-  }
-
-  resizeCanvas(w, h) {
-    if (this._renderer != null) this._renderer.rendererResize(w, h);
-
-    this.width = w;
-    this.height = h;
-    if (this.canvas != null) {
-      this.canvas.width = this.width;
-      this.canvas.height = this.height;
-    }
-  }
-
-  _resizeFull() {
-    let newInnerHeight = window.innerHeight;
-    if (this.aspectRatio != null) {
-      const aspectHeight = window.innerWidth / this.aspectRatio;
-      if (aspectHeight < window.innerHeight) newInnerHeight = aspectHeight;
-    }
-
-    this.resizeCanvas(this.aspectRatio != null ? newInnerHeight * this.aspectRatio : innerWidth, newInnerHeight);
-  }
-
-  remove() {
-    document.body.removeChild(this.canvas);
   }
 }
 
