@@ -119,11 +119,11 @@ export class Engine {
   }
 
   keyIsDown(key) {
-    this._keyPressingDict[key];
+    return this._keyPressingDict[key] ? true : false;
   }
 
   keyCodeIsDown(keyCode) {
-    this._keyCodePressingDict[keyCode];
+    return this._keyCodePressingDict[keyCode] ? true : false;
   }
 
   changeFPS(fps) {

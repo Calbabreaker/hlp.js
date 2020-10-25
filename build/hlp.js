@@ -1,5 +1,5 @@
 /*!
- * hlp.js v1.0.2 by Calbabreaker 2020-10-23 
+ * hlp.js v1.0.2 by Calbabreaker 2020-10-25 
  * Free to use. GPL-3.0.
  */
 /******/ (function(modules) { // webpackBootstrap
@@ -846,11 +846,11 @@ class Engine {
   }
 
   keyIsDown(key) {
-    this._keyPressingDict[key];
+    return this._keyPressingDict[key] ? true : false;
   }
 
   keyCodeIsDown(keyCode) {
-    this._keyCodePressingDict[keyCode];
+    return this._keyCodePressingDict[keyCode] ? true : false;
   }
 
   changeFPS(fps) {

@@ -26,6 +26,11 @@ class Game extends hlp.Engine {
     this.canvas.rect(hlp.Vector.sub(this.canvas.mouse, 25), 50, 50);
 
     this.canvas.pop();
+
+    if (this.keyIsDown(" ")) {
+      this.canvas.fill(0, 255, 0);
+      this.canvas.rect(0, 0, 10, 10);
+    }
   }
 }
 
