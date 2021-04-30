@@ -2,6 +2,10 @@
 
 Welcome to The hlp.js library where there is bunch of useful tools.
 
+## WARNING: hlp.js SUPPORT HAS STOPPED IN FAVOUR OF [essem.js](https://github.com/Calbabreaker/essem.js)
+
+essem.js is basically a replacement for hlp.js with all the features that it would have.
+
 ## Documentation
 
 Comming Soon!
@@ -40,7 +44,7 @@ npm run build
 For development
 
 ```sh
-npm run dev
+npm run de
 ```
 
 ## LICENSE
